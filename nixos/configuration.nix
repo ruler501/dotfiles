@@ -150,6 +150,9 @@
   };
   nixpkgs.config = {
     allowUnfree = true;
+    permittedInsecurePackages = [
+      "electron-12.2.3"
+    ];
   };
   programs = {
     adb.enable = true;
@@ -157,7 +160,8 @@
     gnome-terminal.enable = true;
     less.enable = true;
     npm.enable = false;
-    steam.enable = true;
+    # TODO: Debug why Steam seems to fail to download.
+    # steam.enable = true;
     system-config-printer.enable = true;
     zsh = {
       enable = true;

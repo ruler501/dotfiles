@@ -221,7 +221,6 @@ in
     };
     mcfly = {
       enable = true;
-      enableFishIntegration = true;
       enableZshIntegration = true;
       keyScheme = "vim";
     };
@@ -244,9 +243,9 @@ in
         let g:theme_func        = "${colors.func}"
         let g:theme_keyword     = "${colors.keyword}"
         let g:theme_warm        = "${colors.warm}"
-        lua require('lush')(dofile('${../nvim/lua/lush_theme.lua}'))
-        luafile ${../nvim/lua/settings.lua}
-        luafile ${../nvim/lua/statusline_settings.lua}
+        lua require('lush')(dofile('${../nvim/lua}/lush_theme.lua'))
+        luafile ${../nvim/lua}/settings.lua
+        luafile ${../nvim/lua}/statusline_settings.lua
       '';
       extraPackages = [
         pkgs.ccls
@@ -262,16 +261,13 @@ in
         pkgs.xclip
         pkgs.zls
         nodePackages.bash-language-server
+        nodePackages.diagnostic-languageserver
         nodePackages.dockerfile-language-server-nodejs
         nodePackages.pyright
         nodePackages.typescript-language-server
         nodePackages.vim-language-server
         nodePackages.vscode-langservers-extracted
         nodePackages.yaml-language-server
-        pythonPackages.jedi-language-server
-        pythonPackages.pyls-isort
-        pythonPackages.python-lsp-black
-        pythonPackages.python-lsp-server
       ];
       extraPython3Packages = (ps: with ps; [
         pynvim
@@ -361,7 +357,6 @@ in
           "git-extras"
           "history-substring-search"
           "kubectl"
-          "pep8"
           "pip"
           "poetry"
           "python"

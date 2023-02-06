@@ -6,47 +6,37 @@
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.chromium
     pkgs.cockatrice
-    pkgs.dconf
-    pkgs.delta
-    pkgs.direnv
+    pkgs.dconf  # Backend for GSettings
     pkgs.discord
-    pkgs.etcher
+    pkgs.etcher  # Make liveUSB
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
-    pkgs.gamemode
+    pkgs.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
     pkgs.git
-    pkgs.git-filter-repo
     pkgs.git-latexdiff
     pkgs.gimp
     pkgs.glances
     pkgs.gnome.gnome-system-monitor
-    pkgs.gnupg
     (pkgs.google-cloud-sdk.withExtraComponents ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     pkgs.google-chrome
     pkgs.gparted
     pkgs.graphviz
     pkgs.htop
     pkgs.imagemagick
-    pkgs.nodePackages.vscode-langservers-extracted
-    pkgs.jq
     pkgs.killall
-    pkgs.kubectl
-    pkgs.kustomize
     pkgs.lldb
     pkgs.lm_sensors
-    pkgs.lsd
     pkgs.lshw
     pkgs.lsof
     pkgs.neovim-remote
     pkgs.nix-direnv
-    pkgs.nix-du
-    pkgs.nix-index
+    pkgs.nix-du # Disk usage by gc root
+    pkgs.nix-index # Search what packages have specific files
     pkgs.nvtop
     pkgs.obsidian
     pkgs.parallel
-    pkgs.pavucontrol
     pkgs.pciutils  # Provides lspci
     pkgs.postman
     pkgs.python310Full
@@ -58,9 +48,7 @@
     pkgs.teams
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb
-    pkgs.velero
     pkgs.vlc
     pkgs.wget
-    pkgs.zsh
   ];
 }

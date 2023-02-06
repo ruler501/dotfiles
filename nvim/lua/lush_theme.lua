@@ -131,8 +131,8 @@ local theme = lush(function(injected_functions)
     FloatShadowThrough                     { blend=100, bg="black", }, -- FloatShadowThrough xxx guibg=Black blend=100
     RedrawDebugNormal                      { gui="reverse", }, -- RedrawDebugNormal xxx cterm=reverse gui=reverse
     RedrawDebugClear                       { fg=theme_accentbg, bg=theme_brightfg, }, -- RedrawDebugClear xxx ctermbg=11 guibg=Yellow
-    RedrawDebugComposed                    { fg=theme_brightfg, bg=theme_focus.darken(40), }, -- RedrawDebugComposed xxx ctermbg=10 guibg=Green
-    RedrawDebugRecompose                   { fg=theme_invertbg, bg=theme_error.darken(10), gui="bold" }, -- RedrawDebugRecompose xxx ctermbg=9 guibg=Red
+    RedrawDebugComposed                    { fg=theme_brightfg.desaturate(20), bg=theme_focus.darken(50), }, -- RedrawDebugComposed xxx ctermbg=10 guibg=Green
+    RedrawDebugRecompose                   { fg=theme_invertbg.saturate(25), bg=theme_error.darken(20), gui="bold" }, -- RedrawDebugRecompose xxx ctermbg=9 guibg=Red
     Error                                  { gui="bold", fg=theme_bg, bg=theme_error, }, -- Error          xxx cterm=bold ctermfg=0 ctermbg=1 gui=bold guifg=theme_bg guibg=theme_error
     NvimInvalid                            { Error }, -- NvimInvalid    xxx links to Error
     luaParenError                          { Error }, -- luaParenError  xxx links to Error
@@ -299,7 +299,7 @@ local theme = lush(function(injected_functions)
     NvimFigureBrace                        { NvimInternalError }, -- NvimFigureBrace xxx links to NvimInternalError
     NvimSingleQuotedUnknownEscape          { NvimInternalError }, -- NvimSingleQuotedUnknownEscape xxx links to NvimInternalError
     NvimInvalidSingleQuotedUnknownEscape   { NvimInternalError }, -- NvimInvalidSingleQuotedUnknownEscape xxx links to NvimInternalError
-    DevIconJpg                             { fg="#a074c4", }, -- DevIconJpg     xxx ctermfg=140 guifg=#a074c4
+    DevIconJpg                             { fg="#a074c4", }, -- DevIconJpg     xxx ctermfg=140 guifg=hsl(36, 89%, 45%)
     DevIconH                               { fg="#a074c4", }, -- DevIconH       xxx ctermfg=140 guifg=#a074c4
     DevIconTxt                             { fg="#89e051", }, -- DevIconTxt     xxx ctermfg=113 guifg=#89e051
     DevIconRlib                            { fg="#dea584", }, -- DevIconRlib    xxx ctermfg=180 guifg=#dea584

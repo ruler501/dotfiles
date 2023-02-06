@@ -73,7 +73,23 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nonicons": "nonicons",
-        "nur": "nur"
+        "nur": "nur",
+        "secrets": "secrets"
+      }
+    },
+    "secrets": {
+      "locked": {
+        "lastModified": 1675701770,
+        "narHash": "sha256-qB0+VjnLLc6NcxPjNhdG7fBFTEeqsr1ynsv0sLIJB8E=",
+        "ref": "refs/heads/master",
+        "rev": "b592da39b18bb013454a5f2447be4dc556fb16da",
+        "revCount": 112,
+        "type": "git",
+        "url": "ssh://git@github.com/ruler501/dotfiles-private.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/ruler501/dotfiles-private.git"
       }
     },
     "utils": {

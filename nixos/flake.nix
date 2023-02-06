@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,19 +15,21 @@
     };
   };
 
-  outputs = { home-manager, nixpkgs, nur, nonicons, ... }:
+  outputs = { home-manager, nixpkgs, nur, nonicons, secrets, ... }:
   let
     system = "x86_64-linux";
     configuration = hostname: nixpkgs.lib.nixosSystem {
-    inherit system;
-      specialArgs = { inherit nonicons; inherit hostname; };
+      inherit system;
+      specialArgs.nonicons = nonicons;
+      specialArgs.hostname = hostname;
+      specialArgs.secrets = secrets;
       modules = [
         {
           nixpkgs.overlays = [
             nur.overlay
           ];
         }
-        (import ./configuration.nix)
+        (./configuration.nix)
         (./systemPackages.nix)
         home-manager.nixosModules.home-manager
         {

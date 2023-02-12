@@ -54,10 +54,12 @@ in
     "/mnt/Share" = {
       device = "/dev/disk/by-uuid/5D90D3A8449896B7";
       fsType = "ntfs";
+      options = ["defaults" "uid=5001" "gid=5001"];
     };
     "/mnt/Windows" = {
       device = "/dev/disk/by-uuid/C09E84A79E849814";
       fsType = "ntfs";
+      options = ["defaults" "uid=5001" "gid=5001"];
     };
   };
   hardware = {

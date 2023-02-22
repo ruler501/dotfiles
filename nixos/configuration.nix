@@ -36,16 +36,16 @@
   };
   documentation = {
     enable = true;
-    dev.enable = true;
-    doc.enable = true;
+    # dev.enable = true;
+    # doc.enable = true;
     man = {
       enable = true;
       generateCaches = true;
     };
-    nixos = {
-      enable = true;
-      includeAllModules = true;
-    };
+    # nixos = {
+    #   enable = true;
+    #   includeAllModules = true;
+    # };
   };
   environment = {
     pathsToLink = [

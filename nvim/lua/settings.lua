@@ -518,7 +518,7 @@ require('dressing').setup({
 })
 
 require('nvim-web-devicons').setup {
-    default = true;
+    default = true,
 }
 
 local actions = require("diffview.actions")
@@ -612,21 +612,21 @@ require("diffview").setup({
         view = {
             -- The `view` bindings are active in the diff buffers, only when the current
             -- tabpage is a Diffview.
-            { "n", "<tab>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-            { "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
-            { "n", "<leader>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b", actions.toggle_files, { desc = "Toggle the file panel." } },
-            { "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle through available layouts." } },
-            { "n", "[x", actions.prev_conflict, { desc = "In the merge-tool: jump to the previous conflict" } },
-            { "n", "]x", actions.next_conflict, { desc = "In the merge-tool: jump to the next conflict" } },
-            { "n", "<leader>co", actions.conflict_choose("ours"), { desc = "Choose the OURS version of a conflict" } },
+            { "n", "<tab>",      actions.select_next_entry,         { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>",    actions.select_prev_entry,         { desc = "Open the diff for the previous file" } },
+            { "n", "gf",         actions.goto_file,                 { desc = "Open the file in a new split in the previous tabpage" } },
+            { "n", "<C-w><C-f>", actions.goto_file_split,           { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",    actions.goto_file_tab,             { desc = "Open the file in a new tabpage" } },
+            { "n", "<leader>e",  actions.focus_files,               { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b",  actions.toggle_files,              { desc = "Toggle the file panel." } },
+            { "n", "g<C-x>",     actions.cycle_layout,              { desc = "Cycle through available layouts." } },
+            { "n", "[x",         actions.prev_conflict,             { desc = "In the merge-tool: jump to the previous conflict" } },
+            { "n", "]x",         actions.next_conflict,             { desc = "In the merge-tool: jump to the next conflict" } },
+            { "n", "<leader>co", actions.conflict_choose("ours"),   { desc = "Choose the OURS version of a conflict" } },
             { "n", "<leader>ct", actions.conflict_choose("theirs"), { desc = "Choose the THEIRS version of a conflict" } },
-            { "n", "<leader>cb", actions.conflict_choose("base"), { desc = "Choose the BASE version of a conflict" } },
-            { "n", "<leader>ca", actions.conflict_choose("all"), { desc = "Choose all the versions of a conflict" } },
-            { "n", "dx", actions.conflict_choose("none"), { desc = "Delete the conflict region" } },
+            { "n", "<leader>cb", actions.conflict_choose("base"),   { desc = "Choose the BASE version of a conflict" } },
+            { "n", "<leader>ca", actions.conflict_choose("all"),    { desc = "Choose all the versions of a conflict" } },
+            { "n", "dx",         actions.conflict_choose("none"),   { desc = "Delete the conflict region" } },
         },
         diff1 = {
             -- Mappings in single window diff layouts
@@ -638,85 +638,85 @@ require("diffview").setup({
         },
         diff3 = {
             -- Mappings in 3-way diff layouts
-            { { "n", "x" }, "2do", actions.diffget("ours"),
+            { { "n",                                                          "x" }, "2do", actions.diffget("ours"),
                 { desc = "Obtain the diff hunk from the OURS version of the file" } },
-            { { "n", "x" }, "3do", actions.diffget("theirs"),
+            { { "n",                                                            "x" }, "3do", actions.diffget("theirs"),
                 { desc = "Obtain the diff hunk from the THEIRS version of the file" } },
             { "n", "g?", actions.help({ "view", "diff3" }), { desc = "Open the help panel" } },
         },
         diff4 = {
             -- Mappings in 4-way diff layouts
-            { { "n", "x" }, "1do", actions.diffget("base"),
+            { { "n",                                                          "x" }, "1do", actions.diffget("base"),
                 { desc = "Obtain the diff hunk from the BASE version of the file" } },
-            { { "n", "x" }, "2do", actions.diffget("ours"),
+            { { "n",                                                          "x" }, "2do", actions.diffget("ours"),
                 { desc = "Obtain the diff hunk from the OURS version of the file" } },
-            { { "n", "x" }, "3do", actions.diffget("theirs"),
+            { { "n",                                                            "x" }, "3do", actions.diffget("theirs"),
                 { desc = "Obtain the diff hunk from the THEIRS version of the file" } },
             { "n", "g?", actions.help({ "view", "diff4" }), { desc = "Open the help panel" } },
         },
         file_panel = {
-            { "n", "j", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-            { "n", "<down>", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-            { "n", "k", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<up>", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<cr>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "o", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "<2-LeftMouse>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "-", actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry." } },
-            { "n", "S", actions.stage_all, { desc = "Stage all entries." } },
-            { "n", "U", actions.unstage_all, { desc = "Unstage all entries." } },
-            { "n", "X", actions.restore_entry, { desc = "Restore entry to the state on the left side." } },
-            { "n", "L", actions.open_commit_log, { desc = "Open the commit log panel." } },
-            { "n", "<c-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
-            { "n", "<c-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
-            { "n", "<tab>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-            { "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
-            { "n", "i", actions.listing_style, { desc = "Toggle between 'list' and 'tree' views" } },
-            { "n", "f", actions.toggle_flatten_dirs, { desc = "Flatten empty subdirectories in tree listing style." } },
-            { "n", "R", actions.refresh_files, { desc = "Update stats and entries in the file list." } },
-            { "n", "<leader>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b", actions.toggle_files, { desc = "Toggle the file panel" } },
-            { "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle available layouts" } },
-            { "n", "[x", actions.prev_conflict, { desc = "Go to the previous conflict" } },
-            { "n", "]x", actions.next_conflict, { desc = "Go to the next conflict" } },
-            { "n", "g?", actions.help("file_panel"), { desc = "Open the help panel" } },
+            { "n", "j",             actions.next_entry,          { desc = "Bring the cursor to the next file entry" } },
+            { "n", "<down>",        actions.next_entry,          { desc = "Bring the cursor to the next file entry" } },
+            { "n", "k",             actions.prev_entry,          { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<up>",          actions.prev_entry,          { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<cr>",          actions.select_entry,        { desc = "Open the diff for the selected entry." } },
+            { "n", "o",             actions.select_entry,        { desc = "Open the diff for the selected entry." } },
+            { "n", "<2-LeftMouse>", actions.select_entry,        { desc = "Open the diff for the selected entry." } },
+            { "n", "-",             actions.toggle_stage_entry,  { desc = "Stage / unstage the selected entry." } },
+            { "n", "S",             actions.stage_all,           { desc = "Stage all entries." } },
+            { "n", "U",             actions.unstage_all,         { desc = "Unstage all entries." } },
+            { "n", "X",             actions.restore_entry,       { desc = "Restore entry to the state on the left side." } },
+            { "n", "L",             actions.open_commit_log,     { desc = "Open the commit log panel." } },
+            { "n", "<c-b>",         actions.scroll_view( -0.25), { desc = "Scroll the view up" } },
+            { "n", "<c-f>",         actions.scroll_view(0.25),   { desc = "Scroll the view down" } },
+            { "n", "<tab>",         actions.select_next_entry,   { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>",       actions.select_prev_entry,   { desc = "Open the diff for the previous file" } },
+            { "n", "gf",            actions.goto_file,           { desc = "Open the file in a new split in the previous tabpage" } },
+            { "n", "<C-w><C-f>",    actions.goto_file_split,     { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",       actions.goto_file_tab,       { desc = "Open the file in a new tabpage" } },
+            { "n", "i",             actions.listing_style,       { desc = "Toggle between 'list' and 'tree' views" } },
+            { "n", "f",             actions.toggle_flatten_dirs, { desc = "Flatten empty subdirectories in tree listing style." } },
+            { "n", "R",             actions.refresh_files,       { desc = "Update stats and entries in the file list." } },
+            { "n", "<leader>e",     actions.focus_files,         { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b",     actions.toggle_files,        { desc = "Toggle the file panel" } },
+            { "n", "g<C-x>",        actions.cycle_layout,        { desc = "Cycle available layouts" } },
+            { "n", "[x",            actions.prev_conflict,       { desc = "Go to the previous conflict" } },
+            { "n", "]x",            actions.next_conflict,       { desc = "Go to the next conflict" } },
+            { "n", "g?",            actions.help("file_panel"),  { desc = "Open the help panel" } },
         },
         file_history_panel = {
-            { "n", "g!", actions.options, { desc = "Open the option panel" } },
-            { "n", "<C-A-d>", actions.open_in_diffview, { desc = "Open the entry under the cursor in a diffview" } },
-            { "n", "y", actions.copy_hash, { desc = "Copy the commit hash of the entry under the cursor" } },
-            { "n", "L", actions.open_commit_log, { desc = "Show commit details" } },
-            { "n", "zR", actions.open_all_folds, { desc = "Expand all folds" } },
-            { "n", "zM", actions.close_all_folds, { desc = "Collapse all folds" } },
-            { "n", "j", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-            { "n", "<down>", actions.next_entry, { desc = "Bring the cursor to the next file entry" } },
-            { "n", "k", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<up>", actions.prev_entry, { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<cr>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "o", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "<2-LeftMouse>", actions.select_entry, { desc = "Open the diff for the selected entry." } },
-            { "n", "<c-b>", actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
-            { "n", "<c-f>", actions.scroll_view(0.25), { desc = "Scroll the view down" } },
-            { "n", "<tab>", actions.select_next_entry, { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
-            { "n", "gf", actions.goto_file, { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf", actions.goto_file_tab, { desc = "Open the file in a new tabpage" } },
-            { "n", "<leader>e", actions.focus_files, { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b", actions.toggle_files, { desc = "Toggle the file panel" } },
-            { "n", "g<C-x>", actions.cycle_layout, { desc = "Cycle available layouts" } },
-            { "n", "g?", actions.help("file_history_panel"), { desc = "Open the help panel" } },
+            { "n", "g!",            actions.options,                    { desc = "Open the option panel" } },
+            { "n", "<C-A-d>",       actions.open_in_diffview,           { desc = "Open the entry under the cursor in a diffview" } },
+            { "n", "y",             actions.copy_hash,                  { desc = "Copy the commit hash of the entry under the cursor" } },
+            { "n", "L",             actions.open_commit_log,            { desc = "Show commit details" } },
+            { "n", "zR",            actions.open_all_folds,             { desc = "Expand all folds" } },
+            { "n", "zM",            actions.close_all_folds,            { desc = "Collapse all folds" } },
+            { "n", "j",             actions.next_entry,                 { desc = "Bring the cursor to the next file entry" } },
+            { "n", "<down>",        actions.next_entry,                 { desc = "Bring the cursor to the next file entry" } },
+            { "n", "k",             actions.prev_entry,                 { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<up>",          actions.prev_entry,                 { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<cr>",          actions.select_entry,               { desc = "Open the diff for the selected entry." } },
+            { "n", "o",             actions.select_entry,               { desc = "Open the diff for the selected entry." } },
+            { "n", "<2-LeftMouse>", actions.select_entry,               { desc = "Open the diff for the selected entry." } },
+            { "n", "<c-b>",         actions.scroll_view( -0.25),        { desc = "Scroll the view up" } },
+            { "n", "<c-f>",         actions.scroll_view(0.25),          { desc = "Scroll the view down" } },
+            { "n", "<tab>",         actions.select_next_entry,          { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>",       actions.select_prev_entry,          { desc = "Open the diff for the previous file" } },
+            { "n", "gf",            actions.goto_file,                  { desc = "Open the file in a new split in the previous tabpage" } },
+            { "n", "<C-w><C-f>",    actions.goto_file_split,            { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",       actions.goto_file_tab,              { desc = "Open the file in a new tabpage" } },
+            { "n", "<leader>e",     actions.focus_files,                { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b",     actions.toggle_files,               { desc = "Toggle the file panel" } },
+            { "n", "g<C-x>",        actions.cycle_layout,               { desc = "Cycle available layouts" } },
+            { "n", "g?",            actions.help("file_history_panel"), { desc = "Open the help panel" } },
         },
         option_panel = {
-            { "n", "<tab>", actions.select_entry, { desc = "Change the current option" } },
-            { "n", "q", actions.close, { desc = "Close the panel" } },
-            { "n", "g?", actions.help("option_panel"), { desc = "Open the help panel" } },
+            { "n", "<tab>", actions.select_entry,         { desc = "Change the current option" } },
+            { "n", "q",     actions.close,                { desc = "Close the panel" } },
+            { "n", "g?",    actions.help("option_panel"), { desc = "Open the help panel" } },
         },
         help_panel = {
-            { "n", "q", actions.close, { desc = "Close help menu" } },
+            { "n", "q",     actions.close, { desc = "Close help menu" } },
             { "n", "<esc>", actions.close, { desc = "Close help menu" } },
         },
     },
@@ -741,7 +741,7 @@ cmp.setup({
         end
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -881,20 +881,20 @@ require("symbols-outline").setup({
 local lsp = require "lspconfig"
 
 lsp.bashls.setup { -- requires bash-language-server (nodePackages.bash-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 lsp.ccls.setup { -- requires ccls and clang (pkgs.ccls and pkgs.clang_14 version will need updating periodically)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
-        compilationDatabaseDirectory = "build";
+        compilationDatabaseDirectory = "build",
         index = {
-            threads = 0;
-        };
+            threads = 0,
+        },
         clang = {
-            excludeArgs = { "-frounding-math" };
-        };
+            excludeArgs = { "-frounding-math" },
+        },
     }
 }
 -- lsp.clangd.setup{ -- requires clang (pkgs.clang_14 version will need updating periodically)
@@ -902,15 +902,15 @@ lsp.ccls.setup { -- requires ccls and clang (pkgs.ccls and pkgs.clang_14 version
 --   on_attach = on_attach;
 -- }
 lsp.cmake.setup { -- requires cmake-language-server (pkgs.cmake-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
-        buildDirectory = "build";
-    };
+        buildDirectory = "build",
+    },
 }
 lsp.codeqlls.setup { -- requires codeql-cli (pkgs.codeql)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 -- lsp.cssls.setup{ -- requires vscode-css-language-server (nodePackages.vscode-css-languageserver-bin or nodePackages.vscode-langservers-extracted)
 --   -- Must install a snippet plugin and add `capabilities.textDocument.completion.completionItem.snippetSupport = true`
@@ -928,8 +928,8 @@ lsp.codeqlls.setup { -- requires codeql-cli (pkgs.codeql)
 -- }
 lsp.diagnosticls.setup { -- requires diagnostic-languageserver (nodePackages.diagnostic-languageserver)
     -- and configuration of whatever diagnostic tools it's used with.
-    on_attach = on_attach;
-    filetypes = { "python" };
+    on_attach = on_attach,
+    filetypes = { "python" },
     init_options = {
         linters = {
             flake8 = {
@@ -965,38 +965,38 @@ lsp.diagnosticls.setup { -- requires diagnostic-languageserver (nodePackages.dia
                     '.flake8',
                 },
             },
-        };
+        },
         filetypes = {
             python = { "flake8" },
         },
         formatters = {
             black = {
-                command = vim.fn.exepath("black");
-                args = { "--quiet", "-" };
+                command = vim.fn.exepath("black"),
+                args = { "--quiet", "-" },
                 rootPatterns = {
                     '.git',
                     'pyproject.toml',
                 },
-            };
+            },
             isort = {
-                command = vim.fn.exepath("isort");
+                command = vim.fn.exepath("isort"),
                 args = { '--quiet', '--stdout', '-' },
                 rootPatterns = {
                     '.git',
                     'pyproject.toml',
                 },
-            };
-        };
+            },
+        },
         formatFiletypes = {
-            python = { "black", "isort" };
-        };
-    };
-    format = true;
-    root_dir = lsp.util.root_pattern('.git');
+            python = { "black", "isort" },
+        },
+    },
+    format = true,
+    root_dir = lsp.util.root_pattern('.git'),
 }
 lsp.dockerls.setup { -- requires dockerfile-language-server-nodejs (nodePackages.dockerfile-language-server-nodejs)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 -- lsp.dotls.setup{ -- requires dot-language-server (not in nixpkgs, is an npm package)
 --   capabilities = capabilities;
@@ -1010,33 +1010,36 @@ lsp.dockerls.setup { -- requires dockerfile-language-server-nodejs (nodePackages
 lsp.eslint.setup { -- requires vscode-eslint-language-server (not available individually so needs nodePackages.vscode-langservers-extracted)
     filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx",
         "vue" },
-    capabilities = capabilities;
+    capabilities = capabilities,
     settings = {
         -- nodePath = "../.yarn/sdks"; -- only needed for yarn pnp
         codeAction = {
             disableRuleComment = {
-                enable = true;
-                location = "separateLine";
-            };
+                enable = true,
+                location = "separateLine",
+            },
             showDocumentation = {
-                enable = true;
-            };
-        };
+                enable = true,
+            },
+        },
         codeActionOnSave = {
-            enable = true;
-            mode = "all";
-        };
-        format = true;
-        onIgnoredFiles = "off";
-        packageManager = "pnpm";
+            enable = true,
+            mode = "all",
+        },
+        format = true,
+        lintTask = {
+            enable = true,
+        },
+        onIgnoredFiles = "off",
+        packageManager = "pnpm",
         problems = {
-            shortenToSingleLine = false;
-        };
-        quiet = true;
-        run = "onType";
-        validate = "on";
-    };
-    on_attach = on_attach;
+            shortenToSingleLine = false,
+        },
+        quiet = false,
+        run = "onType",
+        validate = "on",
+    },
+    on_attach = on_attach,
 }
 -- lsp.gradle_ls.setup{ -- requires vscode-gradle gradle-language-server (neither available in nixpkgs)
 --   capabilities = capabilities;
@@ -1053,17 +1056,17 @@ lsp.eslint.setup { -- requires vscode-eslint-language-server (not available indi
 -- }
 lsp.jsonls.setup {
     -- Must install a snippet plugin and add `capabilities.textDocument.completion.completionItem.snippetSupport = true`
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
-        provideFormatter = true;
-    };
+        provideFormatter = true,
+    },
     settings = {
         json = {
-            schemas = require('schemastore').json.schemas();
-            validate = { enable = true };
-        };
-    };
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+        },
+    },
 }
 -- lsp.lean3ls.setup{ -- requires lean-language-server (not in nixpkgs, is an npm package)
 --   capabilities = capabilities;
@@ -1074,8 +1077,8 @@ lsp.jsonls.setup {
 --   on_attach = on_attach;
 -- }
 lsp.ltex.setup { -- requires ltex-ls (pkgs.ltex-ls)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 -- lsp.marksman.setup{ -- requires marksman (not in nixpkgs)
 --   capabilities = capabilities;
@@ -1091,8 +1094,8 @@ lsp.ltex.setup { -- requires ltex-ls (pkgs.ltex-ls)
 --   on_attach = on_attach;
 -- }
 lsp.nil_ls.setup { -- requires nil (pkgs.nil)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 -- lsp.omnisharp.setup{ (requires some weird config, but would be nice for C# stuff)
 --   capabilities = capabilities;
@@ -1152,134 +1155,133 @@ lsp.nil_ls.setup { -- requires nil (pkgs.nil)
 --   on_attach = on_attach;
 -- }
 lsp.pyright.setup { -- requires pyright (nodePackages.pyright)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     settings = {
         python = {
             analysis = {
-                autoSearchPaths = true;
-                diagnosticMode = "workspace";
-                useLibraryCodeForTypes = true;
-            };
-        };
-    };
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true,
+            },
+        },
+    },
 }
 lsp.rust_analyzer.setup { -- requires rust-analyzer (pkgs.rust-analyzer)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 -- lsp.sqlls.setup{ -- requires sql-language-server (not in nixpkgs, is an npm package)
 --   capabilities = capabilities;
 --   on_attach = on_attach;
 -- }
-lsp.sumneko_lua.setup { -- requires lua-language-server (pkgs.sumneko-lua-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+lsp.lua_ls.setup { -- requires lua-language-server (pkgs.sumneko-lua-language-server)
+    capabilities = capabilities,
+    on_attach = on_attach,
     settings = {
         Lua = {
             runtime = {
                 -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = 'LuaJIT';
-            };
+                version = 'LuaJIT',
+            },
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
-                globals = { 'vim' };
-            };
+                globals = { 'vim' },
+            },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true);
-            };
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
             -- Do not send telemetry data containing a randomized but unique identifier
             telemetry = {
-                enable = false;
-            };
-        };
-    };
+                enable = false,
+            },
+        },
+    },
 }
 lsp.taplo.setup { -- requires taplo-cli with lsp features enabled (pkgs.taplo)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 lsp.texlab.setup { -- requires texlab (pkgs.texlab)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     settings = {
         texlab = {
-            auxDirectory = ".";
-            bibtexFormatter = "texlab";
+            auxDirectory = ".",
+            bibtexFormatter = "texlab",
             build = {
-                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" };
-                executable = "latexmk";
-                forwardSearchAfter = false;
-                onSave = false;
-            };
+                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                executable = "latexmk",
+                forwardSearchAfter = false,
+                onSave = false,
+            },
             chktex = {
-                onEdit = false;
-                onOpenAndSave = false;
-            };
-            diagnosticsDelay = 300;
-            formatterLineLength = 100;
+                onEdit = false,
+                onOpenAndSave = false,
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 100,
             forwardSearch = {
-                args = {};
-            };
-            latexFormatter = "latexindent";
+                args = {},
+            },
+            latexFormatter = "latexindent",
             latexindent = {
-                modifyLineBreaks = false;
-            };
-        };
-    };
+                modifyLineBreaks = false,
+            },
+        },
+    },
 }
 lsp.tsserver.setup { -- requires typescript-language-server (nodePackages.typescript-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
     init_options = {
-        hostInfo = "neovim";
-    };
+        hostInfo = "neovim",
+    },
 }
 lsp.vimls.setup { -- requires vim-language-server (nodePackages.vim-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
         diagnostic = {
-            enable = true;
-        };
+            enable = true,
+        },
         indexes = {
-            count = 3;
-            gap = 100;
-            projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" };
-            runtimepath = true;
-        };
-        isNeovim = true;
-        iskeyword = "@,48-57,_,192-255,-#";
-        runtimepath = "";
+            count = 3,
+            gap = 100,
+            projectRootPatterns = { "runtime", "nvim", ".git", "autoload", "plugin" },
+            runtimepath = true,
+        },
+        isNeovim = true,
+        iskeyword = "@,48-57,_,192-255,-#",
+        runtimepath = "",
         suggest = {
-            fromRuntimepath = true;
-            fromVimruntime = true;
-        };
-        vimruntime = "";
-    };
+            fromRuntimepath = true,
+            fromVimruntime = true,
+        },
+        vimruntime = "",
+    },
 }
 lsp.yamlls.setup { -- requires yaml-language-server (nodePackages.yaml-language-server)
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
     settings = {
         redhat = {
             telemetry = {
-                enabled = false;
-            };
-        };
+                enabled = false,
+            },
+        },
         yaml = {
             schemas = {
-                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*";
-                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.24.5-standalone-strict/all.json"] = "/*.kube.yaml";
-            };
-        };
-    };
+                ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+                ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.24.5-standalone-strict/all.json"] = "/*.kube.yaml",
+            },
+        },
+    },
 }
 lsp.zls.setup { -- requires zls (pkgs.zls)
     -- Zig language server
-    capabilities = capabilities;
-    on_attach = on_attach;
+    capabilities = capabilities,
+    on_attach = on_attach,
 }
 
 require "colorizer".setup {
@@ -1367,54 +1369,54 @@ require("tidy").setup()
 
 require("lsp_lines").setup()
 vim.diagnostic.config({
-    virtual_lines = { only_current_line = true; };
-    virtual_text = true;
+    virtual_lines = { only_current_line = true, },
+    virtual_text = true,
 })
 
 require("treesitter-context").setup {
-    enable = true; -- Enable this plugin (Can be enabled/disabled later via commands)
-    max_lines = 0; -- How many lines the window should span. Values <= 0 mean no limit.
-    trim_scope = 'outer'; -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-    min_window_height = 16; -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    min_window_height = 16, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 }
 
 
 require "nvim-treesitter.configs".setup {
-    ensure_installed = {};
-    sync_install = false;
-    auto_install = false;
-    ignore_install = { "ql_dbscheme" };
+    ensure_installed = {},
+    sync_install = false,
+    auto_install = false,
+    ignore_install = { "ql_dbscheme" },
     autotag = {
-        enable = true;
-    };
+        enable = true,
+    },
     context_commentstring = {
-        enable = true;
-        enable_autocmd = false;
-    };
+        enable = true,
+        enable_autocmd = false,
+    },
     highlight = {
-        enable = true;
-        additional_vim_regex_highlighting = false;
-    };
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
     indent = {
-        enable = true;
-    };
+        enable = true,
+    },
     matchup = {
         enable = true, -- mandatory, false will disable the whole extension
         disable = {}, -- optional, list of language that will be disabled
     },
     rainbow = {
-        enable = true;
-        extended_mode = true;
-        max_file_lines = nil;
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
         colors = {
-            vim.g.theme_darkfg;
-            vim.g.theme_keyword;
-            vim.g.theme_focus;
-            vim.g.theme_constant;
-            vim.g.theme_warm;
-            vim.g.theme_type;
-        };
-    };
+            vim.g.theme_darkfg,
+            vim.g.theme_keyword,
+            vim.g.theme_focus,
+            vim.g.theme_constant,
+            vim.g.theme_warm,
+            vim.g.theme_type,
+        },
+    },
 }
 
 require("lsp-colors").setup({})
@@ -1423,46 +1425,46 @@ require("compiler-explorer").setup()
 
 require("Comment").setup({
     ---Add a space b/w comment and the line
-    padding = true;
+    padding = true,
     ---Whether the cursor should stay at its position
-    sticky = true;
+    sticky = true,
     ---Lines to be ignored while (un)comment
-    ignore = nil;
+    ignore = nil,
     ---LHS of toggle mappings in NORMAL mode
     toggler = {
         ---Line-comment toggle keymap
-        line = 'tcc';
+        line = 'tcc',
         ---Block-comment toggle keymap
-        block = 'tbc';
-    };
+        block = 'tbc',
+    },
     ---LHS of operator-pending mappings in NORMAL and VISUAL mode
     opleader = {
         ---Line-comment keymap
-        line = 'tc';
+        line = 'tc',
         ---Block-comment keymap
-        block = 'tbc';
-    };
+        block = 'tbc',
+    },
     ---LHS of extra mappings
     extra = {
         ---Add comment on the line above
-        above = 'gcO';
+        above = 'gcO',
         ---Add comment on the line below
-        below = 'gco';
+        below = 'gco',
         ---Add comment at the end of line
-        eol = 'gcA';
-    };
+        eol = 'gcA',
+    },
     ---Enable keybindings
     ---NOTE: If given `false` then the plugin won't create any mappings
     mappings = {
         ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
-        basic = true;
+        basic = true,
         ---Extra mapping; `gco`, `gcO`, `gcA`
-        extra = false;
-    };
+        extra = false,
+    },
     ---Function to call before (un)comment
-    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook();
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
     ---Function to call after (un)comment
-    post_hook = nil;
+    post_hook = nil,
 })
 
 vim.cmd([[

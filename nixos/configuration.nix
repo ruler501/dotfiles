@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ hostname, config, pkgs, lib, nur, nonicons, secrets, ... }: {
+{ hostname, config, pkgs, lib, nur, nonicons, secrets, nixpkgs-stable, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ((builtins.toString ./.) + "/" + hostname + "-configuration.nix")
@@ -60,7 +60,7 @@
       VISUAL = "nvr --remote-wait";
       GIT_EDITOR = "nvr --remote-wait";
       USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
-      PNPM_HOME = "/home/devon/.pnpm_global";
+      PNPM_HOME = "/home/devon/.npm-global/bin";
     };
     etc = {
       "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
@@ -189,7 +189,7 @@
     mongodb = {
       bind_ip = "0.0.0.0";
       enable = true;
-      package = pkgs.mongodb-4_4;
+      package = nixpkgs-stable.mongodb-4_4;
       replSetName = "rs0";
     };
     printing.enable = true;

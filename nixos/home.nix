@@ -22,6 +22,9 @@ in
     };
     homeDirectory = "/home/devon";
     keyboard.options = [ "ctrl:nocaps" ];
+    sessionPath = [
+      "$HOME/.npm-global/bin"
+    ];
     stateVersion = "22.11";
     username = "devon";
   };
@@ -255,7 +258,7 @@ in
         pkgs.ltex-ls
         pkgs.nil
         pkgs.rust-analyzer
-        pkgs.sumneko-lua-language-server
+        pkgs.lua-language-server
         pkgs.taplo
         pkgs.texlab
         pkgs.xclip

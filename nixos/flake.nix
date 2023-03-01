@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-22.11";
     secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,14 +16,19 @@
     };
   };
 
-  outputs = { home-manager, nixpkgs, nur, nonicons, secrets, ... }:
+  outputs = { home-manager, nixpkgs, nur, nonicons, secrets, nixpkgs-stable, ... }:
   let
     system = "x86_64-linux";
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
     configuration = hostname: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs.nonicons = nonicons;
       specialArgs.hostname = hostname;
       specialArgs.secrets = secrets;
+      specialArgs.nixpkgs-stable = pkgs-stable;
       modules = [
         {
           nixpkgs.overlays = [

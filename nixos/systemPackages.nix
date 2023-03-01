@@ -2,7 +2,7 @@
 {
   environment.systemPackages = [
     pkgs.ark  # GUI archive management
-    pkgs.awscli2
+    # pkgs.awscli2
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.chromium
     pkgs.cockatrice

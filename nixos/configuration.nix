@@ -9,6 +9,9 @@
   ];
   boot = {
     enableContainers = true;
+    binfmt.emulatedSystems = [
+      "aarch64-linux"
+    ];
     blacklistedKernelModules = [];
     extraModulePackages = [];
     hardwareScan = true;

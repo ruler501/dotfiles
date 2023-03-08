@@ -11,6 +11,7 @@
     pkgs.etcher  # Make liveUSB
     pkgs.firefox
     pkgs.fortune
+    pkgs.freecad
     pkgs.fzy
     pkgs.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
@@ -46,6 +47,7 @@
     pkgs.simplescreenrecorder
     pkgs.sloccount
     pkgs.teams
+    pkgs.texlive.combined.scheme-full
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc

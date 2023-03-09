@@ -26,6 +26,7 @@
     pkgs.graphviz
     pkgs.htop
     pkgs.imagemagick
+    pkgs.inkscape
     pkgs.killall
     pkgs.lldb
     pkgs.lm_sensors

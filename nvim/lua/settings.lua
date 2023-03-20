@@ -1,53 +1,53 @@
 local set = vim.opt
 
-set.autochdir = false -- Don't change directories automatically.
-set.autoread = true -- Auto reload if no changes in buffer.
-set.autowrite = false -- Don't write automatically.
+set.autochdir = false                 -- Don't change directories automatically.
+set.autoread = true                   -- Auto reload if no changes in buffer.
+set.autowrite = false                 -- Don't write automatically.
 -- set.background = 'dark'        -- Use a dark background.
-set.backup = false -- Some servers have issues with backup files.
-set.clipboard = 'unnamedplus' -- Use system CLIPBOARD for copy/cut/paste
-set.cmdheight = 2 -- Give more space for commands and messages.
-set.colorcolumn = '100,120' -- Highlight column 101 to give wrapping hints.
-set.concealcursor = '' -- Don't conceal text on the current cursor line.
-set.conceallevel = 2 -- Allow conceals to apply.
-set.confirm = true -- Create a confirm dialog when trying to to quit with unsaved changes.
-set.encoding = 'UTF-8' -- Default encoding is UTF-8.
-set.expandtab = true -- Turn tabs into spaces.
-set.foldcolumn = 'auto:5' -- Always set this to the same value as foldnestmax
-set.foldmethod = 'syntax' -- Fold sections according to file syntax.
-set.foldnestmax = 5 -- Don't fold more than 3 deep.
-set.gdefault = true -- Add g to replacements so it replaces all on line.
-set.hidden = true -- Hide buffer instead of failing when trying to open something over it when there are changes.
-set.hlsearch = true -- Highlight all search results from most recent search.
-set.inccommand = 'split' -- Show previews of replacements before applying.
-set.incsearch = true -- Show match as search string is typed.
-set.lazyredraw = true -- Don't redraw in the middle of macros.
-set.mouse = 'a' -- Allow mouse in all modes.
-set.mousehide = true -- Hide mouse pointer when typing.
-set.mousemodel = 'popup_setpos' -- Open a menu on right click.
-set.number = true -- Line Numbers.
-set.pumblend = 20 -- Pseudo-transparency for popup menus. 80% opaque.
-set.pyxversion = 3 -- Only allow using python3.
-set.relativenumber = false -- No relative numbering.
-set.report = 0 -- Report number of changed lines for most ':' commands.
-set.scroll = 5 -- Lines to scroll with <C-U> and <C-D>.
-set.shiftwidth = 0 -- Indent from normal mode equal to tabstop.
-set.shortmess:append('c') -- Remove messages from in-completion menus.
-set.showbreak = '>>> ' -- Characters to put at the start of wrapped lines.
-set.softtabstop = 4 -- Spaces to remove in insert.
-set.splitbelow = true -- Open splits to the bottom or right of active.
-set.splitright = true -- Open splits to the bottom or right of active.
-set.tabstop = 4 -- Tab width.
-set.termguicolors = true -- 24 Bit color.
-set.timeout = true -- Use timeoutlen to wait for keybindings to complete.
-set.timeoutlen = 2000 -- Wait 2 seconds for keybindings to complete.
+set.backup = false                    -- Some servers have issues with backup files.
+set.clipboard = 'unnamedplus'         -- Use system CLIPBOARD for copy/cut/paste
+set.cmdheight = 2                     -- Give more space for commands and messages.
+set.colorcolumn = '100,120'           -- Highlight column 101 to give wrapping hints.
+set.concealcursor = ''                -- Don't conceal text on the current cursor line.
+set.conceallevel = 2                  -- Allow conceals to apply.
+set.confirm = true                    -- Create a confirm dialog when trying to to quit with unsaved changes.
+set.encoding = 'UTF-8'                -- Default encoding is UTF-8.
+set.expandtab = true                  -- Turn tabs into spaces.
+set.foldcolumn = 'auto:5'             -- Always set this to the same value as foldnestmax
+set.foldmethod = 'syntax'             -- Fold sections according to file syntax.
+set.foldnestmax = 5                   -- Don't fold more than 3 deep.
+set.gdefault = true                   -- Add g to replacements so it replaces all on line.
+set.hidden = true                     -- Hide buffer instead of failing when trying to open something over it when there are changes.
+set.hlsearch = true                   -- Highlight all search results from most recent search.
+set.inccommand = 'split'              -- Show previews of replacements before applying.
+set.incsearch = true                  -- Show match as search string is typed.
+set.lazyredraw = true                 -- Don't redraw in the middle of macros.
+set.mouse = 'a'                       -- Allow mouse in all modes.
+set.mousehide = true                  -- Hide mouse pointer when typing.
+set.mousemodel = 'popup_setpos'       -- Open a menu on right click.
+set.number = true                     -- Line Numbers.
+set.pumblend = 20                     -- Pseudo-transparency for popup menus. 80% opaque.
+set.pyxversion = 3                    -- Only allow using python3.
+set.relativenumber = false            -- No relative numbering.
+set.report = 0                        -- Report number of changed lines for most ':' commands.
+set.scroll = 5                        -- Lines to scroll with <C-U> and <C-D>.
+set.shiftwidth = 0                    -- Indent from normal mode equal to tabstop.
+set.shortmess:append('c')             -- Remove messages from in-completion menus.
+set.showbreak = '>>> '                -- Characters to put at the start of wrapped lines.
+set.softtabstop = 4                   -- Spaces to remove in insert.
+set.splitbelow = true                 -- Open splits to the bottom or right of active.
+set.splitright = true                 -- Open splits to the bottom or right of active.
+set.tabstop = 4                       -- Tab width.
+set.termguicolors = true              -- 24 Bit color.
+set.timeout = true                    -- Use timeoutlen to wait for keybindings to complete.
+set.timeoutlen = 2000                 -- Wait 2 seconds for keybindings to complete.
 set.undodir = '/home/devon/.vim/undo' -- Specify where to store undo histories.
-set.undofile = true -- Enable persisting undo stacks across sessions.
-set.updatetime = 100 -- How many milliseconds to wait to write swap file after edits stopped.
-set.virtualedit = 'onemore' -- go one char beyond in in normal mode.
-set.winblend = 10 -- Floating windows at 90% opacity.
-set.wrap = false -- No line wrapping.
-set.writebackup = false -- Some servers have issues with backup files.
+set.undofile = true                   -- Enable persisting undo stacks across sessions.
+set.updatetime = 100                  -- How many milliseconds to wait to write swap file after edits stopped.
+set.virtualedit = 'onemore'           -- go one char beyond in in normal mode.
+set.winblend = 10                     -- Floating windows at 90% opacity.
+set.wrap = false                      -- No line wrapping.
+set.writebackup = false               -- Some servers have issues with backup files.
 set.fillchars = {
     vert = "│",
     vertleft = "┤",
@@ -57,7 +57,7 @@ set.fillchars = {
     horizup = "┴",
     horizdown = "┬",
     fold = "-",
-    eob = " ", -- suppress ~ at EndOfBuffer
+    eob = " ",  -- suppress ~ at EndOfBuffer
     diff = "⣿", -- alternatives = ⣿ ░ ─
     msgsep = "‾",
     foldopen = "▾",
@@ -215,6 +215,24 @@ require("legendary").setup({
     log_level = 'info',
 })
 
+-- local possession = require("nvim-possession")
+
+-- require("buffer_manager").setup({
+--     select_menu_item_commands = {
+--         v = {
+--             key = "<C-v>",
+--             command = "vsplit"
+--         },
+--         h = {
+--             key = "<C-h>",
+--             command = "split"
+--         }
+--     },
+--     short_file_names = false,
+--     short_term_names = false,
+-- })
+-- local bmui = require("buffer_manager.ui")
+
 wk.register({
     ['<Tab>'] = { '<Cmd>bnext<CR>', "Go to next buffer.", mode = 'n' },
     ['<S-Tab>'] = { '<Cmd>bprevious<CR>', "Go to previous buffer.", mode = 'n' },
@@ -231,6 +249,9 @@ wk.register({
         ['f'] = {
             ['r'] = { '<Cmd>TSLspRenameFile<CR>', "Do a refactor renaming the current file.", mode = 'n' },
         },
+        -- ['u'] = {
+        --     ['s'] = { possession.update, "Update current session.", mode = "n" },
+        -- },
     },
     [';'] = { ':', "Go to command mode.", mode = 'n', silent = false },
     -- [')'] = { '^', ".", mode = 'nx' },
@@ -238,6 +259,9 @@ wk.register({
     ['c'] = {
         ['f'] = { vim.lsp.buf.formatting, "Format the current buffer.", mode = 'n' },
         ['r'] = { vim.lsp.buf.rename, "Rename all references to the currently selected symbol.", mode = 'n' },
+        -- ['n'] = {
+        --    ['s'] = { possession.new, "Create a new session.", mode = "n" },
+        -- },
     },
     ['d'] = { '"_d', 'Delete without copying the text.', mode = 'n', nowait = true },
     ['g'] = {
@@ -297,8 +321,14 @@ wk.register({
         ['m'] = { '<Cmd>marks<CR>', "Show all marks.", mode = 'n' },
         ['r'] = { '<Cmd>TroubleToggle lsp_references<CR>',
             "Toggle showing all references to the symbol under the cursor.", mode = 'n' },
+        -- ['s'] = {
+        -- ['l'] = { possession.list, "Show the list of existing sessions.", mode = 'n' },
+        -- },
     },
     ['t'] = {
+        -- ['b'] = {
+        --     ['l'] = { bmui.toggle_quick_menu, "Toggle buffer list window.", mode = 'n' },
+        -- },
         ['d'] = {
             ['d'] = { '<Cmd>TroubleToggle document_diagnostics<CR>',
                 "Toggle showing a window with the diagnostics for the current document.", mode = 'n' },
@@ -351,25 +381,19 @@ require('dressing').setup({
     input = {
         -- Set to false to disable the vim.ui.input implementation
         enabled = true,
-
         -- Default prompt string
         default_prompt = "Input:",
-
         -- Can be 'left', 'right', or 'center'
         prompt_align = "left",
-
         -- When true, <Esc> will close the modal
         insert_only = true,
-
         -- When true, input will start in insert mode.
         start_in_insert = true,
-
         -- These are passed to nvim_open_win
         anchor = "SW",
         border = "rounded",
         -- 'editor' and 'win' will default to being centered
         relative = "cursor",
-
         -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
         prefer_width = 40,
         width = nil,
@@ -377,7 +401,6 @@ require('dressing').setup({
         -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
         max_width = { 140, 0.9 },
         min_width = { 20, 0.2 },
-
         buf_options = {},
         win_options = {
             -- Window transparency (0-100)
@@ -385,7 +408,6 @@ require('dressing').setup({
             -- Disable line wrapping
             wrap = false,
         },
-
         -- Set to `false` to disable
         mappings = {
             n = {
@@ -399,13 +421,11 @@ require('dressing').setup({
                 ["<Down>"] = "HistoryNext",
             },
         },
-
         override = function(conf)
             -- This is the config that will be passed to nvim_open_win.
             -- Change values here to customize the layout
             return conf
         end,
-
         -- see :help dressing_get_config
         get_config = function(opts)
             if opts.kind == 'legendary.nvim' then
@@ -422,18 +442,14 @@ require('dressing').setup({
     select = {
         -- Set to false to disable the vim.ui.select implementation
         enabled = true,
-
         -- Priority list of preferred vim.select implementations
         backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-
         -- Trim trailing `:` from prompt
         trim_prompt = true,
-
         -- Options for telescope selector
         -- These are passed into the telescope picker directly. Can be used like:
         -- telescope = require('telescope.themes').get_ivy({...})
         telescope = nil,
-
         -- Options for fzf selector
         fzf = {
             window = {
@@ -441,7 +457,6 @@ require('dressing').setup({
                 height = 0.4,
             },
         },
-
         -- Options for fzf_lua selector
         fzf_lua = {
             winopts = {
@@ -449,7 +464,6 @@ require('dressing').setup({
                 height = 0.4,
             },
         },
-
         -- Options for nui Menu
         nui = {
             position = "50%",
@@ -470,7 +484,6 @@ require('dressing').setup({
             min_width = 40,
             min_height = 10,
         },
-
         -- Options for built-in selector
         builtin = {
             -- These are passed to nvim_open_win
@@ -478,13 +491,11 @@ require('dressing').setup({
             border = "rounded",
             -- 'editor' and 'win' will default to being centered
             relative = "editor",
-
             buf_options = {},
             win_options = {
                 -- Window transparency (0-100)
                 winblend = 10,
             },
-
             -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
             -- the min_ and max_ options can be a list of mixed types.
             -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
@@ -494,24 +505,20 @@ require('dressing').setup({
             height = nil,
             max_height = 0.9,
             min_height = { 10, 0.2 },
-
             -- Set to `false` to disable
             mappings = {
                 ["<Esc>"] = "Close",
                 ["<C-c>"] = "Close",
                 ["<CR>"] = "Confirm",
             },
-
             override = function(conf)
                 -- This is the config that will be passed to nvim_open_win.
                 -- Change values here to customize the layout
                 return conf
             end,
         },
-
         -- Used to override format_item. See :help dressing-format
         format_item_override = {},
-
         -- see :help dressing_get_config
         get_config = nil,
     },
@@ -524,13 +531,14 @@ require('nvim-web-devicons').setup {
 local actions = require("diffview.actions")
 
 require("diffview").setup({
-    diff_binaries = false, -- Show diffs for binaries
+    diff_binaries = false,   -- Show diffs for binaries
     enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
-    git_cmd = { "git" }, -- The git executable followed by default args.
-    use_icons = true, -- Requires nvim-web-devicons
-    show_help_hints = true, -- Show hints for how to open the help panel
-    watch_index = true, -- Update views and index buffers when the git index changes.
-    icons = { -- Only applies when use_icons is true.
+    git_cmd = { "git" },     -- The git executable followed by default args.
+    use_icons = true,        -- Requires nvim-web-devicons
+    show_help_hints = true,  -- Show hints for how to open the help panel
+    watch_index = true,      -- Update views and index buffers when the git index changes.
+    icons = {
+        -- Only applies when use_icons is true.
         folder_closed = "",
         folder_open = "",
     },
@@ -566,11 +574,13 @@ require("diffview").setup({
     },
     file_panel = {
         listing_style = "tree", -- One of 'list' or 'tree'
-        tree_options = { -- Only applies when listing_style is 'tree'
-            flatten_dirs = true, -- Flatten dirs that only contain one single dir
+        tree_options = {
+            -- Only applies when listing_style is 'tree'
+            flatten_dirs = true,        -- Flatten dirs that only contain one single dir
             folder_statuses = "always", -- One of 'never', 'only_folded' or 'always'.
         },
-        win_config = { -- See ':h diffview-config-win_config'
+        win_config = {
+            -- See ':h diffview-config-win_config'
             type = "split",
             position = "left",
             relative = "editor",
@@ -579,7 +589,8 @@ require("diffview").setup({
         },
     },
     file_history_panel = {
-        log_options = { -- See ':h diffview-config-log_options'
+        log_options = {
+            -- See ':h diffview-config-log_options'
             git = {
                 single_file = {
                     diff_merges = "combined",
@@ -589,7 +600,8 @@ require("diffview").setup({
                 },
             },
         },
-        win_config = { -- See ':h diffview-config-win_config'
+        win_config = {
+            -- See ':h diffview-config-win_config'
             type = "split",
             position = "bottom",
             relative = "editor",
@@ -602,26 +614,36 @@ require("diffview").setup({
             win_opts = {},
         }
     },
-    default_args = { -- Default args prepended to the arg-list for the listed commands
+    default_args = {
+        -- Default args prepended to the arg-list for the listed commands
         DiffviewOpen = {},
         DiffviewFileHistory = {},
     },
-    hooks = {}, -- See ':h diffview-config-hooks'
+    hooks = {},                   -- See ':h diffview-config-hooks'
     keymaps = {
         disable_defaults = false, -- Disable the default keymaps
         view = {
             -- The `view` bindings are active in the diff buffers, only when the current
             -- tabpage is a Diffview.
-            { "n", "<tab>",      actions.select_next_entry,         { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>",    actions.select_prev_entry,         { desc = "Open the diff for the previous file" } },
-            { "n", "gf",         actions.goto_file,                 { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>", actions.goto_file_split,           { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf",    actions.goto_file_tab,             { desc = "Open the file in a new tabpage" } },
-            { "n", "<leader>e",  actions.focus_files,               { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b",  actions.toggle_files,              { desc = "Toggle the file panel." } },
-            { "n", "g<C-x>",     actions.cycle_layout,              { desc = "Cycle through available layouts." } },
-            { "n", "[x",         actions.prev_conflict,             { desc = "In the merge-tool: jump to the previous conflict" } },
-            { "n", "]x",         actions.next_conflict,             { desc = "In the merge-tool: jump to the next conflict" } },
+            { "n", "<tab>",   actions.select_next_entry, { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>", actions.select_prev_entry, { desc = "Open the diff for the previous file" } },
+            { "n", "gf", actions.goto_file, {
+                desc =
+                "Open the file in a new split in the previous tabpage"
+            } },
+            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",    actions.goto_file_tab,   { desc = "Open the file in a new tabpage" } },
+            { "n", "<leader>e",  actions.focus_files,     { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b",  actions.toggle_files,    { desc = "Toggle the file panel." } },
+            { "n", "g<C-x>",     actions.cycle_layout,    { desc = "Cycle through available layouts." } },
+            { "n", "[x", actions.prev_conflict, {
+                desc =
+                "In the merge-tool: jump to the previous conflict"
+            } },
+            { "n", "]x", actions.next_conflict, {
+                desc =
+                "In the merge-tool: jump to the next conflict"
+            } },
             { "n", "<leader>co", actions.conflict_choose("ours"),   { desc = "Choose the OURS version of a conflict" } },
             { "n", "<leader>ct", actions.conflict_choose("theirs"), { desc = "Choose the THEIRS version of a conflict" } },
             { "n", "<leader>cb", actions.conflict_choose("base"),   { desc = "Choose the BASE version of a conflict" } },
@@ -655,60 +677,88 @@ require("diffview").setup({
             { "n", "g?", actions.help({ "view", "diff4" }), { desc = "Open the help panel" } },
         },
         file_panel = {
-            { "n", "j",             actions.next_entry,          { desc = "Bring the cursor to the next file entry" } },
-            { "n", "<down>",        actions.next_entry,          { desc = "Bring the cursor to the next file entry" } },
-            { "n", "k",             actions.prev_entry,          { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<up>",          actions.prev_entry,          { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<cr>",          actions.select_entry,        { desc = "Open the diff for the selected entry." } },
-            { "n", "o",             actions.select_entry,        { desc = "Open the diff for the selected entry." } },
-            { "n", "<2-LeftMouse>", actions.select_entry,        { desc = "Open the diff for the selected entry." } },
-            { "n", "-",             actions.toggle_stage_entry,  { desc = "Stage / unstage the selected entry." } },
-            { "n", "S",             actions.stage_all,           { desc = "Stage all entries." } },
-            { "n", "U",             actions.unstage_all,         { desc = "Unstage all entries." } },
-            { "n", "X",             actions.restore_entry,       { desc = "Restore entry to the state on the left side." } },
-            { "n", "L",             actions.open_commit_log,     { desc = "Open the commit log panel." } },
-            { "n", "<c-b>",         actions.scroll_view( -0.25), { desc = "Scroll the view up" } },
-            { "n", "<c-f>",         actions.scroll_view(0.25),   { desc = "Scroll the view down" } },
-            { "n", "<tab>",         actions.select_next_entry,   { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>",       actions.select_prev_entry,   { desc = "Open the diff for the previous file" } },
-            { "n", "gf",            actions.goto_file,           { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>",    actions.goto_file_split,     { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf",       actions.goto_file_tab,       { desc = "Open the file in a new tabpage" } },
-            { "n", "i",             actions.listing_style,       { desc = "Toggle between 'list' and 'tree' views" } },
-            { "n", "f",             actions.toggle_flatten_dirs, { desc = "Flatten empty subdirectories in tree listing style." } },
-            { "n", "R",             actions.refresh_files,       { desc = "Update stats and entries in the file list." } },
-            { "n", "<leader>e",     actions.focus_files,         { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b",     actions.toggle_files,        { desc = "Toggle the file panel" } },
-            { "n", "g<C-x>",        actions.cycle_layout,        { desc = "Cycle available layouts" } },
-            { "n", "[x",            actions.prev_conflict,       { desc = "Go to the previous conflict" } },
-            { "n", "]x",            actions.next_conflict,       { desc = "Go to the next conflict" } },
-            { "n", "g?",            actions.help("file_panel"),  { desc = "Open the help panel" } },
+            { "n", "j",             actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
+            { "n", "<down>",        actions.next_entry,         { desc = "Bring the cursor to the next file entry" } },
+            { "n", "k",             actions.prev_entry,         { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<up>",          actions.prev_entry,         { desc = "Bring the cursor to the previous file entry." } },
+            { "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "o",             actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "-",             actions.toggle_stage_entry, { desc = "Stage / unstage the selected entry." } },
+            { "n", "S",             actions.stage_all,          { desc = "Stage all entries." } },
+            { "n", "U",             actions.unstage_all,        { desc = "Unstage all entries." } },
+            { "n", "X",             actions.restore_entry,      { desc = "Restore entry to the state on the left side." } },
+            { "n", "L",             actions.open_commit_log,    { desc = "Open the commit log panel." } },
+            { "n", "<c-b>",         actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
+            { "n", "<c-f>",         actions.scroll_view(0.25),  { desc = "Scroll the view down" } },
+            { "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
+            { "n", "gf", actions.goto_file, {
+                desc =
+                "Open the file in a new split in the previous tabpage"
+            } },
+            { "n", "<C-w><C-f>", actions.goto_file_split, { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",    actions.goto_file_tab,   { desc = "Open the file in a new tabpage" } },
+            { "n", "i",          actions.listing_style,   { desc = "Toggle between 'list' and 'tree' views" } },
+            { "n", "f", actions.toggle_flatten_dirs,
+                {
+                    desc =
+                    "Flatten empty subdirectories in tree listing style."
+                } },
+            { "n", "R",         actions.refresh_files,      { desc = "Update stats and entries in the file list." } },
+            { "n", "<leader>e", actions.focus_files,        { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b", actions.toggle_files,       { desc = "Toggle the file panel" } },
+            { "n", "g<C-x>",    actions.cycle_layout,       { desc = "Cycle available layouts" } },
+            { "n", "[x",        actions.prev_conflict,      { desc = "Go to the previous conflict" } },
+            { "n", "]x",        actions.next_conflict,      { desc = "Go to the next conflict" } },
+            { "n", "g?",        actions.help("file_panel"), { desc = "Open the help panel" } },
         },
         file_history_panel = {
-            { "n", "g!",            actions.options,                    { desc = "Open the option panel" } },
-            { "n", "<C-A-d>",       actions.open_in_diffview,           { desc = "Open the entry under the cursor in a diffview" } },
-            { "n", "y",             actions.copy_hash,                  { desc = "Copy the commit hash of the entry under the cursor" } },
-            { "n", "L",             actions.open_commit_log,            { desc = "Show commit details" } },
-            { "n", "zR",            actions.open_all_folds,             { desc = "Expand all folds" } },
-            { "n", "zM",            actions.close_all_folds,            { desc = "Collapse all folds" } },
-            { "n", "j",             actions.next_entry,                 { desc = "Bring the cursor to the next file entry" } },
-            { "n", "<down>",        actions.next_entry,                 { desc = "Bring the cursor to the next file entry" } },
-            { "n", "k",             actions.prev_entry,                 { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<up>",          actions.prev_entry,                 { desc = "Bring the cursor to the previous file entry." } },
-            { "n", "<cr>",          actions.select_entry,               { desc = "Open the diff for the selected entry." } },
-            { "n", "o",             actions.select_entry,               { desc = "Open the diff for the selected entry." } },
-            { "n", "<2-LeftMouse>", actions.select_entry,               { desc = "Open the diff for the selected entry." } },
-            { "n", "<c-b>",         actions.scroll_view( -0.25),        { desc = "Scroll the view up" } },
-            { "n", "<c-f>",         actions.scroll_view(0.25),          { desc = "Scroll the view down" } },
-            { "n", "<tab>",         actions.select_next_entry,          { desc = "Open the diff for the next file" } },
-            { "n", "<s-tab>",       actions.select_prev_entry,          { desc = "Open the diff for the previous file" } },
-            { "n", "gf",            actions.goto_file,                  { desc = "Open the file in a new split in the previous tabpage" } },
-            { "n", "<C-w><C-f>",    actions.goto_file_split,            { desc = "Open the file in a new split" } },
-            { "n", "<C-w>gf",       actions.goto_file_tab,              { desc = "Open the file in a new tabpage" } },
-            { "n", "<leader>e",     actions.focus_files,                { desc = "Bring focus to the file panel" } },
-            { "n", "<leader>b",     actions.toggle_files,               { desc = "Toggle the file panel" } },
-            { "n", "g<C-x>",        actions.cycle_layout,               { desc = "Cycle available layouts" } },
-            { "n", "g?",            actions.help("file_history_panel"), { desc = "Open the help panel" } },
+            { "n", "g!", actions.options,         { desc = "Open the option panel" } },
+            { "n", "<C-A-d>", actions.open_in_diffview, {
+                desc =
+                "Open the entry under the cursor in a diffview"
+            } },
+            { "n", "y", actions.copy_hash, {
+                desc =
+                "Copy the commit hash of the entry under the cursor"
+            } },
+            { "n", "L",  actions.open_commit_log, { desc = "Show commit details" } },
+            { "n", "zR", actions.open_all_folds,  { desc = "Expand all folds" } },
+            { "n", "zM", actions.close_all_folds, { desc = "Collapse all folds" } },
+            { "n", "j", actions.next_entry, {
+                desc =
+                "Bring the cursor to the next file entry"
+            } },
+            { "n", "<down>", actions.next_entry, {
+                desc =
+                "Bring the cursor to the next file entry"
+            } },
+            { "n", "k", actions.prev_entry, {
+                desc =
+                "Bring the cursor to the previous file entry."
+            } },
+            { "n", "<up>", actions.prev_entry, {
+                desc =
+                "Bring the cursor to the previous file entry."
+            } },
+            { "n", "<cr>",          actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "o",             actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "<2-LeftMouse>", actions.select_entry,       { desc = "Open the diff for the selected entry." } },
+            { "n", "<c-b>",         actions.scroll_view(-0.25), { desc = "Scroll the view up" } },
+            { "n", "<c-f>",         actions.scroll_view(0.25),  { desc = "Scroll the view down" } },
+            { "n", "<tab>",         actions.select_next_entry,  { desc = "Open the diff for the next file" } },
+            { "n", "<s-tab>",       actions.select_prev_entry,  { desc = "Open the diff for the previous file" } },
+            { "n", "gf", actions.goto_file, {
+                desc =
+                "Open the file in a new split in the previous tabpage"
+            } },
+            { "n", "<C-w><C-f>", actions.goto_file_split,            { desc = "Open the file in a new split" } },
+            { "n", "<C-w>gf",    actions.goto_file_tab,              { desc = "Open the file in a new tabpage" } },
+            { "n", "<leader>e",  actions.focus_files,                { desc = "Bring focus to the file panel" } },
+            { "n", "<leader>b",  actions.toggle_files,               { desc = "Toggle the file panel" } },
+            { "n", "g<C-x>",     actions.cycle_layout,               { desc = "Cycle available layouts" } },
+            { "n", "g?",         actions.help("file_history_panel"), { desc = "Open the help panel" } },
         },
         option_panel = {
             { "n", "<tab>", actions.select_entry,         { desc = "Change the current option" } },
@@ -741,7 +791,7 @@ cmp.setup({
         end
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -749,7 +799,6 @@ cmp.setup({
             behavior = cmp.ConfirmBehavior.Insert,
             select = true,
         },
-
         ['<Tab>'] = function(fallback)
             if not cmp.select_next_item() then
                 if vim.bo.buftype ~= 'prompt' and has_words_before() then
@@ -759,7 +808,6 @@ cmp.setup({
                 end
             end
         end,
-
         ['<S-Tab>'] = function(fallback)
             if not cmp.select_prev_item() then
                 if vim.bo.buftype ~= 'prompt' and has_words_before() then
@@ -832,7 +880,8 @@ require("symbols-outline").setup({
     auto_unfold_hover = true,
     fold_markers = { '', '' },
     wrap = false,
-    keymaps = { -- These keymaps can be a string or a table for multiple keys
+    keymaps = {
+        -- These keymaps can be a string or a table for multiple keys
         close = { "<Esc>", "q" },
         goto_location = "<Cr>",
         focus_location = "o",
@@ -933,22 +982,15 @@ lsp.diagnosticls.setup { -- requires diagnostic-languageserver (nodePackages.dia
     init_options = {
         linters = {
             flake8 = {
+                command = vim.fn.exepath('flake8'),
+                args = { [[--format=%(row)d,%(col)d,%(code).1s,%(code)s: %(text)s]], '-' },
                 debounce = 100,
-                sourceName = "flake8",
-                command = "flake8",
-                args = {
-                    "--format",
-                    "%(row)d:%(col)d:%(code)s:%(code)s: %(text)s",
-                    "%file",
-                },
+                offsetLine = 0,
+                offsetColumn = 0,
+                formatLines = 1,
                 formatPattern = {
-                    "^(\\d+):(\\d+):(\\w+):(\\w).+: (.*)$",
-                    {
-                        line = 1,
-                        column = 2,
-                        message = { "[", 3, "] ", 5 },
-                        security = 4
-                    }
+                    [[(\d+),(\d+),([A-Z]),(.*)(\r|\n)*$]],
+                    { line = 1, column = 2, security = 3, message = { '[flake8] ', 4 } },
                 },
                 securities = {
                     W = 'warning',
@@ -956,18 +998,8 @@ lsp.diagnosticls.setup { -- requires diagnostic-languageserver (nodePackages.dia
                     F = 'error',
                     C = 'error',
                     N = 'error',
-                    U = 'warning',
-                    B = "hint",
-                },
-                rootPatterns = {
-                    '.git',
-                    'pyproject.toml',
-                    '.flake8',
                 },
             },
-        },
-        filetypes = {
-            python = { "flake8" },
         },
         formatters = {
             black = {
@@ -1027,15 +1059,12 @@ lsp.eslint.setup { -- requires vscode-eslint-language-server (not available indi
             mode = "all",
         },
         format = true,
-        lintTask = {
-            enable = true,
-        },
         onIgnoredFiles = "off",
         packageManager = "pnpm",
         problems = {
             shortenToSingleLine = false,
         },
-        quiet = false,
+        quiet = true,
         run = "onType",
         validate = "on",
     },
@@ -1109,45 +1138,45 @@ lsp.nil_ls.setup { -- requires nil (pkgs.nil)
 --   capabilities = capabilities;
 --   on_attach = on_attach;
 --   settings = {
---   pylsp = {
---     configurationSources = {'flake8'};
---     plugins = {
---     autopep8 = {
---       enabled = false;
+--     pylsp = {
+--       configurationSources = {'flake8'};
+--       plugins = {
+--         autopep8 = {
+--           enabled = false;
+--         };
+--         black = {
+--           cache_config = true;
+--           enabled = true;
+--         };
+--         flake8 = {
+--           enabled = true;
+--         };
+--         formatter = { "black" };
+--         jedi = {
+--           environment = "./.venv";
+--         };
+--         jedi_completion = {
+--           enabled = false;
+--           include_params = true;
+--           include_class_objects = true;
+--           include_function_objects = true;
+--           fuzzy = true;
+--           eager = true;
+--         };
+--         mccabe = {
+--           enabled = false;
+--         };
+--         pycodestyle = {
+--           enabled = false;
+--         };
+--         pyflakes = {
+--           enabled = false;
+--         };
+--         yapf = {
+--           enabled = false;
+--         };
+--       };
 --     };
---     black = {
---       cache_config = true;
---       enabled = true;
---     };
---     flake8 = {
---       enabled = true;
---     };
---     formatter = { "black" };
---     jedi = {
---       environment = "./.venv";
---     };
---     jedi_completion = {
---       enabled = false;
---       include_params = true;
---       include_class_objects = true;
---       include_function_objects = true;
---       fuzzy = true;
---       eager = true;
---     };
---     mccabe = {
---       enabled = false;
---     };
---     pycodestyle = {
---       enabled = false;
---     };
---     pyflakes = {
---       enabled = false;
---     };
---     yapf = {
---       enabled = false;
---     };
---     };
---   };
 --   };
 -- }
 -- lsp.pyre.setup{ -- requires pyre (not in nixpkgs)
@@ -1234,6 +1263,7 @@ lsp.texlab.setup { -- requires texlab (pkgs.texlab)
 }
 lsp.tsserver.setup { -- requires typescript-language-server (nodePackages.typescript-language-server)
     capabilities = capabilities,
+    on_attach = on_attach,
     init_options = {
         hostInfo = "neovim",
     },
@@ -1321,23 +1351,23 @@ vim.cmd([[
   au BufRead,BufNewFile *.h set filetype=cpp
   " Return to last edit position (You want this!) *N*.
   au BufReadPost *
-     \ if line("'\"") > 0 && line("'\"") <= line("$") |
-     \   exe "normal! g`\"" |
-     \ endif
+       \ if line("'\"") > 0 && line("'\"") <= line("$") |
+       \   exe "normal! g`\"" |
+       \ endif
   au FileReadPost * rundo /home/devon/.vim/undo
 ]])
 -- au BufWritePre *.tsx,*.ts,*.jsx,*.js,*.cjs,*.mjs EslintFixAll
 
-vim.g.mundo_right = 1 -- Open mundo tree view on the right.
-vim.g.mundo_preview_bottom = 1 -- Show preview below window being changed.
-vim.g.gitgutter_realtime = 1 -- Update in realtime
-vim.g.gitgutter_async = 1 -- Update in background
-vim.g.mergetool_layout = 'LmR' -- Set layout for merging files.
-vim.g.mergetool_prefer_revision = 'unmodified' -- Default to taking our side when merging.
-vim.g.rooter_targets = '/,*' -- directories and all files (default).
-vim.g.rooter_cd_cmd = "lcd" -- change directory for the current window only.
+vim.g.mundo_right = 1                                           -- Open mundo tree view on the right.
+vim.g.mundo_preview_bottom = 1                                  -- Show preview below window being changed.
+vim.g.gitgutter_realtime = 1                                    -- Update in realtime
+vim.g.gitgutter_async = 1                                       -- Update in background
+vim.g.mergetool_layout = 'LmR'                                  -- Set layout for merging files.
+vim.g.mergetool_prefer_revision = 'unmodified'                  -- Default to taking our side when merging.
+vim.g.rooter_targets = '/,*'                                    -- directories and all files (default).
+vim.g.rooter_cd_cmd = "lcd"                                     -- change directory for the current window only.
 vim.g.rooter_change_directory_for_non_project_files = 'current' -- change dir to current if there is no project.
-vim.g.rooter_silent_chdir = 1 -- Silently change directories.
+vim.g.rooter_silent_chdir = 1                                   -- Silently change directories.
 vim.g.indentguides_conceal_color = "guifg=" .. vim.g.theme_selectionbg .. " guibg=NONE"
 
 vim.cmd("g:rooter_patterns = ['Dockerfile', '.Jenkinsfile', '.git/', 'jsconfig.json']") -- Look for a dockerfile, jenkinsfile, or git dir to find root.
@@ -1349,9 +1379,9 @@ require 'tabline'.setup {
         component_separators = { '', '' },
         max_bufferline_percent = nil, -- set to nil by default, and it uses vim.o.columns * 2/3
         show_tabs_always = true,
-        show_devicons = true, -- this shows devicons in buffer section
-        show_bufnr = false, -- this appends [bufnr] to buffer section,
-        show_filename_only = false, -- shows base filename only instead of relative path in filename
+        show_devicons = true,         -- this shows devicons in buffer section
+        show_bufnr = false,           -- this appends [bufnr] to buffer section,
+        show_filename_only = false,   -- shows base filename only instead of relative path in filename
     }
 }
 
@@ -1374,9 +1404,9 @@ vim.diagnostic.config({
 })
 
 require("treesitter-context").setup {
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    enable = true,          -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0,          -- How many lines the window should span. Values <= 0 mean no limit.
+    trim_scope = 'outer',   -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
     min_window_height = 16, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 }
 
@@ -1402,12 +1432,11 @@ require "nvim-treesitter.configs".setup {
     },
     matchup = {
         enable = true, -- mandatory, false will disable the whole extension
-        disable = {}, -- optional, list of language that will be disabled
+        disable = {},  -- optional, list of language that will be disabled
     },
     rainbow = {
         enable = true,
         extended_mode = true,
-        max_file_lines = nil,
         colors = {
             vim.g.theme_darkfg,
             vim.g.theme_keyword,
@@ -1416,6 +1445,10 @@ require "nvim-treesitter.configs".setup {
             vim.g.theme_warm,
             vim.g.theme_type,
         },
+        -- Which query to use for finding delimiters
+        query = 'rainbow-parens',
+        -- Highlight the entire buffer all at once
+        strategy = require 'ts-rainbow'.strategy.global,
     },
 }
 
@@ -1465,6 +1498,20 @@ require("Comment").setup({
     pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
     ---Function to call after (un)comment
     post_hook = nil,
+})
+
+require('buffertag').setup({
+    -- accepts any border options that `nvim_open_win` accepts.
+    -- see ":help vim.api.nvim_open_win"
+    border = "none",
+    -- By default if the buffer name is too wide for the pane it's in, it will
+    -- display and overlap the pane. By setting this to true, the buffer name will
+    -- be truncated to fit within the pane, ensuring the floating window does not
+    -- overlap any other panes.
+    limit_width = false,
+    -- if `vim.bo.modified` is `true` for the current buffer,
+    -- display modified symbol before the buffer name.
+    modified_symbol = "[●]", -- other modified symbol: "●"
 })
 
 vim.cmd([[

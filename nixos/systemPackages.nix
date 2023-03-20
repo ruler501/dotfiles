@@ -28,6 +28,7 @@
     pkgs.imagemagick
     pkgs.inkscape
     pkgs.killall
+    pkgs.kitty                               # Fancy highly experimental terminal emulator with full gui support.
     pkgs.lldb
     pkgs.lm_sensors
     pkgs.lshw

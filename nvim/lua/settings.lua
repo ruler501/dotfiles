@@ -215,24 +215,6 @@ require("legendary").setup({
     log_level = 'info',
 })
 
--- local possession = require("nvim-possession")
-
--- require("buffer_manager").setup({
---     select_menu_item_commands = {
---         v = {
---             key = "<C-v>",
---             command = "vsplit"
---         },
---         h = {
---             key = "<C-h>",
---             command = "split"
---         }
---     },
---     short_file_names = false,
---     short_term_names = false,
--- })
--- local bmui = require("buffer_manager.ui")
-
 wk.register({
     ['<Tab>'] = { '<Cmd>bnext<CR>', "Go to next buffer.", mode = 'n' },
     ['<S-Tab>'] = { '<Cmd>bprevious<CR>', "Go to previous buffer.", mode = 'n' },
@@ -249,9 +231,6 @@ wk.register({
         ['f'] = {
             ['r'] = { '<Cmd>TSLspRenameFile<CR>', "Do a refactor renaming the current file.", mode = 'n' },
         },
-        -- ['u'] = {
-        --     ['s'] = { possession.update, "Update current session.", mode = "n" },
-        -- },
     },
     [';'] = { ':', "Go to command mode.", mode = 'n', silent = false },
     -- [')'] = { '^', ".", mode = 'nx' },
@@ -260,7 +239,7 @@ wk.register({
         ['f'] = { vim.lsp.buf.formatting, "Format the current buffer.", mode = 'n' },
         ['r'] = { vim.lsp.buf.rename, "Rename all references to the currently selected symbol.", mode = 'n' },
         -- ['n'] = {
-        --    ['s'] = { possession.new, "Create a new session.", mode = "n" },
+        --     ['s'] = { possession.new, "Create a new session.", mode = "n" },
         -- },
     },
     ['d'] = { '"_d', 'Delete without copying the text.', mode = 'n', nowait = true },
@@ -321,14 +300,8 @@ wk.register({
         ['m'] = { '<Cmd>marks<CR>', "Show all marks.", mode = 'n' },
         ['r'] = { '<Cmd>TroubleToggle lsp_references<CR>',
             "Toggle showing all references to the symbol under the cursor.", mode = 'n' },
-        -- ['s'] = {
-        -- ['l'] = { possession.list, "Show the list of existing sessions.", mode = 'n' },
-        -- },
     },
     ['t'] = {
-        -- ['b'] = {
-        --     ['l'] = { bmui.toggle_quick_menu, "Toggle buffer list window.", mode = 'n' },
-        -- },
         ['d'] = {
             ['d'] = { '<Cmd>TroubleToggle document_diagnostics<CR>',
                 "Toggle showing a window with the diagnostics for the current document.", mode = 'n' },
@@ -943,13 +916,81 @@ lsp.ccls.setup { -- requires ccls and clang (pkgs.ccls and pkgs.clang_14 version
         },
         clang = {
             excludeArgs = { "-frounding-math" },
+            extraArgs = {},
         },
-    }
+    },
 }
--- lsp.clangd.setup{ -- requires clang (pkgs.clang_14 version will need updating periodically)
---   capabilities = capabilities;
---   on_attach = on_attach;
--- }
+require("clangd_extensions").setup {
+    server = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        -- options to pass to nvim-lspconfig
+        -- i.e. the arguments to require("lspconfig").clangd.setup({})
+    },
+    extensions = {
+        -- defaults:
+        -- Automatically set inlay hints (type hints)
+        autoSetHints = true,
+        -- These apply to the default ClangdSetInlayHints command
+        inlay_hints = {
+            -- Only show inlay hints for the current line
+            only_current_line = false,
+            -- Event which triggers a refersh of the inlay hints.
+            -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
+            -- not that this may cause  higher CPU usage.
+            -- This option is only respected when only_current_line and
+            -- autoSetHints both are true.
+            only_current_line_autocmd = "CursorHold",
+            -- whether to show parameter hints with the inlay hints or not
+            show_parameter_hints = true,
+            -- prefix for parameter hints
+            parameter_hints_prefix = "<- ",
+            -- prefix for all the other hints (type, chaining)
+            other_hints_prefix = "=> ",
+            -- whether to align to the length of the longest line in the file
+            max_len_align = false,
+            -- padding from the left if max_len_align is true
+            max_len_align_padding = 1,
+            -- whether to align to the extreme right or not
+            right_align = false,
+            -- padding from the right if right_align is true
+            right_align_padding = 7,
+            -- The color of the hints
+            highlight = "Comment",
+            -- The highlight group priority for extmark
+            priority = 100,
+        },
+        ast = {
+            -- These are unicode, should be available in any font
+            role_icons = {
+                type = "🄣",
+                declaration = "🄓",
+                expression = "🄔",
+                statement = ";",
+                specifier = "🄢",
+                ["template argument"] = "🆃",
+            },
+            kind_icons = {
+                Compound = "🄲",
+                Recovery = "🅁",
+                TranslationUnit = "🅄",
+                PackExpansion = "🄿",
+                TemplateTypeParm = "🅃",
+                TemplateTemplateParm = "🅃",
+                TemplateParamObject = "🅃",
+            },
+            highlights = {
+                detail = "Comment",
+            },
+        },
+        memory_usage = {
+            border = "none",
+        },
+        symbol_info = {
+            border = "none",
+        },
+    },
+}
 lsp.cmake.setup { -- requires cmake-language-server (pkgs.cmake-language-server)
     capabilities = capabilities,
     on_attach = on_attach,
@@ -1204,7 +1245,7 @@ lsp.rust_analyzer.setup { -- requires rust-analyzer (pkgs.rust-analyzer)
 --   capabilities = capabilities;
 --   on_attach = on_attach;
 -- }
-lsp.lua_ls.setup { -- requires lua-language-server (pkgs.sumneko-lua-language-server)
+lsp.lua_ls.setup { -- requires lua-language-server (pkgs.lua-language-server)
     capabilities = capabilities,
     on_attach = on_attach,
     settings = {
@@ -1263,7 +1304,7 @@ lsp.texlab.setup { -- requires texlab (pkgs.texlab)
 }
 lsp.tsserver.setup { -- requires typescript-language-server (nodePackages.typescript-language-server)
     capabilities = capabilities,
-    on_attach = on_attach,
+    -- on_attach = on_attach,
     init_options = {
         hostInfo = "neovim",
     },

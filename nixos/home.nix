@@ -218,6 +218,33 @@ in
     };
     info.enable = true;
     jq.enable = true;
+    kitty = {
+      enable = true;
+      font = {
+        name = "DroidSansMono Nerd Font Mono";
+        size = 9;
+      };
+      settings = {
+        background = colors.bg;
+        foreground = colors.fg;
+        color0     = colors.bg;
+        color1     = colors.constant;
+        color2     = colors.focus;
+        color3     = colors.constant;
+        color4     = colors.func;
+        color5     = colors.subtle;
+        color6     = colors.type;
+        color7     = colors.fg;
+        color8     = colors.darkfg;
+        color9     = colors.error;
+        color10    = colors.focus;
+        color11    = colors.warm;
+        color12    = colors.string;
+        color13    = colors.keyword;
+        color14    = colors.brightfg;
+        color15    = colors.invertbg;
+      };
+    };
     lsd = {
       enable = true;
       enableAliases = true;
@@ -252,7 +279,8 @@ in
       '';
       extraPackages = [
         pkgs.ccls
-        pkgs.clang_14
+        # pkgs.clang_15
+        # pkgs.clang-tools_15
         pkgs.cmake-language-server
         pkgs.codeql
         pkgs.ltex-ls

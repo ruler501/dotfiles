@@ -112,7 +112,6 @@
       enable = true;
     };
     # steam-hardware.enable = true;
-    video.hidpi.enable = true;
   };
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
@@ -155,6 +154,7 @@
     allowUnfree = true;
     permittedInsecurePackages = [
       "electron-12.2.3"
+      "electron-21.4.0"
     ];
   };
   programs = {
@@ -197,12 +197,6 @@
     };
     printing.enable = true;
     pipewire = {
-      config.pipewire = {
-        "context.properties" = {
-          "link.max-buffers" = 64;
-          "log.level" = 2;
-        };
-      };
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;

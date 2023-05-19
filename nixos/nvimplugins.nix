@@ -13,7 +13,6 @@ let
     p.gitcommit
     p.rust
     p.python
-    p.help
     p.java
     p.jsonnet
     p.graphql
@@ -171,7 +170,7 @@ in
         owner = "j-morano";
         repo = "buffer_manager.nvim";
         rev = "03b6bdfa7379ac1c458264b2db1c95b78434bb2c";
-        sha256 = "sha256-4K3YljnhE7ZgkMZHbXe7tuFghMIPHMNw1I568Eo4xqU=";
+        sha256 = "sha256-BJschPEE5gv9v714ap7XaEumfpj/5lndbdexd+4MySU=";
       };
       meta.homepage = "https://github.com/j-morano/buffer_manager.nvim";
     };

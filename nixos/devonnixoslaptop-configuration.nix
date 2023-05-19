@@ -78,7 +78,6 @@ in
       };
     };
     # high-resolution display
-    video.hidpi.enable = true;
   };
   networking = {
     interfaces = {

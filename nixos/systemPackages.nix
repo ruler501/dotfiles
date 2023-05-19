@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nixpkgs-stable, ... }:
 {
   environment.systemPackages = [
     pkgs.ark  # GUI archive management
@@ -13,7 +13,7 @@
     pkgs.fortune
     pkgs.freecad
     pkgs.fzy
-    pkgs.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
+    nixpkgs-stable.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
     pkgs.git
     pkgs.git-latexdiff

@@ -141,7 +141,12 @@ in
       showMenubar = true;
       themeVariant = "default";
     };
-    gpg.enable = true;
+    gpg = {
+      enable = true;
+      settings = {
+        default-key = "0x49AC0F80EE571576!";
+      };
+    };
     htop = {
       enable = true;
       settings = {

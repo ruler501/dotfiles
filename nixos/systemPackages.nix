@@ -27,17 +27,20 @@
     pkgs.htop
     pkgs.imagemagick
     pkgs.inkscape
+    pkgs.jetbrains.clion
     pkgs.killall
     pkgs.lldb
     pkgs.lm_sensors
     pkgs.lshw
     pkgs.lsof
+    pkgs.monkeysphere # some weird ssl/tls auth thing
     pkgs.neovim-remote
     pkgs.nix-direnv
     pkgs.nix-du # Disk usage by gc root
     pkgs.nix-index # Search what packages have specific files
     pkgs.nvtop
     pkgs.obsidian
+    pkgs.openssl
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
     pkgs.postman

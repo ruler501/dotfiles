@@ -27,7 +27,6 @@
         efiSupport = true;
         enable = true;
         useOSProber = true;
-        version = 2;
       };
     };
     readOnlyNixStore = true;

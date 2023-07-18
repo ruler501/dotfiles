@@ -190,7 +190,7 @@
     blueman.enable = true;
     mongodb = {
       bind_ip = "0.0.0.0";
-      enable = true;
+      enable = false;
       package = nixpkgs-stable.mongodb-4_4;
       replSetName = "rs0";
     };

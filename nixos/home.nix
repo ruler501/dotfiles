@@ -226,7 +226,7 @@ in
     kitty = {
       enable = true;
       font = {
-        name = "DroidSansMono Nerd Font Mono";
+        name = "DroidSansM Nerd Font Mono";
         size = 9;
       };
       settings = {
@@ -335,6 +335,12 @@ in
         njpwerner.autodocstring
       ];
       package = pkgs.vscode-fhs;
+      userSettings = {
+        "editor.fontFamily" = "DroidSansM Nerd Font Mono";
+        "editor.fontSize" = 10;
+        "terminal.integrated.fontFamily" = "DroidSansM Nerd Font Mono";
+        "terminal.integrated.fontSize" = 10;
+      };
     };
     zsh = {
       enable = true;

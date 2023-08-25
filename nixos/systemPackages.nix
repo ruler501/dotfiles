@@ -57,6 +57,7 @@
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc
     pkgs.wget
+    pkgs.xdg-utils
     pkgs.zoom-us
   ];
 }

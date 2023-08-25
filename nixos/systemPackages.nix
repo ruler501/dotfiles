@@ -29,6 +29,7 @@
     pkgs.inkscape
     pkgs.jetbrains.clion
     pkgs.killall
+    pkgs.libreoffice
     pkgs.lldb
     pkgs.lm_sensors
     pkgs.lshw

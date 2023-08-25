@@ -77,6 +77,7 @@ in
   plugins.lualine-lsp-progress
   plugins.lualine-nvim
   plugins.lush-nvim
+  plugins.markdown-preview-nvim
   plugins.nvim-base16
   plugins.nvim-cmp
   plugins.nvim-colorizer-lua

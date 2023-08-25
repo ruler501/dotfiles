@@ -57,7 +57,7 @@ set.fillchars = {
     horizup = "┴",
     horizdown = "┬",
     fold = "-",
-    eob = " ",  -- suppress ~ at EndOfBuffer
+    eob = " ", -- suppress ~ at EndOfBuffer
     diff = "⣿", -- alternatives = ⣿ ░ ─
     msgsep = "‾",
     foldopen = "▾",
@@ -310,6 +310,9 @@ wk.register({
         },
         ['l'] = {
             ['l'] = { '<Cmd>TroubleToggle loclist<CR>', "Toggle showing a window with the location list.", mode = 'n' },
+        },
+        ['m'] = {
+            ['p'] = { '<Plug>MarkdownPreviewToggle', 'Toggle a live markdown live preview in the browser.', mode = 'n' },
         },
         ['q'] = { '<Cmd>TroubleToggle quickfix<CR>', "Toggle showing a window with the current quickfix list.",
             mode = 'n' },

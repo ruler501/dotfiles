@@ -1,6 +1,6 @@
 { pkgs }:
 let
-  buildVimPlugin = pkgs.vimUtils.buildVimPluginFrom2Nix;
+  buildVimPlugin = pkgs.vimUtils.buildVimPlugin;
   plugins = pkgs.vimPlugins;
   treesitter = (plugins.nvim-treesitter.withPlugins (p: [ # Install just what's needed so we can avoid potential build failures.
     p.dockerfile

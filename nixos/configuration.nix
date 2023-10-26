@@ -76,11 +76,6 @@
     };
   };
   fonts = {
-    fonts = [
-      (pkgs.nerdfonts.override { fonts = ["DroidSansMono"]; })
-      "${nonicons}/dist/"
-      pkgs.noto-fonts-emoji
-    ];
     fontconfig = {
       antialias = true;
       defaultFonts = {
@@ -88,6 +83,11 @@
         monospace = ["DroidSansMono" "nonicons"];
       };
     };
+    packages = [
+      (pkgs.nerdfonts.override { fonts = ["DroidSansMono"]; })
+      "${nonicons}/dist/"
+      pkgs.noto-fonts-emoji
+    ];
   };
   hardware = {
     bluetooth = {
@@ -154,6 +154,7 @@
     permittedInsecurePackages = [
       "electron-12.2.3"
       "electron-21.4.0"
+      "electron-19.1.9"
     ];
   };
   programs = {

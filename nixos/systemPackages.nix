@@ -11,7 +11,6 @@
     pkgs.etcher  # Make liveUSB
     pkgs.firefox
     pkgs.fortune
-    pkgs.freecad
     pkgs.fzy
     nixpkgs-stable.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
@@ -44,14 +43,15 @@
     pkgs.openssl
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
-    pkgs.postman
+    # Failing to download
+    nixpkgs-stable.postman
     pkgs.python310Full
     pkgs.p7zip
-    pkgs.ripgrep-all
+    # Fails tests
+    nixpkgs-stable.ripgrep-all
     pkgs.sad
     pkgs.simplescreenrecorder
     pkgs.sloccount
-    pkgs.teams
     pkgs.texlive.combined.scheme-full
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb

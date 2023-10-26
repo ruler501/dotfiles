@@ -329,7 +329,7 @@ in
         mikestead.dotenv
         ms-kubernetes-tools.vscode-kubernetes-tools
         ms-python.vscode-pylance
-        ms-python.python
+        # ms-python.python
         redhat.vscode-yaml
         bungcip.better-toml
         njpwerner.autodocstring

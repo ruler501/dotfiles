@@ -25,7 +25,7 @@ in
     sessionPath = [
       "$HOME/.npm-global/bin"
     ];
-    stateVersion = "22.11";
+    stateVersion = "23.11";
     username = "devon";
   };
   programs = {
@@ -284,8 +284,6 @@ in
       '';
       extraPackages = [
         pkgs.ccls
-        # pkgs.clang_15
-        # pkgs.clang-tools_15
         pkgs.cmake-language-server
         pkgs.codeql
         pkgs.ltex-ls
@@ -438,7 +436,9 @@ in
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
+      # enableZshSupport = true;
       grabKeyboardAndMouse = true;
+      pinentryFlavor = "qt";
     };
     pasystray.enable = true;
   };

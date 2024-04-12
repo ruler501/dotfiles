@@ -111,19 +111,19 @@ in
   plugins.nvim-scrollbar
   plugins.nvim-ts-rainbow2
   treesitter
-  {
-    plugin = buildVimPlugin {
-      pname = "nvim-retrail";             # Autoclean trailing whitespace.
-      version = "d04fdf1";
-      src = pkgs.fetchFromGitHub {
-        owner = "kaplanz";
-        repo = "nvim-retrail";
-        rev = "d04fdf1524057e9d8956a1f6aada9a23abd7a476";
-        sha256 = "sha256-G1EE9tuiC3dFu1v08o0zSHY/T2xSiWL0N6dzkdSBsWY=";
-      };
-      meta.homepage = "https://github.com/kaplanz/nvim-retrail";
-    };
-  }
+  # {
+  #   plugin = buildVimPlugin {
+  #     pname = "nvim-retrail";             # Autoclean trailing whitespace.
+  #     version = "d04fdf1";
+  #     src = pkgs.fetchFromGitHub {
+  #       owner = "kaplanz";
+  #       repo = "nvim-retrail";
+  #       rev = "d04fdf1524057e9d8956a1f6aada9a23abd7a476";
+  #       sha256 = "sha256-G1EE9tuiC3dFu1v08o0zSHY/T2xSiWL0N6dzkdSBsWY=";
+  #     };
+  #     meta.homepage = "https://github.com/kaplanz/nvim-retrail";
+  #   };
+  # }
   {
     plugin = buildVimPlugin {
       pname = "vim-indentguides";        # Indentation guides.

@@ -4,8 +4,10 @@
     pkgs.ark  # GUI archive management
     # pkgs.awscli2
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
+    pkgs.calibre
     pkgs.chromium
     pkgs.cockatrice
+    pkgs.cockroachdb-bin
     pkgs.dconf  # Backend for GSettings
     pkgs.discord
     pkgs.etcher  # Make liveUSB
@@ -27,6 +29,7 @@
     pkgs.imagemagick
     pkgs.inkscape
     pkgs.jetbrains.clion
+    pkgs.jetbrains.webstorm
     pkgs.killall
     pkgs.libreoffice
     pkgs.lldb

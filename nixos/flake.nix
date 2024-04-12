@@ -37,6 +37,7 @@
         }
         (./configuration.nix)
         (./systemPackages.nix)
+        (./cockroachdb.nix)
         home-manager.nixosModules.home-manager
         {
           home-manager = {

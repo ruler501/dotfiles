@@ -78,7 +78,7 @@ in
   plugins.lualine-nvim
   plugins.lush-nvim
   plugins.markdown-preview-nvim
-  plugins.nvim-base16
+  plugins.base16-nvim
   plugins.nvim-cmp
   plugins.nvim-colorizer-lua
   plugins.nvim-lspconfig
@@ -109,7 +109,7 @@ in
   plugins.which-key-nvim
   plugins.gitsigns-nvim
   plugins.nvim-scrollbar
-  plugins.nvim-ts-rainbow2
+  plugins.rainbow-delimiters-nvim
   treesitter
   # {
   #   plugin = buildVimPlugin {

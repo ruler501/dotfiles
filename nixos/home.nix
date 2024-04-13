@@ -1,6 +1,5 @@
 { config, pkgs, nonicons, lib, ... }:
 let
-  pythonPackages = pkgs.python310Packages;
   nodePackages = pkgs.nodePackages;
   colors = import ./darkviolet.nix;
 in
@@ -303,8 +302,8 @@ in
         nodePackages.vscode-langservers-extracted
         nodePackages.yaml-language-server
       ];
-      extraPython3Packages = (ps: with ps; [
-        pynvim
+      extraPython3Packages = (ps: [
+        ps.pynvim
       ]);
       package = pkgs.neovim-unwrapped;
       plugins = import ./nvimplugins.nix { inherit pkgs; };
@@ -321,16 +320,16 @@ in
     tmux.enable = true;
     vscode = {
       enable = true;
-      extensions = with pkgs.vscode-extensions; [
-        _2gua.rainbow-brackets
-        dracula-theme.theme-dracula
-        mikestead.dotenv
-        ms-kubernetes-tools.vscode-kubernetes-tools
-        ms-python.vscode-pylance
-        # ms-python.python
-        redhat.vscode-yaml
-        bungcip.better-toml
-        njpwerner.autodocstring
+      extensions = [
+        pkgs.vscode-extensions._2gua.rainbow-brackets
+        pkgs.vscode-extensions.dracula-theme.theme-dracula
+        pkgs.vscode-extensions.mikestead.dotenv
+        pkgs.vscode-extensions.ms-kubernetes-tools.vscode-kubernetes-tools
+        pkgs.vscode-extensions.ms-python.vscode-pylance
+        pkgs.vscode-extensions.ms-python.python
+        pkgs.vscode-extensions.redhat.vscode-yaml
+        pkgs.vscode-extensions.bungcip.better-toml
+        pkgs.vscode-extensions.njpwerner.autodocstring
       ];
       package = pkgs.vscode-fhs;
       userSettings = {
@@ -341,8 +340,10 @@ in
       };
     };
     zsh = {
+      autosuggestion = {
+        enable = true;
+      };
       enable = true;
-      enableAutosuggestions = true;
       enableCompletion = true;
       enableVteIntegration = true;
       history = {
@@ -436,9 +437,7 @@ in
     gpg-agent = {
       enable = true;
       enableSshSupport = true;
-      # enableZshSupport = true;
       grabKeyboardAndMouse = true;
-      pinentryFlavor = "qt";
     };
     pasystray.enable = true;
   };

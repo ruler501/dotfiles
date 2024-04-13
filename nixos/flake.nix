@@ -54,6 +54,7 @@
     nixosConfigurations = {
       devonnixosdesktop = configuration "devonnixosdesktop";
       devonnixoslaptop  = configuration "devonnixoslaptop";
+      devonnixosframework16  = configuration "devonnixosframework16";
     };
   };
 }

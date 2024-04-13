@@ -10,7 +10,6 @@
     pkgs.cockroachdb-bin
     pkgs.dconf  # Backend for GSettings
     pkgs.discord
-    pkgs.etcher  # Make liveUSB
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
@@ -41,14 +40,13 @@
     pkgs.nix-direnv
     pkgs.nix-du # Disk usage by gc root
     pkgs.nix-index # Search what packages have specific files
-    pkgs.nvtop
     pkgs.obsidian
     pkgs.openssl
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
     # Failing to download
     nixpkgs-stable.postman
-    pkgs.python310Full
+    pkgs.python311Full
     pkgs.p7zip
     # Fails tests
     nixpkgs-stable.ripgrep-all

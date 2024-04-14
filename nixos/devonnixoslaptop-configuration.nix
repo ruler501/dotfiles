@@ -35,10 +35,15 @@ in
       };
     };
   };
-  environment.systemPackages = [
-    nvidia-offload
-    pkgs.nvtopPackages.nvidia
-  ];
+  environment = {
+    systemPackages = [
+      nvidia-offload
+      pkgs.nvtopPackages.nvidia
+    ];
+    variables = {
+      LIBVA_DRIVER_NAME = "vdpau";
+    };
+  };
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/6ae570a2-5c7f-4fbc-a047-a7ea47e31d06";
@@ -127,4 +132,9 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+  virtualisation = {
+    docker = {
+      enableNvidia = true;
+    };
+  };
 }

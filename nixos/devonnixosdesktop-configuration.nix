@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, pkgs, modulesPath, ... }:
 {
   imports =[
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -30,6 +30,9 @@
     systemPackages = [
       pkgs.nvtopPackages.nvidia
     ];
+    variables = {
+      LIBVA_DRIVER_NAME = "vdpau";
+    };
   };
   fileSystems = {
     "/mnt/Share" = {
@@ -74,6 +77,7 @@
         pkgs.vaapiVdpau
       ];
     };
+    steam-hardware.enable = true;
   };
   networking = {
     networkmanager.enable = false;
@@ -87,9 +91,14 @@
     max-jobs = 32;
   };
   nixpkgs.hostPlatform = "x86_64-linux";
-  services.xserver = {
-    dpi = 100;
-    videoDrivers = ["nvidia"];
+  programs = {
+    steam.enable = true;
+  };
+  services = {
+    xserver = {
+      dpi = 100;
+      videoDrivers = ["nvidia"];
+    };
   };
   swapDevices = [
     { device = "/dev/disk/by-uuid/8774da94-3123-4919-9914-041a3e00cbf1"; }
@@ -101,4 +110,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
+  virtualisation = {
+    docker = {
+      enableNvidia = true;
+    };
+  };
 }

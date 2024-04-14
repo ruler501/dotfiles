@@ -1,10 +1,6 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ hostname, config, pkgs, lib, nur, nonicons, secrets, nixpkgs-stable, ... }: {
+{ hostname, pkgs, nonicons, secrets, nixpkgs-stable, ... }: {
   imports = [
-    # Include the results of the hardware scan.
+    # Include system specific configurations.
     ((builtins.toString ./.) + "/" + hostname + "-configuration.nix")
   ];
   boot = {
@@ -12,10 +8,7 @@
     binfmt.emulatedSystems = [
       "aarch64-linux"
     ];
-    blacklistedKernelModules = [];
-    extraModulePackages = [];
     hardwareScan = true;
-    kernelModules = [];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -23,7 +16,7 @@
       };
       grub = {
         configurationLimit = 5;
-        devices = [ "nodev" ];
+        devices = ["nodev"];
         efiSupport = true;
         enable = true;
         useOSProber = true;
@@ -38,16 +31,23 @@
   };
   documentation = {
     enable = true;
-    # dev.enable = true;
-    # doc.enable = true;
+    dev.enable = true;
+    doc.enable = true;
+    info.enable = true;
     man = {
       enable = true;
       generateCaches = true;
+      man-db = {
+        enable = true;
+      };
     };
-    # nixos = {
-    #   enable = true;
-    #   includeAllModules = true;
-    # };
+    nixos = {
+      enable = true;
+      includeAllModules = true;
+      options = {
+        splitBuild = true;
+      };
+    };
   };
   environment = {
     pathsToLink = [
@@ -56,7 +56,6 @@
     ];
     shells = [pkgs.zsh];
     variables = {
-      LIBVA_DRIVER_NAME = "vdpau";
       XDG_DATA_HOME = "$HOME/.local/share";
       EDITOR = "nvr --remote-wait";
       VISUAL = "nvr --remote-wait";
@@ -100,7 +99,6 @@
       driSupport32Bit = true;
       enable = true;
     };
-    # steam-hardware.enable = true;
   };
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
@@ -150,24 +148,13 @@
   programs = {
     adb.enable = true;
     command-not-found.enable = true;
-    gnome-terminal.enable = true;
     less.enable = true;
     npm.enable = false;
-    # TODO: Debug why Steam seems to fail to download.
-    # steam.enable = true;
     system-config-printer.enable = true;
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      enableGlobalCompInit = true;
-      autosuggestions.enable = true;
-      histSize = 65536;
-      ohMyZsh.enable = true;
-    };
   };
   security = {
     allowSimultaneousMultithreading = true;
-    rtkit.enable = true;
+    rtkit.enable = true; # Enables processes to request real time scheduling, needed for pipewire.
   };
   services = {
     ananicy = { # Applies automatic nice values for cpu and io.
@@ -247,7 +234,6 @@
     containers.enable = true;
     docker = {
       enable = true;
-      enableNvidia = true;
       autoPrune.enable = true;
     };
   };

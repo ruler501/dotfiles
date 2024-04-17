@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ pkgs, modulesPath, system, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -7,6 +7,12 @@ let
     export __VK_LAYER_NV_optimus=NVIDIA_only
     exec "$@"
     '';
+  ext4SsdOptions = [
+    "data=ordered"      # Ensures data ordering, improving file system reliability and performance by writing data to disk in a specific order.
+    "defaults"          # Applies the default options for mounting, which usually include common settings for permissions, ownership, and read/write access.
+    "discard"           # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
+    "errors=remount-ro" # Remounts the file system as read-only (ro) in case of errors to prevent further potential data corruption.
+  ];
 in
 {
   imports = [
@@ -48,6 +54,7 @@ in
     "/" = {
       device = "/dev/disk/by-uuid/6ae570a2-5c7f-4fbc-a047-a7ea47e31d06";
       fsType = "ext4";
+      options = ext4SsdOptions;
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/2837-43C6";
@@ -91,7 +98,7 @@ in
     cores = 16;
     max-jobs = 4;
   };
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = system;
   services = {
     power-profiles-daemon.enable = false;
     tlp = {

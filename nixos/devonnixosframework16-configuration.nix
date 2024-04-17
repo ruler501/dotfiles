@@ -1,4 +1,12 @@
-{ pkgs, modulesPath, ... }:
+{ pkgs, modulesPath, system, ... }:
+let
+  ext4SsdOptions = [
+    "data=ordered"      # Ensures data ordering, improving file system reliability and performance by writing data to disk in a specific order.
+    "defaults"          # Applies the default options for mounting, which usually include common settings for permissions, ownership, and read/write access.
+    "discard"           # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
+    "errors=remount-ro" # Remounts the file system as read-only (ro) in case of errors to prevent further potential data corruption.
+  ];
+in
 {
   imports =[ 
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -10,21 +18,22 @@
       kernelModules = [ ];
     };
     kernelModules = [ 
-      # "amdgpu" 
+      "amdgpu" 
       "kvm-amd"
     ];
     kernelParams = [
-      # "amdgpu.abmlevel=1"
+      "amdgpu.abmlevel=1"
     ];
   };
   environment.systemPackages = [
     pkgs.framework-tool
-    # pkgs.nvtopPackages.amd
+    pkgs.nvtopPackages.amd
   ];
   fileSystems = {
     "/" ={
       device = "/dev/disk/by-uuid/71539a24-ea83-41bd-adb7-045846ae9965";
       fsType = "ext4";
+      options = ext4SsdOptions;
     };
 
     "/boot" ={
@@ -35,6 +44,7 @@
     "/home" = {
       device = "/dev/disk/by-uuid/7c3c61ed-9b8d-4735-a91a-c9449182b954";
       fsType = "ext4";
+      options = ext4SsdOptions;
     };
   };
   hardware = {
@@ -73,7 +83,7 @@
     cores = 16;
     max-jobs = 8;
   };
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = system;
   services = {
     fprintd = {
       enable = true;

@@ -84,7 +84,7 @@ in
 
         after    = [ "network.target" "time-sync.target" ];
         requires = [ "time-sync.target" ];
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = lib.mkForce [ ];
 
         unitConfig.RequiresMountsFor = "/var/lib/cockroachdb";
 

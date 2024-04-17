@@ -140,9 +140,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "electron-12.2.3"
-      "electron-21.4.0"
-      "electron-19.1.9"
+      "electron-25.9.0"
     ];
   };
   programs = {
@@ -151,6 +149,14 @@
     less.enable = true;
     npm.enable = false;
     system-config-printer.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableGlobalCompInit = true;
+      autosuggestions.enable = true;
+      histSize = 65536;
+      ohMyZsh.enable = true;
+    };
   };
   security = {
     allowSimultaneousMultithreading = true;
@@ -166,14 +172,6 @@
     };
     automatic-timezoned.enable = true;
     blueman.enable = true;
-    displayManager = {
-      autoLogin.enable = false;
-      defaultSession = "plasma";
-      sddm = {
-        enable = true;
-        enableHidpi = true;
-      };
-    };
     mongodb = {
       bind_ip = "0.0.0.0";
       enable = false;
@@ -205,6 +203,14 @@
     timesyncd.enable = true;
     uptimed.enable = true;
     xserver = {
+    displayManager = {
+      autoLogin.enable = false;
+      defaultSession = "plasma";
+      sddm = {
+        enable = true;
+        enableHidpi = true;
+      };
+    };
       desktopManager.plasma5 = {
         enable = true;
       };

@@ -2,7 +2,6 @@
 {
   environment.systemPackages = [
     pkgs.ark  # GUI archive management
-    # pkgs.awscli2
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.calibre
     pkgs.chromium
@@ -44,12 +43,10 @@
     pkgs.openssl
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
-    # Failing to download
-    nixpkgs-stable.postman
+    # pkgs.postman # Failing to download
     pkgs.python311Full
     pkgs.p7zip
-    # Fails tests
-    nixpkgs-stable.ripgrep-all
+    nixpkgs-stable.ripgrep-all # Fails tests on unstable
     pkgs.sad
     pkgs.simplescreenrecorder
     pkgs.sloccount

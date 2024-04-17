@@ -1,4 +1,12 @@
-{ config, pkgs, modulesPath, ... }:
+{ config, pkgs, nixpkgs-stable, modulesPath, system, ... }:
+let
+  ext4SsdOptions = [
+    "data=ordered"      # Ensures data ordering, improving file system reliability and performance by writing data to disk in a specific order.
+    "defaults"          # Applies the default options for mounting, which usually include common settings for permissions, ownership, and read/write access.
+    "discard"           # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
+    "errors=remount-ro" # Remounts the file system as read-only (ro) in case of errors to prevent further potential data corruption.
+  ];
+in
 {
   imports =[
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -28,7 +36,7 @@
   };
   environment = {
     systemPackages = [
-      pkgs.nvtopPackages.nvidia
+      nixpkgs-stable.nvtop
     ];
     variables = {
       LIBVA_DRIVER_NAME = "vdpau";
@@ -54,6 +62,7 @@
     "/mnt/NVME" = {
       device = "/dev/disk/by-uuid/14dcd0b7-2201-4be3-bc6f-053c572457cb";
       fsType = "ext4";
+      options = ext4SsdOptions;
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/825A-E484";
@@ -62,6 +71,7 @@
     "/" = {
       device = "/dev/disk/by-uuid/36aeaea9-8943-4e8c-b36b-b5d2cb31e9ea";
       fsType = "ext4";
+      options = ext4SsdOptions;
     };
   };
   hardware = {
@@ -71,7 +81,6 @@
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
     opengl = {
-      enable = true;
       extraPackages = [
         pkgs.libvdpau-va-gl
         pkgs.vaapiVdpau
@@ -90,7 +99,7 @@
     cores = 32;
     max-jobs = 32;
   };
-  nixpkgs.hostPlatform = "x86_64-linux";
+  nixpkgs.hostPlatform = system;
   programs = {
     steam.enable = true;
   };

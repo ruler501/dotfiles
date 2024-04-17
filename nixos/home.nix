@@ -1,7 +1,6 @@
-{ config, pkgs, nonicons, lib, ... }:
+{ config, pkgs, nonicons, lib, colors, ... }:
 let
   nodePackages = pkgs.nodePackages;
-  colors = import ./darkviolet.nix;
 in
 {
   home = {
@@ -97,34 +96,34 @@ in
         allowBold = true;
         backspaceBinding = "auto";
         colors = {
-          backgroundColor = colors.bg;
-          boldColor = colors.invertbg;
+          backgroundColor = colors.named.bg;
+          boldColor = colors.named.invertbg;
           cursor = {
-            background = colors.invertbg;
-            foreground = colors.bg;
+            background = colors.named.invertbg;
+            foreground = colors.named.bg;
           };
-          foregroundColor = colors.fg;
+          foregroundColor = colors.named.fg;
           highlight = {
-            background = colors.brightfg;
-            foreground = colors.bg;
+            background = colors.named.brightfg;
+            foreground = colors.named.bg;
           };
           palette = [
-            colors.bg
-            colors.constant
-            colors.focus
-            colors.constant
-            colors.func
-            colors.subtle
-            colors.type
-            colors.fg
-            colors.darkfg
-            colors.error
-            colors.focus
-            colors.warm
-            colors.string
-            colors.keyword
-            colors.brightfg
-            colors.invertbg
+            colors.named.bg
+            colors.named.constant
+            colors.named.focus
+            colors.named.constant
+            colors.named.func
+            colors.named.subtle
+            colors.named.type
+            colors.named.fg
+            colors.named.darkfg
+            colors.named.error
+            colors.named.focus
+            colors.named.warm
+            colors.named.string
+            colors.named.keyword
+            colors.named.brightfg
+            colors.named.invertbg
           ];
         };
         cursorBlinkMode = "on";
@@ -224,30 +223,6 @@ in
     jq.enable = true;
     kitty = {
       enable = true;
-      font = {
-        name = "DroidSansM Nerd Font Mono";
-        size = 9;
-      };
-      settings = {
-        background = colors.bg;
-        foreground = colors.fg;
-        color0     = colors.bg;
-        color1     = colors.constant;
-        color2     = colors.focus;
-        color3     = colors.constant;
-        color4     = colors.func;
-        color5     = colors.subtle;
-        color6     = colors.type;
-        color7     = colors.fg;
-        color8     = colors.darkfg;
-        color9     = colors.error;
-        color10    = colors.focus;
-        color11    = colors.warm;
-        color12    = colors.string;
-        color13    = colors.keyword;
-        color14    = colors.brightfg;
-        color15    = colors.invertbg;
-      };
     };
     lsd = {
       enable = true;
@@ -261,22 +236,22 @@ in
     neovim = {
       enable = true;
       extraConfig = ''
-        let g:theme_bg          = "${colors.bg}"
-        let g:theme_accentbg    = "${colors.accentbg}"
-        let g:theme_selectionbg = "${colors.selectionbg}"
-        let g:theme_subtle      = "${colors.subtle}"
-        let g:theme_darkfg      = "${colors.darkfg}"
-        let g:theme_fg          = "${colors.fg}"
-        let g:theme_brightfg    = "${colors.brightfg}"
-        let g:theme_invertbg    = "${colors.invertbg}"
-        let g:theme_error       = "${colors.error}"
-        let g:theme_constant    = "${colors.constant}"
-        let g:theme_type        = "${colors.type}"
-        let g:theme_focus       = "${colors.focus}"
-        let g:theme_string      = "${colors.string}"
-        let g:theme_func        = "${colors.func}"
-        let g:theme_keyword     = "${colors.keyword}"
-        let g:theme_warm        = "${colors.warm}"
+        let g:theme_bg          = "${colors.named.bg}"
+        let g:theme_accentbg    = "${colors.named.accentbg}"
+        let g:theme_selectionbg = "${colors.named.selectionbg}"
+        let g:theme_subtle      = "${colors.named.subtle}"
+        let g:theme_darkfg      = "${colors.named.darkfg}"
+        let g:theme_fg          = "${colors.named.fg}"
+        let g:theme_brightfg    = "${colors.named.brightfg}"
+        let g:theme_invertbg    = "${colors.named.invertbg}"
+        let g:theme_error       = "${colors.named.error}"
+        let g:theme_constant    = "${colors.named.constant}"
+        let g:theme_type        = "${colors.named.type}"
+        let g:theme_focus       = "${colors.named.focus}"
+        let g:theme_string      = "${colors.named.string}"
+        let g:theme_func        = "${colors.named.func}"
+        let g:theme_keyword     = "${colors.named.keyword}"
+        let g:theme_warm        = "${colors.named.warm}"
         lua require('lush')(dofile('${../nvim/lua}/lush_theme.lua'))
         luafile ${../nvim/lua}/settings.lua
         luafile ${../nvim/lua}/statusline_settings.lua
@@ -332,12 +307,7 @@ in
         pkgs.vscode-extensions.njpwerner.autodocstring
       ];
       package = pkgs.vscode-fhs;
-      userSettings = {
-        "editor.fontFamily" = "DroidSansM Nerd Font Mono";
-        "editor.fontSize" = 10;
-        "terminal.integrated.fontFamily" = "DroidSansM Nerd Font Mono";
-        "terminal.integrated.fontSize" = 10;
-      };
+      userSettings = {};
     };
     zsh = {
       # autosuggestion = {

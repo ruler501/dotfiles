@@ -1,4 +1,4 @@
-{ hostname, pkgs, nonicons, secrets, nixpkgs-stable, ... }: {
+{ hostname, pkgs, secrets, nixpkgs-stable, colors, config, nonicons, ... }: {
   imports = [
     # Include system specific configurations.
     ((builtins.toString ./.) + "/" + hostname + "-configuration.nix")
@@ -26,7 +26,6 @@
   };
   console = {
     packages = [];
-    colors = [];
     useXkbConfig = true;
   };
   documentation = {
@@ -43,7 +42,7 @@
     };
     nixos = {
       enable = true;
-      includeAllModules = true;
+      # includeAllModules = true; # Doesn't work with stylix
       options = {
         splitBuild = true;
       };
@@ -67,15 +66,9 @@
   fonts = {
     fontconfig = {
       antialias = true;
-      defaultFonts = {
-        emoji = ["Noto Color Emoji"];
-        monospace = ["DroidSansMono" "nonicons"];
-      };
     };
     packages = [
-      (pkgs.nerdfonts.override { fonts = ["DroidSansMono"]; })
       "${nonicons}/dist/"
-      pkgs.noto-fonts-emoji
     ];
   };
   hardware = {
@@ -222,9 +215,42 @@
     };
   };
   sound.enable = false;
+  stylix = {
+    autoEnable = true;
+    base16Scheme = colors.base16;
+    cursor = {
+      package = pkgs.qogir-icon-theme;
+      name = "Qogir";
+    };
+    fonts = {
+      emoji = {
+        package = pkgs.noto-fonts-emoji;
+        name = "Noto Color Emoji";
+      };
+      # Can't remember what nonicons was for or if I need to do something for it here
+      monospace = {
+        package = (pkgs.nerdfonts.override { fonts = ["DroidSansMono"]; });
+        name = "DroidSansMono";
+      };
+      sizes = {
+        applications = 12;
+        desktop = 10;
+        popups = 10;
+        terminal = 10;
+      };
+    };
+    homeManagerIntegration = {
+      autoImport = true;
+      followSystem = true;
+    };
+    image = config.lib.stylix.pixel "base02";
+    polarity = "dark";
+  };
   users = {
     defaultUserShell = pkgs.zsh;
-    groups.devon = { gid = 5001; members = [ "devon"]; };
+    groups = {
+      devon = { gid = 5001; members = [ "devon"]; };
+    };
     mutableUsers = false;
     users = {
       devon = {

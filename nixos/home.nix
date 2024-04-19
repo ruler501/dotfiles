@@ -1,14 +1,150 @@
-{ config, pkgs, nonicons, lib, colors, ... }:
+{ config, pkgs, nonicons, lib, colors, ... }@inputs:
 let
   nodePackages = pkgs.nodePackages;
-in
-{
+  utils = inputs.nixCats.utils;
+in {
+  imports = [
+    inputs.nixCats.homeModule
+  ];
+  # this value, nixCats is the defaultPackageName you pass to mkNixosModules
+  # it will be the namespace for your options.
+  nixCats = {
+    # these are some of the options. For the rest see
+    # :help nixCats.flake.outputs.utils.mkNixosModules
+    # you do not need to use every option here, anything you do not define
+    # will be pulled from the flake instead.
+    enable = true;
+    # this will add the overlays from ./overlays and also,
+    # add any plugins in inputs named "plugins-pluginName" to pkgs.neovimPlugins
+    # It will not apply to overall system, just nixCats.
+    addOverlays = (import ./nixcat-overlays inputs) ++ [
+      (utils.standardPluginOverlay inputs)
+    ];
+    packageNames = [ "myHomeModuleNvim" ];
+
+    luaPath = "${./../nvim/nixcats/.}";
+    # you could also import lua from the flake though, by not including this.
+
+    # categoryDefinitions.replace will replace the whole categoryDefinitions with a new one
+    categoryDefinitions.replace = ({ pkgs, settings, categories, name, ... }: {
+      propagatedBuildInputs = {
+        # add to general or create a new list called whatever
+        general = [];
+      };
+      lspsAndRuntimeDeps = {
+        general = [
+          pkgs.fd
+          pkgs.gcc
+          pkgs.lua-language-server
+          pkgs.nil
+          pkgs.nix-doc
+          pkgs.nixd
+          pkgs.ripgrep
+          pkgs.universal-ctags
+          pkgs.xclip
+          nodePackages.pyright
+          nodePackages.vscode-langservers-extracted
+          nodePackages.typescript-language-server
+        ];
+      };
+      startupPlugins = {
+        lazy = [ pkgs.vimPlugins.lazy-nvim ];
+        general = {
+          gitPlugins = [ pkgs.neovimPlugins.hlargs ];
+
+          vimPlugins = [
+            pkgs.vimPlugins.neodev-nvim
+            pkgs.vimPlugins.neoconf-nvim
+            pkgs.vimPlugins.nvim-cmp
+            pkgs.vimPlugins.friendly-snippets
+            pkgs.vimPlugins.luasnip
+            pkgs.vimPlugins.cmp_luasnip
+            pkgs.vimPlugins.cmp-path
+            pkgs.vimPlugins.cmp-nvim-lsp
+            pkgs.vimPlugins.telescope-fzf-native-nvim
+            pkgs.vimPlugins.plenary-nvim
+            pkgs.vimPlugins.telescope-nvim
+            pkgs.vimPlugins.nvim-treesitter-textobjects
+            pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+            pkgs.vimPlugins.nvim-lspconfig
+            pkgs.vimPlugins.fidget-nvim
+            pkgs.vimPlugins.lualine-nvim
+            pkgs.vimPlugins.gitsigns-nvim
+            pkgs.vimPlugins.which-key-nvim
+            pkgs.vimPlugins.comment-nvim
+            pkgs.vimPlugins.vim-sleuth
+            pkgs.vimPlugins.vim-fugitive
+            pkgs.vimPlugins.vim-rhubarb
+            pkgs.vimPlugins.vim-repeat
+            pkgs.vimPlugins.indent-blankline-nvim
+            pkgs.vimPlugins.lush-nvim
+            pkgs.vimPlugins.vim-smoothie
+          ];
+        };
+      };
+      optionalPlugins = {
+        general = [];
+      };
+      # shared libraries to be added to LD_LIBRARY_PATH
+      # variable available to nvim runtime
+      sharedLibraries = {
+        general = [
+          # pkgs.libgit2
+        ];
+      };
+      environmentVariables = {
+        test = {};
+      };
+      extraWrapperArgs = {
+        test = [];
+      };
+      # lists of the functions you would have passed to
+      # python.withPackages or lua.withPackages
+
+      # get the path to this python environment
+      # in your lua config via
+      # vim.g.python3_host_prog
+      # or run from nvim terminal via :!<packagename>-python3
+      extraPython3Packages = {
+        test = (_:[]);
+      };
+      extraPythonPackages = {
+        test = (_:[]);
+      };
+      # populates $LUA_PATH and $LUA_CPATH
+      extraLuaPackages = {
+        test = [ (_:[]) ];
+      };
+    });
+
+    # see :help nixCats.flake.outputs.packageDefinitions
+    packages = {
+      # These are the names of your packages
+      # you can include as many as you wish.
+      myHomeModuleNvim = {pkgs , ... }: {
+        # they contain a settings set defined above
+        # see :help nixCats.flake.outputs.settings
+        settings = {
+          wrapRc = true;
+          # IMPORTANT:
+          # you may not alias to nvim
+          # your alias may not conflict with your other packages.
+          aliases = [ "vim" "homeVim" ];
+          # caution: this option must be the same for all packages.
+          # nvimSRC = inputs.neovim;
+        };
+        # and a set of categories that you want
+        # (and other information to pass to lua)
+        categories = {
+          general = true;
+          test = true;
+          colors = colors.named;
+        };
+      };
+    };
+  };
   home = {
     activation = {
-      # patch-steam = lib.hm.dag.entryAfter["writeBoundary"] "
-      #   mkdir -p ~/.local/share/applications
-      #   sed 's/^Exec=/&nvidia-offload /' /run/current-system/sw/share/applications/steam.desktop > ~/.local/share/applications/steam.desktop
-      # ";
       pnpm-global = lib.hm.dag.entryAfter["writeBoundary"] "
         mkdir -p /home/devon/.pnpm_global
       ";
@@ -233,60 +369,60 @@ in
       enableZshIntegration = true;
       keyScheme = "vim";
     };
-    neovim = {
-      enable = true;
-      extraConfig = ''
-        let g:theme_bg          = "${colors.named.bg}"
-        let g:theme_accentbg    = "${colors.named.accentbg}"
-        let g:theme_selectionbg = "${colors.named.selectionbg}"
-        let g:theme_subtle      = "${colors.named.subtle}"
-        let g:theme_darkfg      = "${colors.named.darkfg}"
-        let g:theme_fg          = "${colors.named.fg}"
-        let g:theme_brightfg    = "${colors.named.brightfg}"
-        let g:theme_invertbg    = "${colors.named.invertbg}"
-        let g:theme_error       = "${colors.named.error}"
-        let g:theme_constant    = "${colors.named.constant}"
-        let g:theme_type        = "${colors.named.type}"
-        let g:theme_focus       = "${colors.named.focus}"
-        let g:theme_string      = "${colors.named.string}"
-        let g:theme_func        = "${colors.named.func}"
-        let g:theme_keyword     = "${colors.named.keyword}"
-        let g:theme_warm        = "${colors.named.warm}"
-        lua require('lush')(dofile('${../nvim/lua}/lush_theme.lua'))
-        luafile ${../nvim/lua}/settings.lua
-        luafile ${../nvim/lua}/statusline_settings.lua
-      '';
-      extraPackages = [
-        pkgs.ccls
-        pkgs.cmake-language-server
-        pkgs.codeql
-        pkgs.ltex-ls
-        pkgs.nil
-        pkgs.rust-analyzer
-        pkgs.lua-language-server
-        pkgs.taplo
-        pkgs.texlab
-        pkgs.xclip
-        pkgs.zls
-        nodePackages.bash-language-server
-        nodePackages.diagnostic-languageserver
-        nodePackages.dockerfile-language-server-nodejs
-        nodePackages.pyright
-        nodePackages.typescript-language-server
-        nodePackages.vim-language-server
-        nodePackages.vscode-langservers-extracted
-        nodePackages.yaml-language-server
-      ];
-      extraPython3Packages = (ps: [
-        ps.pynvim
-      ]);
-      package = pkgs.neovim-unwrapped;
-      plugins = import ./nvimplugins.nix { inherit pkgs; };
-      vimAlias = true;
-      vimdiffAlias = true;
-      withNodeJs = true;
-      withPython3 = true;
-    };
+    # neovim = {
+    #   enable = true;
+    #   extraConfig = ''
+    #     let g:theme_bg          = "${colors.named.bg}"
+    #     let g:theme_accentbg    = "${colors.named.accentbg}"
+    #     let g:theme_selectionbg = "${colors.named.selectionbg}"
+    #     let g:theme_subtle      = "${colors.named.subtle}"
+    #     let g:theme_darkfg      = "${colors.named.darkfg}"
+    #     let g:theme_fg          = "${colors.named.fg}"
+    #     let g:theme_brightfg    = "${colors.named.brightfg}"
+    #     let g:theme_invertbg    = "${colors.named.invertbg}"
+    #     let g:theme_error       = "${colors.named.error}"
+    #     let g:theme_constant    = "${colors.named.constant}"
+    #     let g:theme_type        = "${colors.named.type}"
+    #     let g:theme_focus       = "${colors.named.focus}"
+    #     let g:theme_string      = "${colors.named.string}"
+    #     let g:theme_func        = "${colors.named.func}"
+    #     let g:theme_keyword     = "${colors.named.keyword}"
+    #     let g:theme_warm        = "${colors.named.warm}"
+    #     lua require('lush')(dofile('${../nvim}/lush_theme.lua'))
+    #     luafile ${../nvim}/settings.lua
+    #     luafile ${../nvim}/statusline_settings.lua
+    #   '';
+    #   extraPackages = [
+    #     pkgs.ccls
+    #     pkgs.cmake-language-server
+    #     pkgs.codeql
+    #     pkgs.ltex-ls
+    #     pkgs.nil
+    #     pkgs.rust-analyzer
+    #     pkgs.lua-language-server
+    #     pkgs.taplo
+    #     pkgs.texlab
+    #     pkgs.xclip
+    #     pkgs.zls
+    #     nodePackages.bash-language-server
+    #     nodePackages.diagnostic-languageserver
+    #     nodePackages.dockerfile-language-server-nodejs
+    #     nodePackages.pyright
+    #     nodePackages.typescript-language-server
+    #     nodePackages.vim-language-server
+    #     nodePackages.vscode-langservers-extracted
+    #     nodePackages.yaml-language-server
+    #   ];
+    #   extraPython3Packages = (ps: [
+    #     ps.pynvim
+    #   ]);
+    #   package = pkgs.neovim-unwrapped;
+    #   plugins = import ./nvimplugins.nix { inherit pkgs; };
+    #   vimAlias = true;
+    #   vimdiffAlias = true;
+    #   withNodeJs = true;
+    #   withPython3 = true;
+    # };
     ssh = {
       enable = true;
       compression = true;

@@ -7,7 +7,9 @@
     secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+      };
     };
     nonicons = {
       url = "github:yamatsum/nonicons";
@@ -15,12 +17,20 @@
     };
     stylix = {
       url = "github:danth/stylix/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.home-manager.follows = "home-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+        home-manager.follows = "home-manager";
+      };
+    };
+    nixCats = {
+      url = "github:BirdeeHub/nixCats-nvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+      };
     };
   };
 
-  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, ... }:
+  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixCats, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs {
@@ -45,19 +55,20 @@
       inherit system;
       specialArgs = specialArgs // { inherit hostname; };
       modules = [
-        stylix.nixosModules.stylix
-        home-manager.nixosModules.home-manager
         (./configuration.nix)
         (./systemPackages.nix)
         (./cockroachdb.nix)
-        {
+        (home-manager.nixosModules.home-manager)
+        ({
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = false;
             users.devon = import ./home.nix;
-            extraSpecialArgs = specialArgs // { inherit hostname; };
+            extraSpecialArgs = specialArgs // { inherit hostname; inherit nixCats; };
           };
-        }
+        })
+        (stylix.nixosModules.stylix)
+        # (nixCatsNixosModule)
       ];
     };
   in

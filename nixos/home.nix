@@ -1,4 +1,4 @@
-{ config, pkgs, nonicons, lib, colors, ... }@inputs:
+{ config, pkgs, nonicons, lib, secrets, colors, ... }@inputs:
 let
   nodePackages = pkgs.nodePackages;
   utils = inputs.nixCats.utils;
@@ -153,6 +153,7 @@ in {
       ".config/fonts/nonicons.ttf".source = "${nonicons.outPath}/dist/nonicons.ttf";
       ".zsh/plugins/plugins/poetry/_poetry".source = ../_poetry;
       ".pdbrc".source = ../pdbrc;
+      ".gnupg/sshcontrol".text = secrets.gnupg.sshcontrol;
     };
     homeDirectory = "/home/devon";
     keyboard.options = [ "ctrl:nocaps" ];
@@ -545,6 +546,7 @@ in {
       enable = true;
       enableSshSupport = true;
       grabKeyboardAndMouse = true;
+      pinentryPackage = pkgs.pinentry-qt;
     };
     pasystray.enable = true;
   };

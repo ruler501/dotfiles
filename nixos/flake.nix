@@ -48,6 +48,7 @@
       inherit secrets;
       inherit colors;
       inherit stylix;
+      inherit nixCats;
       nixpkgs-stable = pkgs-stable;
       nixpkgs-unstable = pkgs-unstable;
     };
@@ -64,11 +65,10 @@
             useGlobalPkgs = true;
             useUserPackages = false;
             users.devon = import ./home.nix;
-            extraSpecialArgs = specialArgs // { inherit hostname; inherit nixCats; };
+            extraSpecialArgs = specialArgs // { inherit hostname; };
           };
         })
         (stylix.nixosModules.stylix)
-        # (nixCatsNixosModule)
       ];
     };
   in

@@ -14,7 +14,7 @@ in
   boot = {
     extraModulePackages = [ ];
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
+      availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
       kernelModules = [ ];
     };
     kernelModules = [ 
@@ -27,7 +27,7 @@ in
   };
   environment.systemPackages = [
     pkgs.framework-tool
-    pkgs.nvtopPackages.amd
+    # pkgs.nvtopPackages.amd # nvtopPackages doesn't exist on stable
   ];
   fileSystems = {
     "/" ={
@@ -35,12 +35,10 @@ in
       fsType = "ext4";
       options = ext4SsdOptions;
     };
-
     "/boot" ={
       device = "/dev/disk/by-uuid/7AE4-B533";
       fsType = "vfat";
     };
-
     "/home" = {
       device = "/dev/disk/by-uuid/7c3c61ed-9b8d-4735-a91a-c9449182b954";
       fsType = "ext4";

@@ -27,6 +27,7 @@ local theme_error_bright = theme_error.lighten(10)
 local theme = lush(function(injected_functions)
   local sym = injected_functions.sym
   return {
+    IndentGuide                            { fg=theme_subtle.darken(50) }, -- IndentGuide     xxx ctermfg=238 guifg=Grey27
     SpecialKey                             { fg=theme_subtle.desaturate(25).lighten(10) }, -- SpecialKey     xxx ctermfg=238 guifg=Grey27
     TermCursor                             { fg=theme_bg, bg=theme_fg.darken(5), }, -- TermCursor     xxx cterm=reverse guifg=theme_bg guibg=theme_fg
     TermCursorNC                           { TermCursor }, -- TermCursorNC   xxx guifg=theme_bg guibg=theme_fg

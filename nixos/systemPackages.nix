@@ -1,4 +1,7 @@
 { pkgs, nixpkgs-stable, ... }:
+let
+  pythonPackages = pkgs.python311Packages;
+in
 {
   environment.systemPackages = [
     pkgs.ark  # GUI archive management
@@ -44,7 +47,8 @@
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
     # pkgs.postman # Failing to download
-    pkgs.python311Full
+    pythonPackages.python
+    pythonPackages.pynvim
     pkgs.p7zip
     nixpkgs-stable.ripgrep-all # Fails tests on unstable
     pkgs.sad

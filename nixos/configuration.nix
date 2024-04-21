@@ -55,12 +55,13 @@
     ];
     shells = [pkgs.zsh];
     variables = {
-      XDG_DATA_HOME = "$HOME/.local/share";
       EDITOR = "nvr --remote-wait";
-      VISUAL = "nvr --remote-wait";
       GIT_EDITOR = "nvr --remote-wait";
-      USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
+      NVR_CMD = "vim";
       PNPM_HOME = "/home/devon/.npm-global/bin";
+      USE_GKE_GCLOUD_AUTH_PLUGIN = "True";
+      VISUAL = "nvr --remote-wait";
+      XDG_DATA_HOME = "$HOME/.local/share";
     };
   };
   fonts = {

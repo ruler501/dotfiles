@@ -184,7 +184,20 @@
     };
     postgresql = {
       enable = true;
-      ensureDatabases = [ "mydatabase" ];
+      enableJIT = true;
+      ensureDatabases = [ "mydatabase" "devon" ];
+      ensureUsers = [
+        {
+          name = "devon";
+          ensureClauses = {
+            createdb = true;
+            createrole = true;
+            login = true;
+            superuser = true;
+          };
+          ensureDBOwnership = true;
+        }
+      ];
       authentication = pkgs.lib.mkOverride 10 ''
         #type database  DBuser  auth-method
         local all       all     trust

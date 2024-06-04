@@ -471,6 +471,14 @@ in {
               mkdir $1
               cd $1
           }
+
+          export TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
+          'avg shared (code):         %X KB'$'\n'\
+          'avg unshared (data/stack): %D KB'$'\n'\
+          'total (sum):               %K KB'$'\n'\
+          'max memory:                %M 'MB''$'\n'\
+          'page faults from disk:     %F'$'\n'\
+          'other page faults:         %R'
         '';
         localVariables = {
           POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = [ "context" "dir" "vcs" ];

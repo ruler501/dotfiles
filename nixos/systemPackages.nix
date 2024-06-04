@@ -1,4 +1,4 @@
-{ pkgs, nixpkgs-stable, ... }:
+{ config, pkgs, nixpkgs-stable, ... }:
 let
   pythonPackages = pkgs.python311Packages;
 in
@@ -46,6 +46,7 @@ in
     pkgs.openssl
     pkgs.parallel
     pkgs.pciutils  # Provides lspci
+    config.boot.kernelPackages.perf
     # pkgs.postman # Failing to download
     pythonPackages.python
     pythonPackages.pynvim

@@ -82,6 +82,9 @@ in
     max-jobs = 8;
   };
   nixpkgs.hostPlatform = system;
+  programs = {
+    steam.enable = true;
+  };
   services = {
     fprintd = {
       enable = true;

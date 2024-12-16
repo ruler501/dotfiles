@@ -268,7 +268,7 @@
     mutableUsers = false;
     users = {
       devon = {
-        extraGroups = ["wheel" "networkmanager" "adbusers" "docker" "audio"];
+        extraGroups = ["wheel" "networkmanager" "adbusers" "docker" "audio" "kvm"];
         hashedPassword = secrets.hashedPassword;
         isNormalUser = true;
         uid = 5001;

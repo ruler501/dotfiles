@@ -4,6 +4,7 @@ let
 in
 {
   environment.systemPackages = [
+    pkgs.android-studio
     pkgs.ark  # GUI archive management
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.calibre
@@ -32,6 +33,7 @@ in
     pkgs.jetbrains.clion
     pkgs.jetbrains.webstorm
     pkgs.killall
+    pkgs.xorg.libxkbfile
     pkgs.libreoffice
     pkgs.lldb
     pkgs.lm_sensors

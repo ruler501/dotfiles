@@ -399,19 +399,19 @@ require('nixCatsUtils.lazyCat').setup(pluginList, nixLazyPath,
       },
       build = require('nixCatsUtils.lazyCat').lazyAdd(':TSUpdate'),
     },
-    {
-      'm-demare/hlargs.nvim',
-      name = 'hlargs',
-      config = function()
-        require('hlargs').setup({
-          color = '#32a88f',
-        })
-        vim.cmd([[
-        highlight clear @lsp.type.parameter
-        highlight link @lsp.type.parameter Hlargs
-      ]])
-      end,
-    },
+    -- {
+    --   'm-demare/hlargs.nvim',
+    --   name = 'hlargs',
+    --   config = function()
+    --     require('hlargs').setup({
+    --       color = '#32a88f',
+    --     })
+    --     vim.cmd([[
+    --     highlight clear @lsp.type.parameter
+    --     highlight link @lsp.type.parameter Hlargs
+    --   ]])
+    --   end,
+    -- },
     {
       'psliwka/vim-smoothie',
       lazy = false,

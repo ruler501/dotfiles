@@ -89,7 +89,6 @@
     # Required for Steam to run per this GitHub comment:
     # https://github.com/NixOS/nixpkgs/issues/47932#issuecomment-447508411
     opengl = {
-      driSupport = true;
       driSupport32Bit = true;
       enable = true;
     };
@@ -119,7 +118,7 @@
       automatic = true;
       dates = ["daily"];
     };
-    package = pkgs.nixUnstable;
+    # package = pkgs.nixUnstable;
     settings = {
       allowed-users = ["@wheel"];
       auto-optimise-store = true;
@@ -166,6 +165,14 @@
     };
     automatic-timezoned.enable = true;
     blueman.enable = true;
+    displayManager = {
+      autoLogin.enable = false;
+      defaultSession = "plasma";
+      sddm = {
+        enable = true;
+        enableHidpi = true;
+      };
+    };
     mongodb = {
       bind_ip = "0.0.0.0";
       enable = false;
@@ -207,17 +214,20 @@
         host all       all     ::1/128        trust
       '';
     };
+    redis = {
+      servers = {
+        local-redis = {
+          bind = "127.0.0.1";
+          enable = true;
+          port = 6379;
+          requirePass = "localpassword";
+          save = [];
+        };
+      };
+    };
     timesyncd.enable = true;
     uptimed.enable = true;
     xserver = {
-    displayManager = {
-      autoLogin.enable = false;
-      defaultSession = "plasma";
-      sddm = {
-        enable = true;
-        enableHidpi = true;
-      };
-    };
       desktopManager.plasma5 = {
         enable = true;
       };
@@ -228,7 +238,6 @@
       };
     };
   };
-  sound.enable = false;
   stylix = {
     autoEnable = true;
     base16Scheme = colors.base16;

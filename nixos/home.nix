@@ -24,7 +24,7 @@ in { imports = [
         };
         lspsAndRuntimeDeps = { general = [
             pkgs.fd pkgs.gcc pkgs.lua-language-server pkgs.nil pkgs.nix-doc pkgs.nixd pkgs.ripgrep pkgs.universal-ctags pkgs.xclip nodePackages.bash-language-server 
-            nodePackages.diagnostic-languageserver nodePackages.pyright nodePackages.typescript-language-server nodePackages.vscode-langservers-extracted
+            nodePackages.diagnostic-languageserver pkgs.pyright nodePackages.typescript-language-server nodePackages.vscode-langservers-extracted
           ];
         };
         startupPlugins = { lazy = [ pkgs.vimPlugins.lazy-nvim ]; general = {

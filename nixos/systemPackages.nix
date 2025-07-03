@@ -5,14 +5,17 @@ in
 {
   environment.systemPackages = [
     pkgs.android-studio
+    pkgs.ansel
     pkgs.ark  # GUI archive management
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.calibre
     pkgs.chromium
     pkgs.cockatrice
     pkgs.cockroachdb-bin
+    pkgs.darktable
     pkgs.dconf  # Backend for GSettings
     pkgs.discord
+    pkgs.dnglab
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
@@ -26,6 +29,8 @@ in
     (pkgs.google-cloud-sdk.withExtraComponents ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     pkgs.google-chrome
     pkgs.gparted
+    pkgs.gphoto2
+    pkgs.gphoto2fs
     pkgs.graphviz
     pkgs.htop
     pkgs.imagemagick
@@ -53,6 +58,7 @@ in
     pythonPackages.python
     pythonPackages.pynvim
     pkgs.p7zip
+    pkgs.rawtherapee
     nixpkgs-stable.ripgrep-all # Fails tests on unstable
     pkgs.sad
     pkgs.simplescreenrecorder

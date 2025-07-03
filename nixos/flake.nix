@@ -3,12 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-24.05";
     secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs-old";
       };
     };
     nonicons = {
@@ -18,14 +19,14 @@
     stylix = {
       url = "github:danth/stylix/release-24.05";
       inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs-old";
         home-manager.follows = "home-manager";
       };
     };
     nixCats = {
       url = "github:BirdeeHub/nixCats-nvim";
       inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs-old";
       };
     };
   };
@@ -62,6 +63,7 @@
         (home-manager.nixosModules.home-manager)
         ({
           home-manager = {
+            backupFileExtension = "bak";
             useGlobalPkgs = true;
             useUserPackages = false;
             users.devon = import ./home.nix;

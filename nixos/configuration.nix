@@ -179,6 +179,7 @@
       package = nixpkgs-stable.mongodb-4_4;
       replSetName = "rs0";
     };
+    nixseparatedebuginfod.enable = true;
     printing.enable = true;
     pipewire = {
       enable = true;

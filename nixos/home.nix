@@ -114,6 +114,7 @@
       };
       ssh = {
         enable = true;
+        enableDefaultConfig = false;
         # compression = true;
       };
       texlive.enable = true;
@@ -132,10 +133,21 @@
         package = pkgs.vscode-fhs;
       };
       zsh = {
-        autosuggestion = { enable = true;
+        autosuggestion = { 
+          enable = true;
         };
-        enable = true; enableCompletion = true; enableVteIntegration = true; history = {
-          expireDuplicatesFirst = true; extended = true; ignoreDups = true; ignoreSpace = true; save = 32000; share = true; size = 65536;
+        dotDir = "${config.xdg.configHome}/zsh";
+        enable = true;
+        enableCompletion = true;
+        enableVteIntegration = true;
+        history = {
+          expireDuplicatesFirst = true;
+          extended = true;
+          ignoreDups = true;
+          ignoreSpace = true;
+          save = 32000;
+          share = true;
+          size = 65536;
         };
         initContent = '' function cdn {
               mkdir $1 cd $1
@@ -143,7 +155,8 @@
 
           export TIMEFMT='%J %U user %S system %P cpu %*E total'$'\n'\ 'avg shared (code): %X KB'$'\n'\ 'avg unshared (data/stack): %D KB'$'\n'\ 'total (sum): %K KB'$'\n'\ 'max memory: %M 
           'MB''$'\n'\ 'page faults from disk: %F'$'\n'\ 'other page faults: %R'
-        ''; localVariables = {
+        '';
+        localVariables = {
           POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = [ "context" "dir" "vcs" ]; POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [ "status" "time" ]; DISABLE_AUTO_UPDATE = "false"; ENABLE_CORRECTION = "true"; 
           COMPLETION_WAITING_DOTS = "true"; DISABLE_UNTRACKED_FILES_DIRTY = "true"; HIST_STAMPS = "yyyy-mm-dd";
         };

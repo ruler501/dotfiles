@@ -44,9 +44,13 @@ P.S. You can delete this when you're done too. It's your config now :)
 --[[ function so that it will not throw  ]]
 --[[ an error if not loaded via nixCats  ]]
 --[[ ----------------------------------- ]]
-require('nixCatsUtils').setup {
-  non_nix_value = true,
-}
+local set = function(nonNix, nix)
+    if vim.g.nix == true then
+        return nix
+    else
+        return nonNix
+    end
+end
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -72,16 +76,51 @@ local lush_config = {
 
 local pluginList = nil
 local nixLazyPath = nil
-if require('nixCatsUtils').isNixCats then
-  local allPlugins = require("nixCats").pawsible.allPlugins
-  -- it is called pluginList because we only need to pass in the names
-  pluginList = require('nixCatsUtils.lazyCat').mergePluginTables(allPlugins.start, allPlugins.opt)
-  -- it wasnt detecting these because the names are slightly different.
-  -- when that happens, add them to the list, then also specify name in the lazySpec
-  pluginList[ [[Comment.nvim]] ] = ""
-  pluginList[ [[LuaSnip]] ] = ""
-  nixLazyPath = allPlugins.start[ [[lazy.nvim]] ]
+local isNix = vim.g.nix == true
+-- if isNix then
+--   local allPlugins = require("nixCats").pawsible.allPlugins
+--   -- it is called pluginList because we only need to pass in the names
+--   pluginList = require('nixCatsUtils.lazyCat').mergePluginTables(allPlugins.start, allPlugins.opt)
+--   -- it wasnt detecting these because the names are slightly different.
+--   -- when that happens, add them to the list, then also specify name in the lazySpec
+--   pluginList[ [[Comment.nvim]] ] = ""
+--   pluginList[ [[LuaSnip]] ] = ""
+--   nixLazyPath = allPlugins.start[ [[lazy.nvim]] ]
+-- end
+
+local set = function(nonNix, nix)
+  if vim.g.nix == true then
+    return nix
+  else
+    return nonNix
+  end
 end
+
+-- Bootstrap lazy.nvim
+local load_lazy = set(function()
+  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+      vim.api.nvim_echo({
+        { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+        { out, "WarningMsg" },
+        { "\nPress any key to exit..." },
+      }, true, {})
+      vim.fn.getchar()
+      os.exit(1)
+    end
+  end
+  vim.opt.rtp:prepend(lazypath)
+end, function()
+    -- Prepend the runtime path with the directory of lazy
+    -- This means we can call `require("lazy")`
+    vim.opt.rtp:prepend([[lazy.nvim-plugin-path]])
+end)
+
+-- Actually execute the loading function we set above
+load_lazy()
 
 --[[ ------------------------------------------- ]]
 --[[ this is just the options set that is passed ]]
@@ -90,6 +129,7 @@ end
 --[[ ------------------------------------------- ]]
 local lazyOptions = {
   lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
+  performance = { rtp = { reset = set(true, false) } }
 }
 
 --[[ ------------------------------------------- ]]
@@ -99,119 +139,119 @@ local lazyOptions = {
 --[[ after that we just pass in the normal 2     ]]
 --[[ remaining arguments to the lazy setup()     ]]
 --[[ ------------------------------------------- ]]
-require('nixCatsUtils.lazyCat').setup(pluginList, nixLazyPath,
+require('lazy').setup(
   {
     -- NOTE: First, some plugins that don't require any configuration
 
     -- Git related plugins
-    {
-      'tpope/vim-fugitive',
-    },
+    -- {
+    --   'tpope/vim-fugitive',
+    -- },
 
     -- Detect tabstop and shiftwidth automatically
-    {
-      'tpope/vim-sleuth',
-    },
+    -- {
+    --   'tpope/vim-sleuth',
+    -- },
 
-    {
-      'HiPhish/rainbow-delimiters.nvim',
-      config = function ()
-        -- This module contains a number of default definitions
-        local rainbow_delimiters = require 'rainbow-delimiters'
-        ---@type rainbow_delimiters.config
-        vim.g.rainbow_delimiters = {
-          strategy = {
-            [''] = rainbow_delimiters.strategy['global'],
-            vim = rainbow_delimiters.strategy['local'],
-          },
-          query = {
-            [''] = 'rainbow-delimiters',
-            lua = 'rainbow-blocks',
-          },
-          priority = {
-            [''] = 110,
-            lua = 210,
-          },
-          highlight = {
-            'rainbowcol1',
-            'rainbowcol2',
-            'rainbowcol3',
-            'rainbowcol4',
-            'rainbowcol5',
-            'rainbowcol6',
-            'rainbowcol7',
-          },
-        }
-      end,
-      dependencies = {
-        lush_config,
-      },
-    },
+    -- {
+    --   'HiPhish/rainbow-delimiters.nvim',
+    --   config = function ()
+    --     -- This module contains a number of default definitions
+    --     local rainbow_delimiters = require 'rainbow-delimiters'
+    --     ---@type rainbow_delimiters.config
+    --     vim.g.rainbow_delimiters = {
+    --       strategy = {
+    --         [''] = rainbow_delimiters.strategy['global'],
+    --         vim = rainbow_delimiters.strategy['local'],
+    --       },
+    --       query = {
+    --         [''] = 'rainbow-delimiters',
+    --         lua = 'rainbow-blocks',
+    --       },
+    --       priority = {
+    --         [''] = 110,
+    --         lua = 210,
+    --       },
+    --       highlight = {
+    --         'rainbowcol1',
+    --         'rainbowcol2',
+    --         'rainbowcol3',
+    --         'rainbowcol4',
+    --         'rainbowcol5',
+    --         'rainbowcol6',
+    --         'rainbowcol7',
+    --       },
+    --     }
+    --   end,
+    --   dependencies = {
+    --     lush_config,
+    --   },
+    -- },
 
-    {
-      'NvChad/nvim-colorizer.lua',
-      main = "colorizer",
-      opts = {
-        filetypes = { '*' },
-        user_default_options = {
-          RGB = false,
-          RRGGBB = true,
-          names = false,
-          RRGGBBAA = true,
-          rgb_fn = true,
-          hsl_fn = true,
-          css = false,
-          css_fn = false,
-          mode = "virtualtext",
-          tailwind = false,
-          sass = { enable = false, parsers = {}, },
-          virtualtext = "■",
-        },
-        buftypes = {},
-      },
-    },
+    -- {
+    --   'NvChad/nvim-colorizer.lua',
+    --   main = "colorizer",
+    --   opts = {
+    --     filetypes = { '*' },
+    --     user_default_options = {
+    --       RGB = false,
+    --       RRGGBB = true,
+    --       names = false,
+    --       RRGGBBAA = true,
+    --       rgb_fn = true,
+    --       hsl_fn = true,
+    --       css = false,
+    --       css_fn = false,
+    --       mode = "virtualtext",
+    --       tailwind = false,
+    --       sass = { enable = false, parsers = {}, },
+    --       virtualtext = "■",
+    --     },
+    --     buftypes = {},
+    --   },
+    -- },
 
     -- NOTE: This is where your plugins related to LSP can be installed.
     --  The configuration is done below. Search for lspconfig to find it below.
-    {
-      -- LSP Configuration & Plugins
-      'neovim/nvim-lspconfig',
-      dependencies = {
-        -- Automatically install LSPs to stdpath for neovim
-        --[[ ----------------------------------------- ]]
-        --[[ Uh-oh! We don't want to use mason on nix! ]]
-        --[[ luckily we have our lazyAdd utility!      ]]
-        --[[ We can use it to add true only if not     ]]
-        --[[ loaded via nix.                           ]]
-        --[[ When NOT loaded in nix                    ]]
-        --[[ It returns the 1st value, otherwise,      ]]
-        --[[ it returns the 2nd value.                 ]]
-        --[[    (or nil if there wasnt one)            ]]
-        --[[ ----------------------------------------- ]]
-        {
-          'williamboman/mason.nvim',
-          enabled = require('nixCatsUtils.lazyCat').lazyAdd(true, false),
-        },
-        {
-          'williamboman/mason-lspconfig.nvim',
-          enabled = require('nixCatsUtils.lazyCat').lazyAdd(true, false),
-        },
-
-        -- Useful status updates for LSP
-        -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-        {
-          'j-hui/fidget.nvim', opts = {},
-        },
-
-        -- Additional lua configuration, makes nvim stuff amazing!
-        {
-          'folke/neodev.nvim',
-        },
-        {
-          'folke/neoconf.nvim',
-        },
-      },
-    },
+    -- {
+    --   -- LSP Configuration & Plugins
+    --   'neovim/nvim-lspconfig',
+    --   dependencies = {
+    --     -- Automatically install LSPs to stdpath for neovim
+    --     --[[ ----------------------------------------- ]]
+    --     --[[ Uh-oh! We don't want to use mason on nix! ]]
+    --     --[[ luckily we have our lazyAdd utility!      ]]
+    --     --[[ We can use it to add true only if not     ]]
+    --     --[[ loaded via nix.                           ]]
+    --     --[[ When NOT loaded in nix                    ]]
+    --     --[[ It returns the 1st value, otherwise,      ]]
+    --     --[[ it returns the 2nd value.                 ]]
+    --     --[[    (or nil if there wasnt one)            ]]
+    --     --[[ ----------------------------------------- ]]
+    --     {
+    --       'williamboman/mason.nvim',
+    --       enabled = require('nixCatsUtils.lazyCat').lazyAdd(true, false),
+    --     },
+    --     {
+    --       'williamboman/mason-lspconfig.nvim',
+    --       enabled = require('nixCatsUtils.lazyCat').lazyAdd(true, false),
+    --     },
+    --
+    --     -- Useful status updates for LSP
+    --     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+    --     {
+    --       'j-hui/fidget.nvim', opts = {},
+    --     },
+    --
+    --     -- Additional lua configuration, makes nvim stuff amazing!
+    --     {
+    --       'folke/neodev.nvim',
+    --     },
+    --     {
+    --       'folke/neoconf.nvim',
+    --     },
+    --   },
+    -- },
 
     {
       -- Autocompletion
@@ -371,21 +411,21 @@ require('nixCatsUtils.lazyCat').setup(pluginList, nixLazyPath,
         -- Fuzzy Finder Algorithm which requires local dependencies to be built.
         -- Only load if `make` is available. Make sure you have the system
         -- requirements installed.
-        {
-          'nvim-telescope/telescope-fzf-native.nvim',
-          -- NOTE: If you are having trouble with this installation,
-          --       refer to the README for telescope-fzf-native for more instructions.
-          --[[ --------------------------------- ]]
-          --[[ Uh-oh! This one has a build step! ]]
-          --[[ Nix has already done that for us. ]]
-          --[[ Use the lazyAdd function to       ]]
-          --[[ disable build steps on nix.       ]]
-          --[[ --------------------------------- ]]
-          build = require('nixCatsUtils.lazyCat').lazyAdd('make'),
-          cond = require('nixCatsUtils.lazyCat').lazyAdd(function()
-            return vim.fn.executable 'make' == 1
-          end),
-        },
+        -- {
+        --   'nvim-telescope/telescope-fzf-native.nvim',
+        --   -- NOTE: If you are having trouble with this installation,
+        --   --       refer to the README for telescope-fzf-native for more instructions.
+        --   --[[ --------------------------------- ]]
+        --   --[[ Uh-oh! This one has a build step! ]]
+        --   --[[ Nix has already done that for us. ]]
+        --   --[[ Use the lazyAdd function to       ]]
+        --   --[[ disable build steps on nix.       ]]
+        --   --[[ --------------------------------- ]]
+        --   build = require('nixCatsUtils.lazyCat').lazyAdd('make'),
+        --   cond = require('nixCatsUtils.lazyCat').lazyAdd(function()
+        --     return vim.fn.executable 'make' == 1
+        --   end),
+        -- },
       },
     },
 
@@ -397,7 +437,7 @@ require('nixCatsUtils.lazyCat').setup(pluginList, nixLazyPath,
           'nvim-treesitter/nvim-treesitter-textobjects',
         },
       },
-      build = require('nixCatsUtils.lazyCat').lazyAdd(':TSUpdate'),
+      -- build = require('nixCatsUtils.lazyCat').lazyAdd(':TSUpdate'),
     },
     -- {
     --   'm-demare/hlargs.nvim',
@@ -790,7 +830,7 @@ require('which-key').register({
   },
   -- [')'] = { '^', ".", mode = 'nx' },
   ['c'] = {
-    ['f'] = { vim.lsp.buf.formatting, "Format the current buffer.", mode = 'n' },
+    -- ['f'] = { vim.lsp.buf.formatting, "Format the current buffer.", mode = 'n' },
     ['r'] = { vim.lsp.buf.rename, "Rename all references to the currently selected symbol.", mode = 'n' },
     -- ['n'] = {
     --     ['s'] = { possession.new, "Create a new session.", mode = "n" },
@@ -924,10 +964,10 @@ require('which-key').register({
 --[[ ------------------------------------- ]]
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
-if not require('nixCatsUtils').isNixCats then
-  require('mason').setup()
-  require('mason-lspconfig').setup()
-end
+-- if not require('nixCatsUtils').isNixCats then
+--   require('mason').setup()
+--   require('mason-lspconfig').setup()
+-- end
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -953,9 +993,6 @@ local servers = {
         ignoreComments = true,
       },
       signatureHelp = { enabled = true },
-      diagnostics = {
-        globals = { "nixCats" },
-      },
     },
     workspace = { checkThirdParty = true },
     telemetry = { enabled = false },
@@ -1064,16 +1101,16 @@ local servers = {
 }
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+-- require('neodev').setup()
 
-require("neoconf").setup({
-  plugins = {
-    lua_ls = {
-      enabled = true,
-      enabled_for_neovim_config = true,
-    },
-  },
-})
+-- require("neoconf").setup({
+--   plugins = {
+--     lua_ls = {
+--       enabled = true,
+--       enabled_for_neovim_config = true,
+--     },
+--   },
+-- })
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -1082,17 +1119,17 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 --[[ Handling mason is covered in the help ]]
 --[[ See :help nixCats.luaUtils.mason      ]]
 --[[ ------------------------------------- ]]
-if require('nixCatsUtils').isNixCats then
-  for server_name, _ in pairs(servers) do
-    require('lspconfig')[server_name].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-      cmd = (servers[server_name] or {}).cmd,
-      root_pattern = (servers[server_name] or {}).root_pattern,
-    })
-  end
+if isNix then
+  -- for server_name, _ in pairs(servers) do
+  --   require('lspconfig')[server_name].setup({
+  --     capabilities = capabilities,
+  --     on_attach = on_attach,
+  --     settings = servers[server_name],
+  --     filetypes = (servers[server_name] or {}).filetypes,
+  --     cmd = (servers[server_name] or {}).cmd,
+  --     root_pattern = (servers[server_name] or {}).root_pattern,
+  --   })
+  -- end
 else
   -- Ensure the servers above are installed
   local mason_lspconfig = require 'mason-lspconfig'

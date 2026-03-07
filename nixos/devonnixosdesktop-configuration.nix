@@ -80,10 +80,10 @@ in
       modesetting.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
-    opengl = {
+    graphics = {
       extraPackages = [
         pkgs.libvdpau-va-gl
-        pkgs.vaapiVdpau
+        pkgs.libva-vdpau-driver
       ];
     };
     steam-hardware.enable = true;

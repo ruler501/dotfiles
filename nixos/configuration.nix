@@ -14,40 +14,35 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      grub = {
-        configurationLimit = 5;
-        devices = ["nodev"];
-        efiSupport = true;
+      systemd-boot = {
         enable = true;
-        useOSProber = true;
       };
     };
-    readOnlyNixStore = true;
   };
   console = {
     packages = [];
     useXkbConfig = true;
   };
-  documentation = {
-    enable = true;
-    dev.enable = true;
-    doc.enable = true;
-    info.enable = true;
-    man = {
-      enable = true;
-      generateCaches = true;
-      man-db = {
-        enable = true;
-      };
-    };
-    nixos = {
-      enable = true;
-      # includeAllModules = true; # Doesn't work with stylix
-      options = {
-        splitBuild = true;
-      };
-    };
-  };
+  # documentation = {
+  #   enable = true;
+  #   dev.enable = true;
+  #   doc.enable = true;
+  #   info.enable = true;
+  #   man = {
+  #     cache.enable = true;
+  #     enable = true;
+  #     man-db = {
+  #       enable = true;
+  #     };
+  #   };
+  #   nixos = {
+  #     enable = true;
+  #     # includeAllModules = true; # Doesn't work with stylix
+  #     options = {
+  #       splitBuild = true;
+  #     };
+  #   };
+  # };
   environment = {
     pathsToLink = [
       "/share/zsh"
@@ -78,18 +73,18 @@
       package = pkgs.bluez;
       powerOnBoot = true;
     };
-    ckb-next = {
-      enable = true;
-      package = pkgs.ckb-next;
-    };
+    # ckb-next = {
+    #   enable = true;
+    #   package = pkgs.ckb-next;
+    # };
     logitech.wireless = {
       enable = true;
       enableGraphical = true;
     };
     # Required for Steam to run per this GitHub comment:
     # https://github.com/NixOS/nixpkgs/issues/47932#issuecomment-447508411
-    opengl = {
-      driSupport32Bit = true;
+    graphics = {
+      # driSupport32Bit = true;
       enable = true;
     };
   };
@@ -122,6 +117,7 @@
     settings = {
       allowed-users = ["@wheel"];
       auto-optimise-store = true;
+      download-buffer-size = 1073741824; # 1GiB
       sandbox = true;
     };
     extraOptions = ''
@@ -137,8 +133,8 @@
     ];
   };
   programs = {
-    adb.enable = true;
-    command-not-found.enable = true;
+    # adb.enable = true;
+    # command-not-found.enable = true;
     less.enable = true;
     npm.enable = false;
     system-config-printer.enable = true;
@@ -163,14 +159,20 @@
       enable = true;
       sampleRate = 60;
     };
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     automatic-timezoned.enable = true;
     blueman.enable = true;
     displayManager = {
       autoLogin.enable = false;
-      defaultSession = "plasma";
+      # defaultSession = "plasma";
       sddm = {
         enable = true;
         enableHidpi = true;
+        wayland.enable = true;
       };
     };
     mongodb = {
@@ -179,8 +181,10 @@
       package = nixpkgs-stable.mongodb-4_4;
       replSetName = "rs0";
     };
-    nixseparatedebuginfod.enable = true;
-    printing.enable = true;
+    printing = {
+      drivers = [ pkgs.canon-cups-ufr2 ];
+      enable = true;
+    };
     pipewire = {
       enable = true;
       alsa = {
@@ -228,24 +232,26 @@
     };
     timesyncd.enable = true;
     uptimed.enable = true;
-    xserver = {
-      desktopManager.plasma5 = {
-        enable = true;
-      };
-      enable = true;
-      xkb = {
-        layout = "us";
-        options = "ctrl:nocaps";
-      };
-    };
+    desktopManager.plasma6.enable = true;
+
+    # xserver = {
+    #   desktopManager.plasma5 = {
+    #     enable = true;
+    #   };
+    #   enable = true;
+    #   xkb = {
+    #     layout = "us";
+    #     options = "ctrl:nocaps";
+    #   };
+    # };
   };
   stylix = {
     autoEnable = true;
     base16Scheme = colors.base16;
-    cursor = {
-      package = pkgs.qogir-icon-theme;
-      name = "Qogir";
-    };
+    # cursor = {
+    #   package = pkgs.qogir-icon-theme;
+    #   name = "Qogir";
+    # };
     fonts = {
       emoji = {
         package = pkgs.noto-fonts-emoji;

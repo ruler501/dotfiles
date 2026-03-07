@@ -1,83 +1,9 @@
-{ config, pkgs, nonicons, lib, secrets, colors, ... }@inputs: let
-  nodePackages = pkgs.nodePackages; utils = inputs.nixCats.utils;
-in { imports = [
-    inputs.nixCats.homeModule
-  ]; config = {
-    # this value, nixCats is the defaultPackageName you pass to mkNixosModules it will be the namespace for your options.
-    nixCats = {
-      # these are some of the options. For the rest see
-      # :help nixCats.flake.outputs.utils.mkNixosModules
-      # you do not need to use every option here, anything you do not define will be pulled from the flake instead.
-      enable = true;
-      # this will add the overlays from ./overlays and also, add any plugins in inputs named "plugins-pluginName" to pkgs.neovimPlugins It will not apply to overall system, just nixCats.
-      addOverlays = (import ./nixcat-overlays inputs) ++ [ (utils.standardPluginOverlay inputs)
-      ];
-      packageNames = [ "nvim" ];
-
-      luaPath = "${./../nvim/nixcats/.}";
-      # you could also import lua from the flake though, by not including this.
-
-      # categoryDefinitions.replace will replace the whole categoryDefinitions with a new one
-      categoryDefinitions.replace = ({ pkgs, settings, categories, name, ... }: { propagatedBuildInputs = {
-          # add to general or create a new list called whatever
-          general = [];
-        };
-        lspsAndRuntimeDeps = { general = [
-            pkgs.fd pkgs.gcc pkgs.lua-language-server pkgs.nil pkgs.nix-doc pkgs.nixd pkgs.ripgrep pkgs.universal-ctags pkgs.xclip nodePackages.bash-language-server 
-            nodePackages.diagnostic-languageserver pkgs.pyright nodePackages.typescript-language-server nodePackages.vscode-langservers-extracted
-          ];
-        };
-        startupPlugins = { lazy = [ pkgs.vimPlugins.lazy-nvim ]; general = {
-            gitPlugins = [];
-
-            vimPlugins = [ pkgs.vimPlugins.neodev-nvim pkgs.vimPlugins.neoconf-nvim pkgs.vimPlugins.nvim-cmp pkgs.vimPlugins.luasnip pkgs.vimPlugins.cmp_luasnip pkgs.vimPlugins.cmp-path 
-              pkgs.vimPlugins.cmp-nvim-lsp pkgs.vimPlugins.telescope-fzf-native-nvim pkgs.vimPlugins.plenary-nvim pkgs.vimPlugins.telescope-nvim pkgs.vimPlugins.nvim-treesitter-textobjects 
-              pkgs.vimPlugins.nvim-treesitter.withAllGrammars pkgs.vimPlugins.nvim-lspconfig pkgs.vimPlugins.fidget-nvim pkgs.vimPlugins.lualine-nvim pkgs.vimPlugins.gitsigns-nvim 
-              pkgs.vimPlugins.which-key-nvim pkgs.vimPlugins.comment-nvim pkgs.vimPlugins.vim-sleuth pkgs.vimPlugins.vim-fugitive pkgs.vimPlugins.indent-blankline-nvim 
-              pkgs.vimPlugins.lush-nvim pkgs.vimPlugins.vim-smoothie pkgs.vimPlugins.nvim-colorizer-lua pkgs.vimPlugins.rainbow-delimiters-nvim
-            ];
-          };
-        };
-        optionalPlugins = { general = [];
-        };
-        # shared libraries to be added to LD_LIBRARY_PATH variable available to nvim runtime
-        sharedLibraries = { general = [
-            # pkgs.libgit2
-          ];
-        };
-        environmentVariables = { test = {};
-        };
-        extraWrapperArgs = { test = [];
-        };
-        # lists of the functions you would have passed to python.withPackages or lua.withPackages
-
-        # get the path to this python environment in your lua config via vim.g.python3_host_prog or run from nvim terminal via :!<packagename>-python3
-        extraPython3Packages = { test = (_:[]);
-        };
-        extraPythonPackages = { test = (_:[]);
-        };
-        # populates $LUA_PATH and $LUA_CPATH
-        extraLuaPackages = { test = [ (_:[]) ];
-        };
-      });
-
-      # see :help nixCats.flake.outputs.packageDefinitions
-      packages = {
-        # These are the names of your packages you can include as many as you wish.
-        nvim = {pkgs , ... }: {
-          # they contain a settings set defined above see :help nixCats.flake.outputs.settings
-          settings = { wrapRc = true;
-            # IMPORTANT: you may not alias to nvim your alias may not conflict with your other packages.
-            aliases = [ "vim" "homeVim" ];
-            # caution: this option must be the same for all packages. nvimSRC = inputs.neovim;
-          };
-          # and a set of categories that you want (and other information to pass to lua)
-          categories = { general = true; test = true; colors = colors.named;
-          };
-        };
-      };
-    };
-    home = { activation = {
+{ config, pkgs, nonicons, lib, secrets, colors, ... }@inputs:
+{ 
+  imports = [ ];
+  config = {
+    home = {
+      activation = {
         pnpm-global = lib.hm.dag.entryAfter["writeBoundary"] "
           mkdir -p /home/devon/.pnpm_global ";
       };
@@ -88,7 +14,16 @@ in { imports = [
         "$HOME/.npm-global/bin"
       ]; stateVersion = "23.11"; username = "devon";
     };
-    programs = { command-not-found.enable = true; dircolors = {
+    programs = {
+      # command-not-found.enable = true;
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+        options = {
+          side-by-side = true;
+        };
+      };
+      dircolors = {
         enable = true; enableZshIntegration = true;
       };
       direnv = { config = {
@@ -99,13 +34,15 @@ in { imports = [
         };
         enableZshIntegration = true;
       };
-      firefox.profiles = {}; git = {
-        delta = {
-          enable = true; options = {
-            side-by-side = true;
-          };
-        };
-        enable = true; extraConfig = {
+      firefox.profiles = {};
+      git = {
+        enable = true;
+        includes = [ {
+            path = "~/.gnupg/.git-userconfig";
+          }
+        ];
+        lfs.enable = true;
+        settings = {
           color = {
             ui = true;
           };
@@ -124,14 +61,14 @@ in { imports = [
           };
           pull = { rebase = true;
           };
+          user = {
+            name = "Sabia Richards";
+            email = "friends.devon@gmail.com";
+          };
         };
-        includes = [ {
-            path = "~/.gnupg/.git-userconfig";
-          }
-        ]; lfs.enable = true; package = pkgs.gitAndTools.gitFull; signing = {
+        signing = {
           key = "friends.devon@gmail.com"; signByDefault = true;
         };
-        userName = "Devon Richards"; userEmail = "friends.devon@gmail.com";
       };
       gnome-terminal = { enable = true; profile."0c35006c-9b3f-4ea6-80ab-380ee0228a75" = {
           allowBold = true; backspaceBinding = "auto"; colors = {
@@ -171,19 +108,28 @@ in { imports = [
       info.enable = true; jq.enable = true; kitty = {
         enable = true;
       };
-      lsd = { enable = true; enableAliases = true;
+      lsd = { enable = true; enableZshIntegration = true;
       };
       mcfly = { enable = true; enableZshIntegration = true; keyScheme = "vim";
       };
-      ssh = { enable = true; compression = true;
+      ssh = {
+        enable = true;
+        # compression = true;
       };
-      texlive.enable = true; tmux.enable = true; vscode = {
-        enable = true; extensions = [
-          pkgs.vscode-extensions."2gua".rainbow-brackets pkgs.vscode-extensions.dracula-theme.theme-dracula pkgs.vscode-extensions.mikestead.dotenv 
-          pkgs.vscode-extensions.ms-kubernetes-tools.vscode-kubernetes-tools pkgs.vscode-extensions.ms-python.vscode-pylance
-          # pkgs.vscode-extensions.ms-python.python
-          pkgs.vscode-extensions.redhat.vscode-yaml pkgs.vscode-extensions.bungcip.better-toml pkgs.vscode-extensions.njpwerner.autodocstring
-        ]; package = pkgs.vscode-fhs; userSettings = {};
+      texlive.enable = true;
+      tmux.enable = true;
+      vscode = {
+        enable = true;
+        profiles.default = {
+          extensions = [
+            pkgs.vscode-extensions."2gua".rainbow-brackets pkgs.vscode-extensions.dracula-theme.theme-dracula pkgs.vscode-extensions.mikestead.dotenv 
+            pkgs.vscode-extensions.ms-kubernetes-tools.vscode-kubernetes-tools pkgs.vscode-extensions.ms-python.vscode-pylance
+            # pkgs.vscode-extensions.ms-python.python
+            pkgs.vscode-extensions.redhat.vscode-yaml pkgs.vscode-extensions.bungcip.better-toml pkgs.vscode-extensions.njpwerner.autodocstring
+          ];
+          userSettings = {};
+        };
+        package = pkgs.vscode-fhs;
       };
       zsh = {
         autosuggestion = { enable = true;
@@ -191,7 +137,7 @@ in { imports = [
         enable = true; enableCompletion = true; enableVteIntegration = true; history = {
           expireDuplicatesFirst = true; extended = true; ignoreDups = true; ignoreSpace = true; save = 32000; share = true; size = 65536;
         };
-        initExtra = '' function cdn {
+        initContent = '' function cdn {
               mkdir $1 cd $1
           }
 
@@ -227,7 +173,7 @@ in { imports = [
     };
     services = { blueman-applet.enable = true; gpg-agent = {
         enable = true; enableSshSupport = true; grabKeyboardAndMouse = true;
-        pinentryPackage = pkgs.pinentry-qt; # Needed on unstable, not supported on stable.
+        pinentry.package = pkgs.pinentry-qt; # Needed on unstable, not supported on stable.
       };
       pasystray.enable = true;
     };

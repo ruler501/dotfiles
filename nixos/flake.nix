@@ -3,13 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-old.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
     secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager";
       inputs = {
-        nixpkgs.follows = "nixpkgs-old";
+        nixpkgs.follows = "nixpkgs";
       };
     };
     nonicons = {
@@ -17,21 +16,21 @@
       flake = false;
     };
     stylix = {
-      url = "github:danth/stylix/release-24.05";
+      url = "github:danth/stylix";
       inputs = {
-        nixpkgs.follows = "nixpkgs-old";
-        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
       };
     };
-    nixCats = {
-      url = "github:BirdeeHub/nixCats-nvim";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-old";
-      };
+    nixPatch = {
+      url = "git+https://codeberg.org/NicoElbers/nixPatch-nvim.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+
+      # We do this so that we ensure neovim nightly actually updates
+      # inputs.neovim-nightly-overlay.follows = "neovim-nightly-overlay";
     };
   };
 
-  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixCats, ... }@inputs:
+  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixPatch, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs {
@@ -49,17 +48,17 @@
       inherit secrets;
       inherit colors;
       inherit stylix;
-      inherit nixCats;
+      inherit nixPatch;
       nixpkgs-stable = pkgs-stable;
       nixpkgs-unstable = pkgs-unstable;
     };
-    configuration = hostname: nixpkgs-stable.lib.nixosSystem {
+    configuration = hostname: nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = specialArgs // { inherit hostname; };
       modules = [
         (./configuration.nix)
         (./systemPackages.nix)
-        (./cockroachdb.nix)
+        # (./cockroachdb.nix)
         (home-manager.nixosModules.home-manager)
         ({
           home-manager = {

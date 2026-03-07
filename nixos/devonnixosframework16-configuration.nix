@@ -48,14 +48,9 @@ in
   hardware = {
     cpu.amd.updateMicrocode = true;
     enableRedistributableFirmware = true;
-    keyboard = {
-      qmk = {
-        enable = true;
-      };
-    };
-    opengl = {
+    graphics = {
       extraPackages = [
-        pkgs.vaapiVdpau
+        pkgs.libva-vdpau-driver
         pkgs.libvdpau-va-gl
         # pkgs.mangohud
         # pkgs.gamescope
@@ -64,6 +59,11 @@ in
       extraPackages32 = [
         # pkgs.gamescope
       ];
+    };
+    keyboard = {
+      qmk = {
+        enable = true;
+      };
     };
     sensor = {
       iio = {

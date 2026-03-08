@@ -1,49 +1,12 @@
---[[
+-- Set <space> as the leader key
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
-
-
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
---]]
-
---[[ ----------------------------------- ]]
---[[ This setup function will provide    ]]
---[[ a default value for the nixCats('') ]]
---[[ function so that it will not throw  ]]
---[[ an error if not loaded via nixCats  ]]
---[[ ----------------------------------- ]]
+----------------------------
+-- UTILS
+----------------------------
 local set = function(nonNix, nix)
     if vim.g.nix == true then
         return nix
@@ -51,53 +14,10 @@ local set = function(nonNix, nix)
         return nonNix
     end
 end
-
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-local lush_config = {
-  'rktjmp/lush.nvim',
-  lazy = false,
-  config = function()
-    require('lush')(require('lush_theme/darkviolet'));
-  end,
-}
-
---[[ ------------------------------------- ]]
---[[ This is our lazy wrapper. First we    ]]
---[[ combine our plugin names into 1 list  ]]
---[[ or table, then we override any that   ]]
---[[ have a different name when loaded via ]]
---[[ nix. Then we also get the lazy path   ]]
---[[ ------------------------------------- ]]
-
-local pluginList = nil
-local nixLazyPath = nil
-local isNix = vim.g.nix == true
--- if isNix then
---   local allPlugins = require("nixCats").pawsible.allPlugins
---   -- it is called pluginList because we only need to pass in the names
---   pluginList = require('nixCatsUtils.lazyCat').mergePluginTables(allPlugins.start, allPlugins.opt)
---   -- it wasnt detecting these because the names are slightly different.
---   -- when that happens, add them to the list, then also specify name in the lazySpec
---   pluginList[ [[Comment.nvim]] ] = ""
---   pluginList[ [[LuaSnip]] ] = ""
---   nixLazyPath = allPlugins.start[ [[lazy.nvim]] ]
--- end
-
-local set = function(nonNix, nix)
-  if vim.g.nix == true then
-    return nix
-  else
-    return nonNix
-  end
-end
+local isNix = set(false, true)
 
 -- Bootstrap lazy.nvim
-local load_lazy = set(function()
+local load_lazy_non_nix = function()
   local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
   if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -113,14 +33,29 @@ local load_lazy = set(function()
     end
   end
   vim.opt.rtp:prepend(lazypath)
-end, function()
+end
+
+local load_lazy_nix = function()
     -- Prepend the runtime path with the directory of lazy
     -- This means we can call `require("lazy")`
     vim.opt.rtp:prepend([[lazy.nvim-plugin-path]])
-end)
+end
+
+local load_lazy = set(load_lazy_non_nix, load_lazy_nix)
 
 -- Actually execute the loading function we set above
 load_lazy()
+
+----------------------------
+-- LAZY CONFIG
+----------------------------
+local lush_config = {
+  'rktjmp/lush.nvim',
+  lazy = false,
+  config = function()
+    require('lush')(require('lush_theme/darkviolet'));
+  end,
+}
 
 --[[ ------------------------------------------- ]]
 --[[ this is just the options set that is passed ]]
@@ -459,9 +394,10 @@ require('lazy').setup(
   }, lazyOptions)
 
 
--- [[ Setting options ]]
+----------------------------
+-- NEOVIM OPTIONS
+----------------------------
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
 
 vim.o.autochdir = false                 -- Don't change directories automatically.
 vim.o.autoread = true                   -- Auto reload if no changes in buffer.
@@ -527,6 +463,24 @@ vim.o.writebackup = false               -- Some servers have issues with backup 
 --     foldsep = "│",
 --     foldclose = "▸",
 -- }
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Case-insensitive searching UNLESS \C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Keep signcolumn on by default
+vim.wo.signcolumn = 'yes'
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
+
+----------------------------
+-- CUSTOM COMMANDS
+----------------------------
 vim.cmd([[cabbrev wq execute "Format sync" <bar> wq]]) -- Run formatting on wq.
 
 vim.cmd([[
@@ -556,24 +510,10 @@ vim.cmd([[
   endfunction
 ]])
 
--- Enable break indent
-vim.o.breakindent = true
 
--- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
--- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
-
--- [[ Basic Keymaps ]]
-
-
--- [[ Highlight on yank ]]
+----------------------------
+-- HIGHLIGHT ON YANK
+----------------------------
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -584,7 +524,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- [[ Configure Telescope ]]
+
+----------------------------
+-- TELESCOPE
+----------------------------
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
@@ -644,7 +587,10 @@ local function telescope_live_grep_open_files()
   }
 end
 
--- [[ Configure Treesitter ]]
+
+----------------------------
+-- TREESITTER
+----------------------------
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
@@ -713,7 +659,10 @@ vim.defer_fn(function()
   }
 end, 0)
 
--- [[ Configure LSP ]]
+
+----------------------------
+-- LANGUAGE SERVER KEYBINDINGS
+----------------------------
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -758,6 +707,9 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+----------------------------
+-- KEYBINDINGS
+----------------------------
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 -- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -957,7 +909,9 @@ require('which-key').register({
 
 
 
-
+----------------------------
+-- LANGUAGE SERVERS
+----------------------------
 --[[ ------------------------------------- ]]
 --[[ Handling mason is covered in the help ]]
 --[[ See :help nixCats.luaUtils.mason      ]]
@@ -1154,6 +1108,10 @@ end
 --[[ See :help nixCats.luaUtils.mason      ]]
 --[[ ------------------------------------- ]]
 
+
+----------------------------
+-- NVIM CMP
+----------------------------
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'

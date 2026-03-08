@@ -15,38 +15,39 @@ let
   in
   {
     # The path to your neovim configuration.
-    luaPath = ./../nvim/nixcats/.;
+    luaPath = ./../nvim_config/.;
 
     # Plugins you use in your configuration.
     plugins = [
-      pkgs.vimPlugins.lazy-nvim
-      pkgs.vimPlugins.neodev-nvim
-      pkgs.vimPlugins.neoconf-nvim
-      pkgs.vimPlugins.nvim-cmp
-      pkgs.vimPlugins.luasnip
-      pkgs.vimPlugins.cmp_luasnip
-      pkgs.vimPlugins.cmp-path
       pkgs.vimPlugins.cmp-nvim-lsp
-      pkgs.vimPlugins.telescope-fzf-native-nvim
-      pkgs.vimPlugins.plenary-nvim
-      pkgs.vimPlugins.telescope-nvim
-      pkgs.vimPlugins.nvim-treesitter-textobjects
-      pkgs.vimPlugins.nvim-treesitter-legacy.withAllGrammars
-      pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.fidget-nvim
-      pkgs.vimPlugins.lualine-nvim
-      pkgs.vimPlugins.gitsigns-nvim
-      pkgs.vimPlugins.which-key-nvim
+      pkgs.vimPlugins.cmp-path
+      pkgs.vimPlugins.cmp_luasnip
       pkgs.vimPlugins.comment-nvim
-      pkgs.vimPlugins.vim-sleuth
-      pkgs.vimPlugins.vim-fugitive
+      pkgs.vimPlugins.fidget-nvim
+      pkgs.vimPlugins.gitsigns-nvim
       pkgs.vimPlugins.indent-blankline-nvim
+      pkgs.vimPlugins.lazy-nvim
+      pkgs.vimPlugins.lualine-nvim
+      pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.lush-nvim
-      pkgs.vimPlugins.vim-smoothie
-      pkgs.vimPlugins.nvim-colorizer-lua
-      pkgs.vimPlugins.rainbow-delimiters-nvim
       pkgs.vimPlugins.mini-icons
+      pkgs.vimPlugins.neoconf-nvim
+      pkgs.vimPlugins.neodev-nvim
+      pkgs.vimPlugins.nvim-cmp
+      # pkgs.vimPlugins.nvim-colorizer-lua
+      pkgs.vimPlugins.nvim-lspconfig
+      pkgs.vimPlugins.nvim-treesitter-legacy.withAllGrammars
+      pkgs.vimPlugins.nvim-treesitter-textobjects
       pkgs.vimPlugins.nvim-web-devicons
+      pkgs.vimPlugins.plenary-nvim
+      # pkgs.vimPlugins.rainbow-delimiters-nvim
+      # pkgs.vimPlugins.telescope-fzf-native-nvim
+      pkgs.vimPlugins.telescope-nvim
+      pkgs.vimPlugins.trouble-nvim
+      # pkgs.vimPlugins.vim-fugitive
+      pkgs.vimPlugins.vim-sleuth
+      pkgs.vimPlugins.vim-smoothie
+      pkgs.vimPlugins.which-key-nvim
     ];
 
     # Runtime dependencies. This is thing like tree-sitter, lsps or programs
@@ -54,8 +55,10 @@ let
     runtimeDeps = [
       pkgs.fd
       pkgs.gcc
+      pkgs.llvmPackages.clang-unwrapped
+      pkgs.pyright
+      pkgs.marksman
       pkgs.lua-language-server
-      pkgs.nil
       pkgs.nix-doc
       pkgs.nixd
       pkgs.ripgrep
@@ -66,13 +69,14 @@ let
       pkgs.pyright
       pkgs.nodePackages.typescript-language-server
       pkgs.nodePackages.vscode-langservers-extracted
+      pkgs.wl-clipboard-rs
     ];
 
     # Environment variables set during neovim runtime.
     environmentVariables = { };
 
     # Aliases for the patched config
-    aliases = [ "vim" "vi" ];
+    aliases = [ "vim" "vi" "nvim" ];
 
     # Extra wrapper args you want to pass.
     # Look here if you don't know what those are:

@@ -1,0 +1,148 @@
+-- LSP Configuration & Plugins
+local utils = require("utils")
+
+local update_border = function()
+    local border = {
+        { "╭", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╮", "FloatBorder" },
+        { "│", "FloatBorder" },
+        { "╯", "FloatBorder" },
+        { "─", "FloatBorder" },
+        { "╰", "FloatBorder" },
+        { "│", "FloatBorder" },
+    }
+    local orig_floating_preview = vim.lsp.util.open_floating_preview
+
+    ---@diagnostic disable-next-line: duplicate-set-field
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or border
+        return orig_floating_preview(contents, syntax, opts, ...)
+    end
+end
+
+local on_attach = function(client, bufnr)
+  update_border()
+
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = "LSP: " .. desc
+    end
+
+    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  -- Supports
+  local supp = function(method)
+    return client.supports_method(method)
+  end
+
+  -- Conditional normal map
+  local cnmap = function(method, keys, func, desc)
+    if supp(method) then
+      nmap(keys, func, desc)
+    end
+  end
+
+  cnmap("textDocument/hover", "K", vim.lsp.buf.hover, "Hover Docs")
+  cnmap("textDocument/definition", "gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+  cnmap("textDocument/declaration", "gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+  cnmap("textDocument/implementation", "gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+  cnmap("textDocument/typeDefinition", "<leader>de", vim.lsp.buf.type_definition, "[T]ype [D]efinition")
+  cnmap("textDocument/rename", "<leader>rn", vim.lsp.buf.rename, "[R]e[N]ame")
+  cnmap("textDocument/codeAction", "<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+  nmap('<leader>TD', require('telescope.builtin').lsp_type_definitions, '[T]ype [D]efinitions')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  if supp("textDocument/inlayHint") then
+    vim.lsp.inlay_hint.enable(true)
+  end
+end
+
+return {
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      {
+        'williamboman/mason.nvim',
+        enabled = utils.set(true, false),
+      },
+      {
+        'williamboman/mason-lspconfig.nvim',
+        enabled = utils.set(true, false),
+      },
+
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      {
+        'j-hui/fidget.nvim',
+        opts = {},
+      },
+      -- Additional lua configuration, makes nvim stuff amazing!
+      {
+        'folke/neodev.nvim',
+      },
+      {
+        'folke/neoconf.nvim',
+      },
+    },
+    config = function()
+      if utils.isNotNix then
+        -- mason-lspconfig requires that these setup functions are called in this order
+        -- before setting up the servers.
+        require('mason').setup()
+        require('mason-lspconfig').setup()
+      end
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+      local lspconfig = require("lspconfig")
+
+       -- c/ c++
+       lspconfig.clangd.setup({
+           on_attach = on_attach,
+           cmd = { "clangd" },
+           capabilities = capabilities,
+       })
+
+       -- Lua
+       lspconfig.lua_ls.setup({
+           on_attach = utils.on_attach,
+           cmd = { "lua-language-server" },
+           capabilities = capabilities,
+       })
+
+       -- Markdown
+       lspconfig.marksman.setup({
+           on_attach = utils.on_attach,
+           cmd = { "marksman" },
+           capabilities = capabilities,
+       })
+
+       -- Nix
+       lspconfig.nixd.setup({
+           on_attach = utils.on_attach,
+           cmd = { "nixd" },
+           capabilities = capabilities,
+       })
+
+       -- Python
+       lspconfig.pyright.setup({
+           on_attach = utils.on_attach,
+           cmd = { "pyright-langserver" },
+           capabilities = capabilities,
+       })
+
+       -- Web
+       lspconfig.tsserver.setup({
+           on_attach = utils.on_attach,
+           capabilities = capabilities,
+       })
+    end,
+  },
+}

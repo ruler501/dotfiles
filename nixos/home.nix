@@ -1,4 +1,7 @@
 { config, pkgs, nonicons, lib, secrets, colors, ... }@inputs:
+let
+ zshDotDir = "${config.xdg.configHome}/zsh";
+in
 { 
   imports = [ ];
   config = {
@@ -7,7 +10,7 @@
         pnpm-global = lib.hm.dag.entryAfter["writeBoundary"] "
           mkdir -p /home/devon/.pnpm_global ";
       };
-      file = { ".config/fonts/nonicons.ttf".source = "${nonicons.outPath}/dist/nonicons.ttf"; ".zsh/plugins/plugins/poetry/_poetry".source = ../_poetry; ".pdbrc".source = ../pdbrc; 
+      file = { ".config/fonts/nonicons.ttf".source = "${nonicons.outPath}/dist/nonicons.ttf"; "${zshDotDir}/plugins/plugins/poetry/_poetry".source = ../_poetry; ".pdbrc".source = ../pdbrc; 
         ".gnupg/sshcontrol".text = secrets.gnupg.sshcontrol;
       };
       homeDirectory = "/home/devon"; keyboard.options = [ "ctrl:nocaps" ]; sessionPath = [
@@ -136,7 +139,7 @@
         autosuggestion = { 
           enable = true;
         };
-        dotDir = "${config.xdg.configHome}/zsh";
+        dotDir = zshDotDir;
         enable = true;
         enableCompletion = true;
         enableVteIntegration = true;
@@ -160,14 +163,38 @@
           POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = [ "context" "dir" "vcs" ]; POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [ "status" "time" ]; DISABLE_AUTO_UPDATE = "false"; ENABLE_CORRECTION = "true"; 
           COMPLETION_WAITING_DOTS = "true"; DISABLE_UNTRACKED_FILES_DIRTY = "true"; HIST_STAMPS = "yyyy-mm-dd";
         };
-        oh-my-zsh = { custom = "\$HOME/.zsh/plugins"; enable = true; extraConfig = ''
-            zstyle ':completion:*' use-cache on zstyle ':completion:*' cache-path ~/.zsh/cache zstyle ':completion:*' completer _complete _match _approximate zstyle ':completion:*:match:*' 
+        oh-my-zsh = {
+          custom = "${zshDotDir}/plugins";
+          enable = true;
+          extraConfig = ''
+            zstyle ':completion:*' use-cache on zstyle ':completion:*' cache-path ${zshDotDir}/cache zstyle ':completion:*' completer _complete _match _approximate zstyle ':completion:*:match:*' \
             original only zstyle ':completion:*:approximate:*' max-errors 1 numeric zstyle -e ':completion:*:approximate:*' \
                     max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)' zstyle ':completion:*:functions' ignored-patterns '_*'
-          ''; plugins = [
-            "git" "colored-man-pages" "colorize" "compleat" "cp" "dircycle" "dirhistory" "emoji" "emoji-clock" "fasd" "git-extras" "history-substring-search" "kubectl" "pip" "poetry" 
-            "python" "rand-quote" "screen" "sudo" "tmux" "wd"
-          ]; theme = "powerlevel10k/powerlevel10k";
+          '';
+          plugins = [
+            "git"
+            "colored-man-pages"
+            "colorize"
+            "compleat"
+            "cp"
+            "dircycle"
+            "dirhistory"
+            "emoji"
+            "emoji-clock"
+            "fasd"
+            "git-extras"
+            "history-substring-search"
+            "kubectl"
+            "pip"
+            "poetry" 
+            "python"
+            "rand-quote"
+            "screen"
+            "sudo"
+            "tmux"
+            "wd"
+          ];
+          theme = "powerlevel10k/powerlevel10k";
         };
         plugins = [ {
             name = "themes/powerlevel10k"; src = "${pkgs.zsh-powerlevel10k.outPath}/share/zsh-powerlevel10k";

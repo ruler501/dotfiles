@@ -31,13 +31,16 @@ let
       pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.lush-nvim
       pkgs.vimPlugins.mini-icons
+      pkgs.vimPlugins.neo-tree-nvim
       pkgs.vimPlugins.neodev-nvim
+      pkgs.vimPlugins.nui-nvim
       pkgs.vimPlugins.nvim-cmp
       # pkgs.vimPlugins.nvim-colorizer-lua
       pkgs.vimPlugins.nvim-lspconfig
       pkgs.vimPlugins.nvim-treesitter-legacy.withAllGrammars
       pkgs.vimPlugins.nvim-treesitter-textobjects
       pkgs.vimPlugins.nvim-web-devicons
+      pkgs.vimPlugins.nvim-window-picker
       pkgs.vimPlugins.plenary-nvim
       # pkgs.vimPlugins.rainbow-delimiters-nvim
       # pkgs.vimPlugins.telescope-fzf-native-nvim
@@ -46,6 +49,7 @@ let
       # pkgs.vimPlugins.vim-fugitive
       pkgs.vimPlugins.vim-sleuth
       pkgs.vimPlugins.vim-smoothie
+      pkgs.vimPlugins.vimtex
       pkgs.vimPlugins.which-key-nvim
     ];
 

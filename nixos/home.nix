@@ -120,7 +120,10 @@ in
         enableDefaultConfig = false;
         # compression = true;
       };
-      texlive.enable = true;
+      texlive = {
+        enable = true;
+        extraPackages = tpkgs: { inherit (tpkgs) scheme-full; };
+      };
       tmux.enable = true;
       vscode = {
         enable = true;

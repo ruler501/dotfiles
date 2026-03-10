@@ -66,12 +66,12 @@ in
     nixpkgs-stable.ripgrep-all # Fails tests on unstable
     pkgs.sad
     pkgs.simplescreenrecorder
-    pkgs.texlive.combined.scheme-full
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc
     pkgs.wget
     pkgs.xdg-utils
+    pkgs.zathura
     pkgs.zoom-us
   ];
 }

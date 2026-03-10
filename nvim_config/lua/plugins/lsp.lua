@@ -52,10 +52,11 @@ local on_attach = function(client, bufnr)
   cnmap("textDocument/typeDefinition", "<leader>de", vim.lsp.buf.type_definition, "[T]ype [D]efinition")
   cnmap("textDocument/rename", "<leader>rn", vim.lsp.buf.rename, "[R]e[N]ame")
   cnmap("textDocument/codeAction", "<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+  cnmap("textDocument/documentSymbols", '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  cnmap("textDocument/documentSymbols", 'sds', "<Cmd>Neotree document_symbols<CR>", '[D]ocument [S]ymbols')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>TD', require('telescope.builtin').lsp_type_definitions, '[T]ype [D]efinitions')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   if supp("textDocument/inlayHint") then
@@ -157,8 +158,8 @@ return {
           -- Unset 'omnifunc'
           vim.bo[args.buf].omnifunc = nil
           -- Unmap K
-          vim.keymap.del('n', 'K', { buffer = args.buf })
-          vim.keymap.set('n', 'K', '5<Plug>(SmoothieUpwards)', { desc = "Scroll smoothly upwards 5 lines.", noremap = false })
+          -- vim.keymap.del('n', 'K', { buffer = args.buf })
+          vim.keymap.set('n', 'K', '5<Plug>(SmoothieUpwards)', { buffer = args.buf, desc = "Scroll smoothly upwards 5 lines.", remap = true })
           -- Disable document colors
           -- vim.lsp.document_color.enable(false, args.buf)
         end,

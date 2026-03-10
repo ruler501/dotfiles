@@ -168,6 +168,7 @@ return {
         {
           prefix = 's',
           children = {
+            { 'b', "<Cmd>Neotree buffers<CR>", desc = "Show the Neotree buffer explorer.", mode = "n" },
             {
               prefix = 'c',
               children = {
@@ -175,6 +176,7 @@ return {
               }
             },
             { 'e', vim.diagnostic.open_float, desc = "Show diagnostics in a new float.", mode = 'n' },
+            { 'f', "<Cmd>Neotree filesystem<CR>", desc = "Show the Neotree file explorer.", mode = "n" },
             {
               prefix ='h',
               children = {

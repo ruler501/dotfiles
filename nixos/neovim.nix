@@ -31,7 +31,6 @@ let
       pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.lush-nvim
       pkgs.vimPlugins.mini-icons
-      pkgs.vimPlugins.neoconf-nvim
       pkgs.vimPlugins.neodev-nvim
       pkgs.vimPlugins.nvim-cmp
       # pkgs.vimPlugins.nvim-colorizer-lua
@@ -53,23 +52,27 @@ let
     # Runtime dependencies. This is thing like tree-sitter, lsps or programs
     # like ripgrep.
     runtimeDeps = [
-      pkgs.fd
-      pkgs.gcc
+      pkgs.nodePackages.bash-language-server
       pkgs.llvmPackages.clang-unwrapped
-      pkgs.pyright
-      pkgs.marksman
+      pkgs.cmake-language-server
+      # pkgs.nodePackages.diagnostic-languageserver
+      pkgs.docker-compose-language-service
+      pkgs.docker-language-server
+      pkgs.fd
+      pkgs.futhark
+      pkgs.gcc
       pkgs.lua-language-server
+      pkgs.marksman
       pkgs.nix-doc
       pkgs.nixd
-      pkgs.ripgrep
-      pkgs.universal-ctags
-      pkgs.xclip
-      pkgs.nodePackages.bash-language-server 
-      pkgs.nodePackages.diagnostic-languageserver
       pkgs.pyright
+      pkgs.ripgrep
+      pkgs.systemd-lsp
       pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.vscode-langservers-extracted
+      pkgs.universal-ctags
+      # pkgs.nodePackages.vscode-langservers-extracted
       pkgs.wl-clipboard-rs
+      pkgs.xclip
     ];
 
     # Environment variables set during neovim runtime.

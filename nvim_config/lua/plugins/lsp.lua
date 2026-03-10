@@ -86,9 +86,6 @@ return {
       {
         'folke/neodev.nvim',
       },
-      {
-        'folke/neoconf.nvim',
-      },
     },
     config = function()
       if utils.isNotNix then
@@ -98,51 +95,110 @@ return {
         require('mason-lspconfig').setup()
       end
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      --
+      -- local lspconfig = require("lspconfig")
+      --
+      --  -- c/ c++
+      --  lspconfig.clangd.setup({
+      --      on_attach = on_attach,
+      --      cmd = { "clangd" },
+      --      capabilities = capabilities,
+      --  })
+      --
+      --  -- Lua
+      --  lspconfig.lua_ls.setup({
+      --      on_attach = utils.on_attach,
+      --      cmd = { "lua-language-server" },
+      --      capabilities = capabilities,
+      --  })
+      --
+      --  -- Markdown
+      --  lspconfig.marksman.setup({
+      --      on_attach = utils.on_attach,
+      --      cmd = { "marksman" },
+      --      capabilities = capabilities,
+      --  })
+      --
+      --  -- Nix
+      --  lspconfig.nixd.setup({
+      --      on_attach = utils.on_attach,
+      --      cmd = { "nixd" },
+      --      capabilities = capabilities,
+      --  })
+      --
+      --  -- Python
+      --  lspconfig.pyright.setup({
+      --      on_attach = utils.on_attach,
+      --      cmd = { "pyright-langserver" },
+      --      capabilities = capabilities,
+      --  })
+      --
+      --  -- Web
+      --  lspconfig.tsserver.setup({
+      --      on_attach = utils.on_attach,
+      --      capabilities = capabilities,
+      --  })
+      vim.lsp.config('lua_ls', {
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if
+              path ~= vim.fn.stdpath('config')
+              and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+            then
+              return
+            end
+          end
 
-      local lspconfig = require("lspconfig")
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              -- Tell the language server which version of Lua you're using (most
+              -- likely LuaJIT in the case of Neovim)
+              version = 'LuaJIT',
+              -- Tell the language server how to find Lua modules same way as Neovim
+              -- (see `:h lua-module-load`)
+              path = {
+                'lua/?.lua',
+                'lua/?/init.lua',
+              },
+            },
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME,
+                -- Depending on the usage, you might want to add additional paths
+                -- here.
+                -- '${3rd}/luv/library',
+                -- '${3rd}/busted/library',
+              },
+              -- Or pull in all of 'runtimepath'.
+              -- NOTE: this is a lot slower and will cause issues when working on
+              -- your own configuration.
+              -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+              -- library = vim.api.nvim_get_runtime_file('', true),
+            },
+          })
+        end,
+        settings = {
+          Lua = {},
+        },
+      })
 
-       -- c/ c++
-       lspconfig.clangd.setup({
-           on_attach = on_attach,
-           cmd = { "clangd" },
-           capabilities = capabilities,
-       })
-
-       -- Lua
-       lspconfig.lua_ls.setup({
-           on_attach = utils.on_attach,
-           cmd = { "lua-language-server" },
-           capabilities = capabilities,
-       })
-
-       -- Markdown
-       lspconfig.marksman.setup({
-           on_attach = utils.on_attach,
-           cmd = { "marksman" },
-           capabilities = capabilities,
-       })
-
-       -- Nix
-       lspconfig.nixd.setup({
-           on_attach = utils.on_attach,
-           cmd = { "nixd" },
-           capabilities = capabilities,
-       })
-
-       -- Python
-       lspconfig.pyright.setup({
-           on_attach = utils.on_attach,
-           cmd = { "pyright-langserver" },
-           capabilities = capabilities,
-       })
-
-       -- Web
-       lspconfig.tsserver.setup({
-           on_attach = utils.on_attach,
-           capabilities = capabilities,
-       })
+      vim.lsp.enable("bashls")
+      vim.lsp.enable("clangd")
+      vim.lsp.enable("cmake")
+      vim.lsp.enable('docker_compose_language_service')
+      vim.lsp.enable("docker_language_server")
+      vim.lsp.enable("futhark_lsp")
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("marksman")
+      vim.lsp.enable("nixd")
+      vim.lsp.enable("pyright")
+      vim.lsp.enable("systemd_lsp")
+      vim.lsp.enable("ts_ls")
     end,
   },
 }

@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
     end
   end
 
-  cnmap("textDocument/hover", "K", vim.lsp.buf.hover, "Hover Docs")
+  cnmap("textDocument/hover", "<C-h>", vim.lsp.buf.hover, "Hover Docs")
   cnmap("textDocument/definition", "gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
   cnmap("textDocument/declaration", "gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
   cnmap("textDocument/implementation", "gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
@@ -69,11 +69,11 @@ return {
     dependencies = {
       {
         'williamboman/mason.nvim',
-        enabled = utils.set(true, false),
+        enabled = utils.isNotNix,
       },
       {
         'williamboman/mason-lspconfig.nvim',
-        enabled = utils.set(true, false),
+        enabled = utils.isNotNix,
       },
 
       -- Useful status updates for LSP
@@ -95,51 +95,14 @@ return {
         require('mason-lspconfig').setup()
       end
 
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-      --
-      -- local lspconfig = require("lspconfig")
-      --
-      --  -- c/ c++
-      --  lspconfig.clangd.setup({
-      --      on_attach = on_attach,
-      --      cmd = { "clangd" },
-      --      capabilities = capabilities,
-      --  })
-      --
-      --  -- Lua
-      --  lspconfig.lua_ls.setup({
-      --      on_attach = utils.on_attach,
-      --      cmd = { "lua-language-server" },
-      --      capabilities = capabilities,
-      --  })
-      --
-      --  -- Markdown
-      --  lspconfig.marksman.setup({
-      --      on_attach = utils.on_attach,
-      --      cmd = { "marksman" },
-      --      capabilities = capabilities,
-      --  })
-      --
-      --  -- Nix
-      --  lspconfig.nixd.setup({
-      --      on_attach = utils.on_attach,
-      --      cmd = { "nixd" },
-      --      capabilities = capabilities,
-      --  })
-      --
-      --  -- Python
-      --  lspconfig.pyright.setup({
-      --      on_attach = utils.on_attach,
-      --      cmd = { "pyright-langserver" },
-      --      capabilities = capabilities,
-      --  })
-      --
-      --  -- Web
-      --  lspconfig.tsserver.setup({
-      --      on_attach = utils.on_attach,
-      --      capabilities = capabilities,
-      --  })
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+      vim.lsp.config('*', {
+        on_attach = on_attach,
+        capabilities = capabilities
+      })
+
       vim.lsp.config('lua_ls', {
         on_init = function(client)
           if client.workspace_folders then
@@ -185,6 +148,20 @@ return {
         settings = {
           Lua = {},
         },
+      })
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          -- Unset 'formatexpr'
+          -- vim.bo[args.buf].formatexpr = nil
+          -- Unset 'omnifunc'
+          vim.bo[args.buf].omnifunc = nil
+          -- Unmap K
+          vim.keymap.del('n', 'K', { buffer = args.buf })
+          vim.keymap.set('n', 'K', '5<Plug>(SmoothieUpwards)', { desc = "Scroll smoothly upwards 5 lines.", noremap = false })
+          -- Disable document colors
+          -- vim.lsp.document_color.enable(false, args.buf)
+        end,
       })
 
       vim.lsp.enable("bashls")

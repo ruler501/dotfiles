@@ -134,7 +134,7 @@ return {
           },
         },
         {'<C-N>', '<Cmd>enew<CR>', desc = "Open a blank new buffer.", mode = 'n' },
-        {'p', '"_dP', desc = "Paste from the system clipboard.", mode = 'x' },
+        -- {'p', '"_dP', desc = "Paste from the system clipboard.", mode = 'x' },
         {'q', '<Nop>', mode = 'n' },
         {
           prefix = '<C-R>',

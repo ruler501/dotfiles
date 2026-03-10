@@ -69,10 +69,8 @@ let
       pkgs.ripgrep
       pkgs.systemd-lsp
       pkgs.nodePackages.typescript-language-server
-      pkgs.universal-ctags
       # pkgs.nodePackages.vscode-langservers-extracted
       pkgs.wl-clipboard-rs
-      pkgs.xclip
     ];
 
     # Environment variables set during neovim runtime.

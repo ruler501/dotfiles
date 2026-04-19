@@ -56,7 +56,7 @@ let
     # Runtime dependencies. This is thing like tree-sitter, lsps or programs
     # like ripgrep.
     runtimeDeps = [
-      pkgs.nodePackages.bash-language-server
+      pkgs.bash-language-server
       pkgs.llvmPackages.clang-unwrapped
       pkgs.cmake-language-server
       # pkgs.nodePackages.diagnostic-languageserver
@@ -72,7 +72,7 @@ let
       pkgs.pyright
       pkgs.ripgrep
       pkgs.systemd-lsp
-      pkgs.nodePackages.typescript-language-server
+      pkgs.typescript-language-server
       # pkgs.nodePackages.vscode-langservers-extracted
       pkgs.wl-clipboard-rs
     ];

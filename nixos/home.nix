@@ -70,7 +70,9 @@ in
           };
         };
         signing = {
-          key = "friends.devon@gmail.com"; signByDefault = true;
+          format = "openpgp";
+          key = "friends.devon@gmail.com";
+          signByDefault = true;
         };
       };
       gnome-terminal = { enable = true; profile."0c35006c-9b3f-4ea6-80ab-380ee0228a75" = {

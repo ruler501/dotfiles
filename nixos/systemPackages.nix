@@ -65,6 +65,7 @@ in
     pkgs.rawtherapee
     nixpkgs-stable.ripgrep-all # Fails tests on unstable
     pkgs.sad
+    pkgs.signal-desktop
     pkgs.simplescreenrecorder
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb

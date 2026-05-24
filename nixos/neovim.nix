@@ -27,6 +27,7 @@ let
       pkgs.vimPlugins.gitsigns-nvim
       pkgs.vimPlugins.indent-blankline-nvim
       pkgs.vimPlugins.lazy-nvim
+      pkgs.vimPlugins.lean-nvim
       pkgs.vimPlugins.lualine-nvim
       pkgs.vimPlugins.luasnip
       pkgs.vimPlugins.lush-nvim
@@ -65,11 +66,13 @@ let
       pkgs.fd
       pkgs.futhark
       pkgs.gcc
+      pkgs.lean4
       pkgs.lua-language-server
       pkgs.marksman
       pkgs.nix-doc
       pkgs.nixd
       pkgs.pyright
+      pkgs.resvg
       pkgs.ripgrep
       pkgs.systemd-lsp
       pkgs.typescript-language-server

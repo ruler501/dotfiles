@@ -35,7 +35,7 @@ local on_attach = function(client, bufnr)
 
   -- Supports
   local supp = function(method)
-    return client.supports_method(method)
+    return client:supports_method(method)
   end
 
   -- Conditional normal map

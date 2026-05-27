@@ -39,6 +39,7 @@ in
     pkgs.jetbrains.clion
     pkgs.jetbrains.webstorm
     pkgs.killall
+    pkgs.leanblueprint
     pkgs.libxkbfile
     pkgs.libreoffice
     pkgs.lldb

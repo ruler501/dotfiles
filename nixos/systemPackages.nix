@@ -59,12 +59,12 @@ in
     pkgs.pciutils  # Provides lspci
     pkgs.perf
     # config.boot.kernelPackages.perf
-    # pkgs.postman # Failing to download
+    pkgs.postman
     pythonPackages.python
     pythonPackages.pynvim
     pkgs.p7zip
     pkgs.rawtherapee
-    nixpkgs-stable.ripgrep-all # Fails tests on unstable
+    pkgs.ripgrep-all # Fails tests on unstable
     pkgs.sad
     pkgs.signal-desktop
     pkgs.simplescreenrecorder

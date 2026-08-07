@@ -66,7 +66,7 @@ in
           };
           user = {
             name = "Sabia Richards";
-            email = "friends.devon@gmail.com";
+            email = "sabia.richards@gmail.com";
           };
         };
         signing = {

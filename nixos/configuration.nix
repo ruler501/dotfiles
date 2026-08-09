@@ -152,9 +152,9 @@
     rtkit.enable = true; # Enables processes to request real time scheduling, needed for pipewire.
   };
   services = {
-    ananicy = { # Applies automatic nice values for cpu and io.
-      enable = true;
-    };
+    # ananicy = { # Applies automatic nice values for cpu and io.
+    #   enable = true;
+    # };
     arbtt = { # Automatically tracks statistics on activity on machine.
       enable = true;
       sampleRate = 60;
@@ -166,6 +166,7 @@
     };
     automatic-timezoned.enable = true;
     blueman.enable = true;
+    colord.enable = true;
     displayManager = {
       autoLogin.enable = false;
       # defaultSession = "plasma";

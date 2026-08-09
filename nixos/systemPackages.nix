@@ -2,6 +2,7 @@
 let
   pythonPackages = pkgs.python313Packages;
   neovim-patched = import ./neovim.nix inputs;
+  kdePackages = pkgs.kdePackages;
 in
 {
   environment.systemPackages = [
@@ -13,10 +14,13 @@ in
     pkgs.chromium
     pkgs.cockatrice
     # pkgs.cockroachdb-bin
+    kdePackages.colord-kde
     pkgs.darktable
     pkgs.dconf  # Backend for GSettings
     pkgs.discord
     pkgs.dnglab
+    pkgs.exiftool
+    pkgs.exiv2
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
@@ -39,7 +43,7 @@ in
     pkgs.jetbrains.clion
     pkgs.jetbrains.webstorm
     pkgs.killall
-    pkgs.leanblueprint
+    # pkgs.leanblueprint
     pkgs.libxkbfile
     pkgs.libreoffice
     pkgs.lldb

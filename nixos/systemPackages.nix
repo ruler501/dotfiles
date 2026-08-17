@@ -3,12 +3,13 @@ let
   pythonPackages = pkgs.python313Packages;
   neovim-patched = import ./neovim.nix inputs;
   kdePackages = pkgs.kdePackages;
+  jetbrainsPackages = pkgs.jetbrains;
 in
 {
   environment.systemPackages = [
     pkgs.android-studio
     pkgs.ansel
-    pkgs.kdePackages.ark  # GUI archive management
+    kdePackages.ark  # GUI archive management
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.calibre
     pkgs.chromium
@@ -24,12 +25,14 @@ in
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
-    nixpkgs-stable.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
+    # nixpkgs-stable.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
     pkgs.git
     pkgs.git-latexdiff
     pkgs.gimp
     pkgs.glances
+    pkgs.gmic
+    pkgs.gmic-qt
     pkgs.gnome-system-monitor
     (pkgs.google-cloud-sdk.withExtraComponents ([pkgs.google-cloud-sdk.components.gke-gcloud-auth-plugin]))
     pkgs.google-chrome
@@ -40,8 +43,8 @@ in
     pkgs.htop
     pkgs.imagemagick
     pkgs.inkscape
-    pkgs.jetbrains.clion
-    pkgs.jetbrains.webstorm
+    jetbrainsPackages.clion
+    jetbrainsPackages.webstorm
     pkgs.killall
     # pkgs.leanblueprint
     pkgs.libxkbfile
@@ -68,7 +71,7 @@ in
     pythonPackages.pynvim
     pkgs.p7zip
     pkgs.rawtherapee
-    pkgs.ripgrep-all # Fails tests on unstable
+    pkgs.ripgrep-all
     pkgs.sad
     pkgs.signal-desktop
     pkgs.simplescreenrecorder

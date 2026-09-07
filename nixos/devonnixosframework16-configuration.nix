@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, system, ... }:
+{ pkgs, modulesPath, system, lib, nixos-hardware, ... }:
 let
   ext4SsdOptions = [
     "data=ordered"      # Ensures data ordering, improving file system reliability and performance by writing data to disk in a specific order.
@@ -6,29 +6,50 @@ let
     "discard"           # Enables the TRIM command, which allows the file system to notify the storage device of unused blocks, improving performance and longevity of solid-state drives (SSDs).
     "errors=remount-ro" # Remounts the file system as read-only (ro) in case of errors to prevent further potential data corruption.
   ];
-in
-{
-  imports =[ 
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
-  boot = {
-    extraModulePackages = [ ];
-    initrd = {
-      availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod"];
-      kernelModules = [ ];
-    };
-    kernelModules = [ 
-      "amdgpu" 
-      "kvm-amd"
-    ];
-    kernelParams = [
-      "amdgpu.abmlevel=1"
+  rocmLibPath = lib.makeLibraryPath [ pkgs.libdrm ];
+
+  rocmSmi = pkgs.writeShellScriptBin "rocm-smi" ''
+    export LD_LIBRARY_PATH="${rocmLibPath}''${LD_LIBRARY_PATH:+:}''${LD_LIBRARY_PATH:-}"
+    exec ${pkgs.rocmPackages.rocm-smi}/bin/rocm-smi "$@"
+  '';
+
+  rocmEnv = pkgs.symlinkJoin {
+    name = "rocm-combined";
+    paths = with pkgs.rocmPackages; [
+      rocblas
+      hipblas
+      clr
     ];
   };
-  environment.systemPackages = [
-    pkgs.framework-tool
-    # pkgs.nvtopPackages.amd # nvtopPackages doesn't exist on stable
+in
+{
+  imports = [ 
+    (modulesPath + "/installer/scan/not-detected.nix")
+    nixos-hardware.nixosModules.framework-16-7040-amd
   ];
+
+  boot = {
+    kernelPackages = pkgs.linuxPackages_zen;
+    kernelParams = [ "amdgpu.abmlevel=0" ];
+  };
+  environment = {
+      systemPackages = [
+      pkgs.clinfo
+      pkgs.gamescope
+      pkgs.gpu-viewer
+      pkgs.gpuvis
+      pkgs.lact
+      pkgs.lm_sensors
+      pkgs.nvtopPackages.amd
+      pkgs.powertop
+      pkgs.radeontools
+      pkgs.radeontop
+      pkgs.rgp
+      pkgs.rocmPackages.rocminfo
+      rocmSmi
+      pkgs.umr
+    ];
+  };
   fileSystems = {
     "/" ={
       device = "/dev/disk/by-uuid/71539a24-ea83-41bd-adb7-045846ae9965";
@@ -46,29 +67,28 @@ in
     };
   };
   hardware = {
+    amdgpu = {
+      initrd.enable = true;
+      opencl.enable = true;
+    };
+    bluetooth = {
+      enable = true;
+      package = pkgs.bluez;
+      powerOnBoot = true;
+    };
     cpu.amd.updateMicrocode = true;
-    enableRedistributableFirmware = true;
+    enableAllFirmware = true;
     graphics = {
+      enable32Bit = true;
       extraPackages = [
-        pkgs.libva-vdpau-driver
-        pkgs.libvdpau-va-gl
         # pkgs.mangohud
         # pkgs.gamescope
         # pkgs.amdvlk
       ];
       extraPackages32 = [
+        # pkgs.driversi686Linux.amdvlk
         # pkgs.gamescope
       ];
-    };
-    keyboard = {
-      qmk = {
-        enable = true;
-      };
-    };
-    sensor = {
-      iio = {
-        enable = true;
-      };
     };
   };
   networking = {
@@ -83,22 +103,17 @@ in
   };
   nixpkgs.hostPlatform = system;
   programs = {
-    steam.enable = true;
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
   };
   services = {
-    fprintd = {
-      enable = true;
-    };
-    fwupd = {
-      enable = true;
-    };
-    power-profiles-daemon = {
-      enable = true;
-    };
-    xserver = {
-      dpi = 120;
-      videoDrivers = ["modesetting"];
-    };
+    blueman.enable = true;
+    udisks2.enable = true;
+    thermald.enable = true;
+    gvfs.enable = true;
+    xserver.videoDrivers = [ "modesetting" ];
   };
   swapDevices =[ 
     { device = "/dev/disk/by-uuid/b2c9eac0-c8d3-4db4-9a86-6c4d4afcf12d"; }
@@ -117,5 +132,8 @@ in
         enable = false;
       };
     };
+    tmpfiles.rules = [
+      "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
+    ];
   };
 }

@@ -4,6 +4,7 @@ let
   neovim-patched = import ./neovim.nix inputs;
   kdePackages = pkgs.kdePackages;
   jetbrainsPackages = pkgs.jetbrains;
+  stablePkgs = nixpkgs-stable;
 in
 {
   environment.systemPackages = [
@@ -13,6 +14,7 @@ in
     pkgs.bear  # CMake wrapper for generating compile_commands.json for language servers.
     pkgs.calibre
     pkgs.chromium
+    jetbrainsPackages.clion
     pkgs.cockatrice
     # pkgs.cockroachdb-bin
     kdePackages.colord-kde
@@ -25,7 +27,6 @@ in
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
-    # nixpkgs-stable.gamemode # Allow games to request temporary application of optimization settings to the system when run through it.
     pkgs.gdb
     pkgs.git
     pkgs.git-latexdiff
@@ -43,10 +44,7 @@ in
     pkgs.htop
     pkgs.imagemagick
     pkgs.inkscape
-    jetbrainsPackages.clion
-    jetbrainsPackages.webstorm
     pkgs.killall
-    # pkgs.leanblueprint
     pkgs.libxkbfile
     pkgs.libreoffice
     pkgs.lldb
@@ -70,14 +68,16 @@ in
     pythonPackages.python
     pythonPackages.pynvim
     pkgs.p7zip
+    pkgs.rapidraw
     pkgs.rawtherapee
     pkgs.ripgrep-all
     pkgs.sad
     pkgs.signal-desktop
-    pkgs.simplescreenrecorder
+    stablePkgs.simplescreenrecorder
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc
+    jetbrainsPackages.webstorm
     pkgs.wget
     pkgs.xdg-utils
     pkgs.zathura

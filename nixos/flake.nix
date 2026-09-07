@@ -28,9 +28,10 @@
       # We do this so that we ensure neovim nightly actually updates
       # inputs.neovim-nightly-overlay.follows = "neovim-nightly-overlay";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixPatch, ... }@inputs:
+  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixPatch, nixos-hardware, ... }:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs {
@@ -49,6 +50,7 @@
       inherit colors;
       inherit stylix;
       inherit nixPatch;
+      inherit nixos-hardware;
       nixpkgs-stable = pkgs-stable;
       nixpkgs-unstable = pkgs-unstable;
     };

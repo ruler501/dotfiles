@@ -1,7 +1,7 @@
 { hostname, pkgs, secrets, nixpkgs-stable, colors, config, nonicons, ... }: {
-  imports = [
+  require = [
     # Include system specific configurations.
-    ((builtins.toString ./.) + "/" + hostname + "-configuration.nix")
+    (import ./${hostname}-configuration.nix)
   ];
   boot = {
     enableContainers = true;
@@ -68,25 +68,10 @@
     ];
   };
   hardware = {
-    bluetooth = {
-      enable = true;
-      package = pkgs.bluez;
-      powerOnBoot = true;
-    };
     # ckb-next = {
     #   enable = true;
     #   package = pkgs.ckb-next;
     # };
-    logitech.wireless = {
-      enable = true;
-      enableGraphical = true;
-    };
-    # Required for Steam to run per this GitHub comment:
-    # https://github.com/NixOS/nixpkgs/issues/47932#issuecomment-447508411
-    graphics = {
-      # driSupport32Bit = true;
-      enable = true;
-    };
   };
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
@@ -113,7 +98,6 @@
       automatic = true;
       dates = ["daily"];
     };
-    # package = pkgs.nixUnstable;
     settings = {
       allowed-users = ["@wheel"];
       auto-optimise-store = true;
@@ -165,7 +149,6 @@
       openFirewall = true;
     };
     automatic-timezoned.enable = true;
-    blueman.enable = true;
     colord.enable = true;
     displayManager = {
       autoLogin.enable = false;
@@ -196,7 +179,7 @@
       jack.enable = false;
     };
     postgresql = {
-      enable = true;
+      enable = false;
       enableJIT = true;
       ensureDatabases = [ "mydatabase" "devon" ];
       ensureUsers = [
@@ -224,7 +207,7 @@
       servers = {
         local-redis = {
           bind = "127.0.0.1";
-          enable = true;
+          enable = false;
           port = 6379;
           requirePass = "localpassword";
           save = [];
@@ -234,17 +217,6 @@
     timesyncd.enable = true;
     uptimed.enable = true;
     desktopManager.plasma6.enable = true;
-
-    # xserver = {
-    #   desktopManager.plasma5 = {
-    #     enable = true;
-    #   };
-    #   enable = true;
-    #   xkb = {
-    #     layout = "us";
-    #     options = "ctrl:nocaps";
-    #   };
-    # };
   };
   stylix = {
     autoEnable = true;

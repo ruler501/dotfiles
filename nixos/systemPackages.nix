@@ -42,6 +42,7 @@ in
     pkgs.gphoto2fs
     pkgs.graphviz
     pkgs.htop
+    pkgs.hugin
     pkgs.imagemagick
     pkgs.inkscape
     pkgs.killall

@@ -56,7 +56,6 @@ in
     pkgs.monkeysphere # some weird ssl/tls auth thing
     pkgs.neovim-remote
     neovim-patched
-    pkgs.nix-direnv
     pkgs.nix-du # Disk usage by gc root
     pkgs.nix-index # Search what packages have specific files
     pkgs.obsidian

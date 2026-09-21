@@ -3,14 +3,20 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
     secrets.url = "git+ssh://git@github.com/ruler501/dotfiles-private.git";
+    direnv-instant.url = "github:Mic92/direnv-instant";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
     };
+    nixPatch = {
+      url = "git+https://codeberg.org/NicoElbers/nixPatch-nvim.git";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nonicons = {
       url = "github:yamatsum/nonicons";
       flake = false;
@@ -21,17 +27,11 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-    nixPatch = {
-      url = "git+https://codeberg.org/NicoElbers/nixPatch-nvim.git";
-      inputs.nixpkgs.follows = "nixpkgs";
-
-      # We do this so that we ensure neovim nightly actually updates
-      # inputs.neovim-nightly-overlay.follows = "neovim-nightly-overlay";
-    };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixPatch, nixos-hardware, ... }:
+  outputs = {
+    home-manager, nixpkgs, nonicons, secrets, nixpkgs-stable, stylix, nixPatch, nixos-hardware, direnv-instant, ...
+  }:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs {
@@ -72,6 +72,7 @@
           };
         })
         (stylix.nixosModules.stylix)
+        direnv-instant.nixosModules.direnv-instant
       ];
     };
   in

@@ -1,4 +1,4 @@
-{ system, nixPatch, ... }:
+{ system, nixPatch, nixpkgs-stable, ... }:
 let
   # Easily configure a custom name, this will affect the name of the standard
   # executable, you can add as many aliases as you'd like in the configuration.
@@ -12,6 +12,7 @@ let
   configuration = { pkgs, ... }:
   let
     patchUtils = nixPatch.patchUtils.${pkgs.stdenv.hostPlatform.system};
+    stablePkgs = nixpkgs-stable;
   in
   {
     # The path to your neovim configuration.
@@ -38,8 +39,8 @@ let
       pkgs.vimPlugins.nvim-cmp
       # pkgs.vimPlugins.nvim-colorizer-lua
       pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.nvim-treesitter-legacy.withAllGrammars
-      pkgs.vimPlugins.nvim-treesitter-textobjects
+      stablePkgs.vimPlugins.nvim-treesitter-legacy.withAllGrammars
+      stablePkgs.vimPlugins.nvim-treesitter-textobjects
       pkgs.vimPlugins.nvim-web-devicons
       pkgs.vimPlugins.nvim-window-picker
       pkgs.vimPlugins.plenary-nvim

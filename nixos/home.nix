@@ -29,13 +29,16 @@ in
       dircolors = {
         enable = true; enableZshIntegration = true;
       };
-      direnv = { config = {
+      direnv = {
+        config = {
           load_dotenv = false;
         };
-        enable = true; nix-direnv = {
+        enable = true;
+        nix-direnv = {
           enable = true;
         };
-        enableZshIntegration = true;
+        enableBashIntegration = false;
+        enableZshIntegration = false;
       };
       firefox.profiles = {};
       git = {

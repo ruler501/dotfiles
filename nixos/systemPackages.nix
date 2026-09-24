@@ -19,11 +19,15 @@ in
     # pkgs.cockroachdb-bin
     kdePackages.colord-kde
     pkgs.darktable
+    pkgs.db
     pkgs.dconf  # Backend for GSettings
     pkgs.discord
     pkgs.dnglab
+    pkgs.electrum
+    pkgs.exodus
     pkgs.exiftool
     pkgs.exiv2
+    pkgs.file
     pkgs.firefox
     pkgs.fortune
     pkgs.fzy
@@ -58,9 +62,12 @@ in
     neovim-patched
     pkgs.nix-du # Disk usage by gc root
     pkgs.nix-index # Search what packages have specific files
+    pkgs.ntfs3g
     pkgs.obsidian
     pkgs.openssl
     pkgs.parallel
+    pkgs.partclone
+    pkgs.partclone-utils
     pkgs.pciutils  # Provides lspci
     pkgs.perf
     # config.boot.kernelPackages.perf
@@ -69,11 +76,17 @@ in
     pythonPackages.pynvim
     pkgs.p7zip
     pkgs.rapidraw
+    stablePkgs.ratarmount
     pkgs.rawtherapee
+    pkgs.rclone
+    pkgs.rclone-browser
     pkgs.ripgrep-all
     pkgs.sad
+    pkgs.scrounge-ntfs
     pkgs.signal-desktop
     stablePkgs.simplescreenrecorder
+    pkgs.testdisk
+    pkgs.testdisk-qt
     pkgs.texstudio
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc

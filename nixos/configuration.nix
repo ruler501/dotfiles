@@ -120,6 +120,10 @@
     # adb.enable = true;
     # command-not-found.enable = true;
     direnv-instant.enable = true;
+    fuse = {
+      enable = true;
+      userAllowOther = true;
+    };
     less.enable = true;
     npm.enable = false;
     system-config-printer.enable = true;

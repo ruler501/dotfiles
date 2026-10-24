@@ -126,6 +126,7 @@
     };
     less.enable = true;
     npm.enable = false;
+    renderdoc.enable = true;
     system-config-printer.enable = true;
     zsh = {
       enable = true;

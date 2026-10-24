@@ -24,12 +24,12 @@ in
     pkgs.discord
     pkgs.dnglab
     pkgs.electrum
-    pkgs.exodus
     pkgs.exiftool
     pkgs.exiv2
     pkgs.file
     pkgs.firefox
     pkgs.fortune
+    pkgs.furmark
     pkgs.fzy
     pkgs.gdb
     pkgs.git
@@ -49,6 +49,7 @@ in
     pkgs.hugin
     pkgs.imagemagick
     pkgs.inkscape
+    kdePackages.kfind
     pkgs.killall
     pkgs.libxkbfile
     pkgs.libreoffice
@@ -57,6 +58,8 @@ in
     pkgs.loccount
     pkgs.lshw
     pkgs.lsof
+    pkgs.mangohud
+    pkgs.mesa-demos   # Adds glxinfo and other utilities 
     pkgs.monkeysphere # some weird ssl/tls auth thing
     pkgs.neovim-remote
     neovim-patched
@@ -88,8 +91,11 @@ in
     pkgs.testdisk
     pkgs.testdisk-qt
     pkgs.texstudio
+    pkgs.unigine-superposition
     pkgs.usbutils  # Provides lsusb
     pkgs.vlc
+    pkgs.vulkan-caps-viewer
+    pkgs.vulkan-tools  # vulkaninfo and other tools
     jetbrainsPackages.webstorm
     pkgs.wget
     pkgs.xdg-utils

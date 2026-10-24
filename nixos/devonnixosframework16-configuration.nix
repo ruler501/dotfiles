@@ -21,6 +21,7 @@ let
       clr
     ];
   };
+  linuxPackages = pkgs.linuxPackages_zen;
 in
 {
   imports = [ 
@@ -29,26 +30,35 @@ in
   ];
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    extraModulePackages = [ linuxPackages.zenergy ];
+    kernelModules = [ "zenergy" "msr" ];
+    kernelPackages = linuxPackages;
     kernelParams = [ "amdgpu.abmlevel=0" ];
   };
   environment = {
-      systemPackages = [
+    systemPackages = [
+      pkgs.amdgpu_top
       pkgs.clinfo
+      pkgs.corectrl
       pkgs.gamescope
       pkgs.gpu-viewer
       pkgs.gpuvis
-      pkgs.lact
       pkgs.lm_sensors
       pkgs.nvtopPackages.amd
       pkgs.powertop
+      pkgs.radeon-profile
       pkgs.radeontools
       pkgs.radeontop
       pkgs.rgp
       pkgs.rocmPackages.rocminfo
       rocmSmi
+      pkgs.tuxclocker
+      pkgs.tuxclocker-plugins-with-unfree
       pkgs.umr
     ];
+    variables = {
+      GAMEMODERUNEXEC="env DRI_PRIME=1!";
+    };
   };
   fileSystems = {
     "/" ={
@@ -70,6 +80,11 @@ in
     amdgpu = {
       initrd.enable = true;
       opencl.enable = true;
+      overdrive = {
+        enable = true;
+        ppfeaturemask = "0xffffffff";
+      };
+      zluda.enable = true;
     };
     bluetooth = {
       enable = true;
@@ -81,13 +96,8 @@ in
     graphics = {
       enable32Bit = true;
       extraPackages = [
-        # pkgs.mangohud
-        # pkgs.gamescope
-        # pkgs.amdvlk
       ];
       extraPackages32 = [
-        # pkgs.driversi686Linux.amdvlk
-        # pkgs.gamescope
       ];
     };
   };
@@ -103,6 +113,22 @@ in
   };
   nixpkgs.hostPlatform = system;
   programs = {
+    gamemode = {
+      enable = true;
+      enableRenice = true;
+      settings = {
+        general = {
+          renice = 10;
+        };
+      
+        # Warning: GPU optimisations have the potential to damage hardware
+        gpu = {
+          apply_gpu_optimisations = "accept-responsibility";
+          gpu_device = 1;
+          amd_performance_level = "high";
+        };
+      };
+    };
     steam = {
       enable = true;
       gamescopeSession.enable = true;
@@ -113,6 +139,7 @@ in
     udisks2.enable = true;
     thermald.enable = true;
     gvfs.enable = true;
+    lact.enable = true;
     xserver.videoDrivers = [ "modesetting" ];
   };
   swapDevices =[ 

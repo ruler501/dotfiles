@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, system, lib, nixos-hardware, ... }:
+{ pkgs, modulesPath, system, lib, nixos-hardware, nixpkgs-stable, ... }:
 let
   ext4SsdOptions = [
     "data=ordered"      # Ensures data ordering, improving file system reliability and performance by writing data to disk in a specific order.
@@ -21,7 +21,7 @@ let
       clr
     ];
   };
-  linuxPackages = pkgs.linuxPackages_zen;
+  stablePkgs = nixpkgs-stable;
 in
 {
   imports = [ 
@@ -30,9 +30,9 @@ in
   ];
 
   boot = {
-    extraModulePackages = [ linuxPackages.zenergy ];
-    kernelModules = [ "zenergy" "msr" ];
-    kernelPackages = linuxPackages;
+    # extraModulePackages = [ linuxPackages.zenergy ];
+    # kernelModules = [ "zenergy" "msr" ];
+    # kernelPackages = linuxPackages;
     kernelParams = [ "amdgpu.abmlevel=0" ];
   };
   environment = {
@@ -43,6 +43,7 @@ in
       pkgs.gamescope
       pkgs.gpu-viewer
       pkgs.gpuvis
+      pkgs.hidapi
       pkgs.lm_sensors
       pkgs.nvtopPackages.amd
       pkgs.powertop
@@ -55,6 +56,7 @@ in
       pkgs.tuxclocker
       pkgs.tuxclocker-plugins-with-unfree
       pkgs.umr
+      pkgs.xpad
     ];
     variables = {
       GAMEMODERUNEXEC="env DRI_PRIME=1!";
@@ -84,7 +86,7 @@ in
         enable = true;
         ppfeaturemask = "0xffffffff";
       };
-      zluda.enable = true;
+      # zluda.enable = true;
     };
     bluetooth = {
       enable = true;
@@ -131,7 +133,9 @@ in
     };
     steam = {
       enable = true;
+      # extest.enable = true;
       gamescopeSession.enable = true;
+      # package = stablePkgs.steam;
     };
   };
   services = {

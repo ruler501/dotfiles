@@ -4,11 +4,22 @@
     (import ./${hostname}-configuration.nix)
   ];
   boot = {
-    enableContainers = true;
     binfmt.emulatedSystems = [
       "aarch64-linux"
+      "riscv64-linux"
     ];
+    enableContainers = true;
+    extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
     hardwareScan = true;
+    initrd.kernelModules = [ "kvmfr" "kvm-amd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+    kernelPackages = pkgs.linuxKernel.packages.linux_7_3;
+    kernelParams = [
+      "kvmfr.static_size_mb=256" # LookingGlass calculated MEM requirement
+      "amd_iommu=force_isolation"
+      "iommu=pt"
+      "kvm.ignore_msrs=1"
+      "vfio-pci ids=1002:7480,1002:ab30"
+    ];
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -75,12 +86,16 @@
   };
   i18n.defaultLocale = "en_US.UTF-8";
   networking = {
-    dhcpcd = {
+      dhcpcd = {
       enable = true;
       wait = "background";
     };
     enableIPv6 = false;
-    firewall.enable = true;
+    firewall = {
+      checkReversePath = "loose";
+      enable = true;
+      trustedInterfaces = [ "virbr0" ];
+    };
     hostName = hostname;
     # The global useDHCP flag is deprecated, therefore explicitly set to false here.
     # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -128,6 +143,7 @@
     npm.enable = false;
     renderdoc.enable = true;
     system-config-printer.enable = true;
+    virt-manager.enable = true;
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -146,7 +162,7 @@
     #   enable = true;
     # };
     arbtt = { # Automatically tracks statistics on activity on machine.
-      enable = true;
+      enable = false;
       sampleRate = 60;
     };
     avahi = {
@@ -171,6 +187,7 @@
       package = nixpkgs-stable.mongodb-4_4;
       replSetName = "rs0";
     };
+    nordvpn.enable = true;
     printing = {
       drivers = [ pkgs.canon-cups-ufr2 ];
       enable = true;
@@ -221,6 +238,15 @@
       };
     };
     timesyncd.enable = true;
+    udev.packages = pkgs.lib.singleton (pkgs.writeTextFile
+      { 
+        name = "kvmfr";
+        text = ''
+          SUBSYSTEM=="kvmfr", OWNER="devon", GROUP="kvm", MODE="0660", TAG+="uaccess"
+        '';
+        destination = "/etc/udev/rules.d/70-kvmfr.rules";
+      }
+    );
     uptimed.enable = true;
     desktopManager.plasma6.enable = true;
   };
@@ -255,6 +281,7 @@
     image = config.lib.stylix.pixel "base02";
     polarity = "dark";
   };
+  systemd.tmpfiles.rules = [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
   users = {
     defaultUserShell = pkgs.zsh;
     groups = {
@@ -263,7 +290,18 @@
     mutableUsers = false;
     users = {
       devon = {
-        extraGroups = ["wheel" "networkmanager" "adbusers" "docker" "audio" "kvm"];
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+          "adbusers"
+          "docker"
+          "audio"
+          "kvm"
+          "libvirtd"
+          "qemu-libvirtd"
+          "disk"
+          "nordvpn"
+        ];
         hashedPassword = secrets.hashedPassword;
         isNormalUser = true;
         uid = 5001;
@@ -276,6 +314,25 @@
     docker = {
       enable = true;
       autoPrune.enable = true;
+    };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = true;
+        swtpm.enable = true;
+        verbatimConfig = ''
+          namespaces = []
+          user = +5001
+          cgroup_device_acl = [
+            "/dev/null", "/dev/full", "/dev/zero",
+            "/dev/random", "/dev/urandom",
+            "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+            "/dev/rtc","/dev/hpet", "/dev/vfio/vfio",
+            "/dev/kvmfr0"
+          ]
+        '';
+      };
     };
   };
   xdg = {

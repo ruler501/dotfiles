@@ -18,7 +18,7 @@
       "amd_iommu=force_isolation"
       "iommu=pt"
       "kvm.ignore_msrs=1"
-      "vfio-pci ids=1002:7480,1002:ab30"
+      "vfio-pci,ids=1002:7480,1002:ab30"
     ];
     loader = {
       efi = {
